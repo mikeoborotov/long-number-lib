@@ -7,5 +7,14 @@
 int main(int argc, char *argv[]) {
 	std::cout << "Running tests" << "\n";
 
+	LongInt x;
+	x.print();
+
+	x.set("45");
+	x.print();
+
+	x.set("-120");
+	x.print();
+
 	return 0;
 }
