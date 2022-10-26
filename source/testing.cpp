@@ -16,5 +16,8 @@ int main(int argc, char *argv[]) {
 	x.set("-120");
 	x.print();
 
+	x.set("-123987");
+	x.print();
+
 	return 0;
 }
