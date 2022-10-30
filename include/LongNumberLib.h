@@ -5,11 +5,13 @@
 #include <iostream>
 #include <vector>
 
+// Opening namespace "LongNumberLib"
+namespace LongNumberLib {
+
 // A class for arbitrary length integers
 class LongInt {
 private:
 	std::vector<int> _digits; // Number as a vector of digits
-	size_t _size; // Number length
 	bool _positive; // Is number positive?
 
 public:
@@ -17,7 +19,7 @@ public:
 	~LongInt();
 
 	std::string getString(); // Get number value as a string
-	size_t getSize(); // Get number size
+	long long size(); // Get number size
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
 	void set(std::string input); // Set number value
@@ -28,14 +30,13 @@ public:
 // Default constructor
 LongInt::LongInt() {
 	_digits.push_back(0); // Number is set to 0 by default
-	_size = 1;
 	_positive = true;
 }
 
 // Default destructor
 LongInt::~LongInt() {}
 
-// Get number number as a string
+// Get number as a string
 std::string LongInt::getString() {
 	std::string output;
 	for (const auto &digit: this->_digits) {
@@ -45,8 +46,8 @@ std::string LongInt::getString() {
 }
 
 // Get number size
-size_t LongInt::getSize() {
-	return this->_size;
+long long LongInt::size() {
+	return this->_digits.size();
 }
 
 // Is number positive?
@@ -71,7 +72,6 @@ void LongInt::set(std::string input) {
 	for (const auto &digit: input) {
 		this->_digits.push_back(digit - '0');
 	}
-	this->_size = _digits.size();
 }
 
 // Print number, its size and sign (mostly for debug)
@@ -81,7 +81,7 @@ void LongInt::print() {
 		std::cout << "-";
 	}
 	std::cout << this->getString();
-	std::cout << "\nSize:  " << this->_size;
+	std::cout << "\nSize:  " << this->size();
 	std::cout << "\nSign:  ";
 	if (this->isPositive()) {
 		std::cout << "+" << "\n\n";
@@ -89,3 +89,5 @@ void LongInt::print() {
 		std::cout << "-" << "\n\n";
 	}
 }
+
+} // Closing namespace "LongNumberLib"
