@@ -25,9 +25,14 @@ public:
 	long long size(); // Get number size
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
-	void set(std::string input); // Set number value
+	void set(std::string input); // Set number value with string
+	void set(LongInt input); // Set number value with LongInt
+
+	static bool areEqual(LongInt firstNum, LongInt secondNum); // Are numbers equal?
+	static bool isBigger(LongInt firstNum, LongInt secondNum); // Is first number bigger?
 
 	void add(LongInt secondNum); // Add a number TODO
+	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers TODO
 
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -98,11 +103,105 @@ void LongInt::set(std::string input) {
 	std::reverse(_digits.begin(), _digits.end());
 }
 
+// Set number value with LongInt
+void LongInt::set(LongInt input) {
+	this->_digits = input._digits;
+	this->_positive = input._positive;
+}
+
+// Are numbers equal?
+bool LongInt::areEqual(LongInt firstNum, LongInt secondNum) {
+	if ((firstNum.isPositive() != secondNum.isPositive()) or (firstNum.size() != secondNum.size())) {
+		return false;
+	}
+	for (long long i = 0; i < firstNum.size(); i++) {
+		if (firstNum._digits[i] != secondNum._digits[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
+// Is first number bigger?
+bool LongInt::isBigger(LongInt firstNum, LongInt secondNum) {
+	// Signs: + -
+	if (firstNum.isPositive() and secondNum.isNegative()) {
+		return true;
+	}
+	// Signs: - +
+	if (firstNum.isNegative() and secondNum.isPositive()) {
+		return false;
+	}
+	// Signs: + +
+	if (firstNum.isPositive() and secondNum.isPositive()) {
+		if (firstNum.size() > secondNum.size()) {
+			return true;
+		} else if (firstNum.size() < secondNum.size()) {
+			return false;
+		} else {
+			for (long long i = firstNum.size() - 1; i >= 0; i--) {
+				if (firstNum._digits[i] > secondNum._digits[i]) {
+					return true;
+				} else if (firstNum._digits[i] < secondNum._digits[i]) {
+					return false;
+				}
+			}
+		}
+	}
+	// Signs: - -
+	if (firstNum.isNegative() and secondNum.isNegative()) {
+		if (firstNum.size() > secondNum.size()) {
+			return false;
+		} else if (firstNum.size() < secondNum.size()) {
+			return true;
+		} else {
+			for (long long i = firstNum.size() - 1; i >= 0; i--) {
+				if (firstNum._digits[i] > secondNum._digits[i]) {
+					return false;
+				} else if (firstNum._digits[i] < secondNum._digits[i]) {
+					return true;
+				}
+			}
+		}
+	}
+	return false; // If numbers are equal
+}
+
 // Add a number
 void LongInt::add(LongInt secondNum) {
 	if (this->isPositive() and secondNum.isPositive()) {
 		// TODO
 	}
+}
+
+// Sum of 2 numbers
+LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
+	LongInt result;
+
+	if (firstNum.size() < secondNum.size()) {
+		// TODO
+	} else {
+		result.set(firstNum.getString());
+		if (firstNum.isPositive() == secondNum.isPositive()) {
+			for (long long i = 0; i < secondNum.size(); i++) {
+				result._digits[i] += secondNum._digits[i];
+			}
+		}
+		// TODO
+		if (firstNum.isPositive() != secondNum.isPositive()) {
+			for (long long i = 0; i < secondNum.size(); i++) {
+				result._digits[i] -= secondNum._digits[i];
+			}
+		}
+	}
+
+	// + +
+	// + -
+	// - +
+	// - -
+
+	result._checkDigitOverflow();
+	return result;
 }
 
 // Print number, its size and sign (mostly for debug)
