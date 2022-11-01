@@ -17,18 +17,22 @@ private:
 
 	void _checkDigitOverflow(); // Correct digits if they are beyond 9
 
+	static LongInt _sumPrimitive(LongInt biggerNum, LongInt smallerNum); // Primitive sum
+
 public:
 	LongInt(); // Default constructor
 	LongInt(std::string input); // Overloaded constructor (for string)
 	~LongInt(); // Default destructor
 
 	std::string getString(); // Get number value as a string
+	LongInt abs(); // Get absolute number value
 	long long size(); // Get number size
 	long long length(); // Get number size
 	bool isEven(); // Is number even?
 	bool isOdd(); // Is number odd?
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
+	static LongInt abs(LongInt number); // Get absolute number value
 	static long long size(LongInt number); // Get number size
 	static long long length(LongInt number); // Get number size
 	static bool isEven(LongInt number); // Is number even?
@@ -62,6 +66,18 @@ void LongInt::_checkDigitOverflow() {
 	}
 }
 
+// Primitive sum
+// Sums 2 positive numbers (biggerNum >= smallerNum)
+LongInt LongInt::_sumPrimitive(LongInt biggerNum, LongInt smallerNum) {
+	LongInt result;
+	result.set(biggerNum);
+	for (long long i = 0; i < smallerNum.size(); i++) {
+		result._digits[i] += smallerNum._digits[i];
+	}
+	result._checkDigitOverflow();
+	return result;
+}
+
 // Default constructor
 LongInt::LongInt() {
 	_digits.push_back(0); // Number is set to 0 by default
@@ -87,6 +103,14 @@ std::string LongInt::getString() {
 	}
 	std::reverse(output.begin(), output.end());
 	return output;
+}
+
+// Get absolute number value
+LongInt LongInt::abs() {
+	LongInt result;
+	result.set(*this);
+	result._positive = true;
+	return result;
 }
 
 // Get number size
@@ -124,6 +148,11 @@ bool LongInt::isPositive() {
 // Is number negative?
 bool LongInt::isNegative() {
 	return !this->_positive;
+}
+
+// Get absolute number value
+LongInt LongInt::abs(LongInt number) {
+	return number.abs();
 }
 
 // Get number size
@@ -250,12 +279,13 @@ LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
 		// TODO
 	} else {
 		result.set(firstNum.getString());
+		// If (+,+) or (-,-)
 		if (firstNum.isPositive() == secondNum.isPositive()) {
 			for (long long i = 0; i < secondNum.size(); i++) {
 				result._digits[i] += secondNum._digits[i];
 			}
 		}
-		// TODO
+		// If (+,-) or (-,+)
 		if (firstNum.isPositive() != secondNum.isPositive()) {
 			for (long long i = 0; i < secondNum.size(); i++) {
 				result._digits[i] -= secondNum._digits[i];
@@ -263,10 +293,7 @@ LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
 		}
 	}
 
-	// + +
-	// + -
-	// - +
-	// - -
+	
 
 	result._checkDigitOverflow();
 	return result;

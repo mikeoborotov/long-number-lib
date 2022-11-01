@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
 	std::cout << "Running tests:" << "\n\n";
 
-	LongNumberLib::LongInt x("120");
+	LongNumberLib::LongInt x("90");
 	LongNumberLib::LongInt y("95");
 	x.print();
 	y.print();
@@ -32,6 +32,11 @@ int main(int argc, char *argv[]) {
 	// std::cout << LongNumberLib::LongInt::isOdd(x) << "\n";
 	// std::cout << LongNumberLib::LongInt::isEven(y) << "\n";
 	// std::cout << LongNumberLib::LongInt::isOdd(y) << "\n";
+
+	// set() tests
+	// x.print();
+	// x.set(y);
+	// x.print();
 
 	// x.print();
 	// y.print();
