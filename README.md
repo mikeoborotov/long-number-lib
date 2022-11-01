@@ -2,6 +2,8 @@
 
 LongNumberLib (Long Number Library) is a library for arithmetics with arbitrary length numbers in C++
 
+The library is currently under development!
+
 ## Contents
 
 + [Tests](#Tests)
