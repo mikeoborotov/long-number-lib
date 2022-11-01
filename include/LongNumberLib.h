@@ -14,6 +14,8 @@ private:
 	std::vector<int> _digits; // Number as a vector of digits
 	bool _positive; // Is number positive?
 
+	void _checkDigitOverflow(); // Correct digits if they are beyond 9
+
 public:
 	LongInt();
 	~LongInt();
@@ -24,8 +26,23 @@ public:
 	bool isNegative(); // Is number negative?
 	void set(std::string input); // Set number value
 
+	void add(LongInt secondNum); // Add a number TODO
+
 	void print(); // Print number, its size and sign (mainly for debug)
 };
+
+void LongInt::_checkDigitOverflow() {
+	for (long long i = this->_digits.size(); i > 0; i--) {
+		if (this->_digits[i] > 9) {
+			this->_digits[i] -= 10;
+			this->_digits[i - 1] += 1;
+		}
+	}
+	if (this->_digits[0] > 9) {
+		this->_digits[0] -= 10;
+		this->_digits.insert(this->_digits.begin(), 1);
+	}
+}
 
 // Default constructor
 LongInt::LongInt() {
@@ -71,6 +88,13 @@ void LongInt::set(std::string input) {
 	}
 	for (const auto &digit: input) {
 		this->_digits.push_back(digit - '0');
+	}
+}
+
+// Add a number
+void LongInt::add(LongInt secondNum) {
+	if (this->isPositive() and secondNum.isPositive()) {
+		// TODO
 	}
 }
 
