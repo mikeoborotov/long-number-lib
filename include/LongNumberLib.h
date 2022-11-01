@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 // Opening namespace "LongNumberLib"
 namespace LongNumberLib {
@@ -31,16 +32,17 @@ public:
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
+// Correct digits if they are beyond 9
 void LongInt::_checkDigitOverflow() {
-	for (long long i = this->_digits.size(); i > 0; i--) {
+	for (long long i = 0; i < this->size() - 1; i++) {
 		if (this->_digits[i] > 9) {
 			this->_digits[i] -= 10;
-			this->_digits[i - 1] += 1;
+			this->_digits[i + 1] += 1;
 		}
 	}
-	if (this->_digits[0] > 9) {
-		this->_digits[0] -= 10;
-		this->_digits.insert(this->_digits.begin(), 1);
+	if (this->_digits[this->size() - 1] > 9) {
+		this->_digits[this->size() - 1] -= 10;
+		this->_digits.push_back(1);
 	}
 }
 
@@ -59,6 +61,10 @@ std::string LongInt::getString() {
 	for (const auto &digit: this->_digits) {
 		output.push_back(digit + '0');
 	}
+	if (this->isNegative()) {
+		output.push_back('-');
+	}
+	std::reverse(output.begin(), output.end());
 	return output;
 }
 
@@ -89,6 +95,7 @@ void LongInt::set(std::string input) {
 	for (const auto &digit: input) {
 		this->_digits.push_back(digit - '0');
 	}
+	std::reverse(_digits.begin(), _digits.end());
 }
 
 // Add a number
@@ -100,17 +107,13 @@ void LongInt::add(LongInt secondNum) {
 
 // Print number, its size and sign (mostly for debug)
 void LongInt::print() {
-	std::cout << "Value: ";
-	if (this->isNegative()) {
-		std::cout << "-";
-	}
-	std::cout << this->getString();
+	std::cout << "Value: " << this->getString();
 	std::cout << "\nSize:  " << this->size();
 	std::cout << "\nSign:  ";
 	if (this->isPositive()) {
-		std::cout << "+" << "\n\n";
+		std::cout << "positive" << "\n\n";
 	} else {
-		std::cout << "-" << "\n\n";
+		std::cout << "negative" << "\n\n";
 	}
 }
 

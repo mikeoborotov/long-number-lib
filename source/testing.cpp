@@ -5,7 +5,7 @@
 #include "../include/LongNumberLib.h"
 
 int main(int argc, char *argv[]) {
-	std::cout << "Running tests" << "\n";
+	std::cout << "Running tests:" << "\n\n";
 
 	LongNumberLib::LongInt x;
 	x.print();
