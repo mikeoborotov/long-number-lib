@@ -24,12 +24,17 @@ public:
 
 	std::string getString(); // Get number value as a string
 	long long size(); // Get number size
+	long long length(); // Get number size
 	bool isEven(); // Is number even?
 	bool isOdd(); // Is number odd?
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
+	static long long size(LongInt number); // Get number size
+	static long long length(LongInt number); // Get number size
 	static bool isEven(LongInt number); // Is number even?
 	static bool isOdd(LongInt number); // Is number odd?
+	static bool isPositive(LongInt number); // Is number positive?
+	static bool isNegative(LongInt number); // Is number negative?
 	// NEED TO ADD LETTER CHECK
 	void set(std::string input); // Set number value with string 
 	void set(LongInt input); // Set number value with LongInt
@@ -89,6 +94,11 @@ long long LongInt::size() {
 	return this->_digits.size();
 }
 
+// Get number size, synonym to size()
+long long LongInt::length() {
+	return this->_digits.size();
+}
+
 // Is number even?
 bool LongInt::isEven() {
 	switch (this->_digits[0]) {
@@ -116,6 +126,16 @@ bool LongInt::isNegative() {
 	return !this->_positive;
 }
 
+// Get number size
+long long LongInt::size(LongInt number) {
+	return number.size();
+}
+
+// Get number size, synonym to size()
+long long LongInt::length(LongInt number) {
+	return number.length();
+}
+
 // Is number even?
 bool LongInt::isEven(LongInt number) {
 	return number.isEven();
@@ -124,6 +144,16 @@ bool LongInt::isEven(LongInt number) {
 // Is number odd?
 bool LongInt::isOdd(LongInt number) {
 	return number.isOdd();
+}
+
+// Is number positive?
+bool LongInt::isPositive(LongInt number) {
+	return number.isPositive();
+}
+
+// // Is number negative?
+static bool isNegative(LongInt number) {
+	return number.isNegative();
 }
 
 // Set number value
