@@ -18,14 +18,16 @@ private:
 	void _checkDigitOverflow(); // Correct digits if they are beyond 9
 
 public:
-	LongInt();
-	~LongInt();
+	LongInt(); // Default constructor
+	LongInt(std::string input); // Overloaded constructor (for string)
+	~LongInt(); // Default destructor
 
 	std::string getString(); // Get number value as a string
 	long long size(); // Get number size
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
-	void set(std::string input); // Set number value with string
+	// NEED TO ADD LETTER CHECK
+	void set(std::string input); // Set number value with string 
 	void set(LongInt input); // Set number value with LongInt
 
 	static bool areEqual(LongInt firstNum, LongInt secondNum); // Are numbers equal?
@@ -55,6 +57,11 @@ void LongInt::_checkDigitOverflow() {
 LongInt::LongInt() {
 	_digits.push_back(0); // Number is set to 0 by default
 	_positive = true;
+}
+
+// Overloaded constructor (for string)
+LongInt::LongInt(std::string input) {
+	this->set(input);
 }
 
 // Default destructor
