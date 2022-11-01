@@ -45,6 +45,9 @@ public:
 
 	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
 	static bool isGreater(LongInt firstNum, LongInt secondNum); // Is 1st number greater than 2nd?
+	static bool isGreaterOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number greater or equal to 2nd?
+	static bool isLess(LongInt firstNum, LongInt secondNum); // Is 1st number less than 2nd?
+	static bool isLessOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number less or equal to 2nd?
 
 	void add(LongInt secondNum); // Add a number TODO
 	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers TODO
@@ -66,8 +69,8 @@ void LongInt::_checkDigitOverflow() {
 	}
 }
 
-// Compare 2 LongInt numbers
-// Returns: 1 -> bigger, 0 -> equal, -1 -> smaller
+// Compare 2 LongInt numbers (1st relative to 2nd)
+// Returns: 1 -> greater, 0 -> equal, -1 -> less
 int LongInt::_compare(LongInt firstNum, LongInt secondNum) {
 	// Signs: + -
 	if (firstNum.isPositive() and secondNum.isNegative()) {
@@ -268,11 +271,41 @@ bool LongInt::isEqual(LongInt firstNum, LongInt secondNum) {
 // Is 1st number greater than 2nd?
 bool LongInt::isGreater(LongInt firstNum, LongInt secondNum) {
 	switch(LongInt::_compare(firstNum, secondNum)) {
-		case 1: return true; // Bigger
+		case 1: return true; // Greater
 		case 0: return false; // Equal
-		case -1: return false; // Smaller
+		case -1: return false; // Less
 	}
 	return false; // Duplicating '0' case to avoid warning
+}
+
+// Is 1st number greater or equal to 2nd?
+bool LongInt::isGreaterOrEqual(LongInt firstNum, LongInt secondNum) {
+	switch(LongInt::_compare(firstNum, secondNum)) {
+		case 1: return true; // Greater
+		case 0: return true; // Equal
+		case -1: return false; // Less
+	}
+	return true; // Duplicating '0' case to avoid warning
+}
+
+// Is 1st number less than 2nd?
+bool LongInt::isLess(LongInt firstNum, LongInt secondNum) {
+	switch(LongInt::_compare(firstNum, secondNum)) {
+		case 1: return false; // Greater
+		case 0: return false; // Equal
+		case -1: return true; // Less
+	}
+	return false; // Duplicating '0' case to avoid warning
+}
+
+// Is 1st number less or equal to 2nd?
+bool LongInt::isLessOrEqual(LongInt firstNum, LongInt secondNum) {
+	switch(LongInt::_compare(firstNum, secondNum)) {
+		case 1: return false; // Greater
+		case 0: return true; // Equal
+		case -1: return true; // Less
+	}
+	return true; // Duplicating '0' case to avoid warning
 }
 
 // Add a number
