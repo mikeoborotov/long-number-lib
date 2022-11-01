@@ -23,9 +23,9 @@ int main(int argc, char *argv[]) {
 	res.print();
 
 	// areEqual() and isBigger() tests
-	// std::cout << LongNumberLib::LongInt::areEqual(x, y) << "\n";
-	// std::cout << LongNumberLib::LongInt::isBigger(x, y) << "\n";
-	// std::cout << LongNumberLib::LongInt::isBigger(y, x) << "\n";
+	// std::cout << LongNumberLib::LongInt::isEqual(x, y) << "\n";
+	// std::cout << LongNumberLib::LongInt::isGreater(x, y) << "\n";
+	// std::cout << LongNumberLib::LongInt::isGreater(y, x) << "\n";
 
 	// isEven() and isOdd() tests
 	// std::cout << LongNumberLib::LongInt::isEven(x) << "\n";

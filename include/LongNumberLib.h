@@ -43,8 +43,8 @@ public:
 	void set(std::string input); // Set number value with string 
 	void set(LongInt input); // Set number value with LongInt
 
-	static bool areEqual(LongInt firstNum, LongInt secondNum); // Are numbers equal?
-	static bool isBigger(LongInt firstNum, LongInt secondNum); // Is first number bigger?
+	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
+	static bool isGreater(LongInt firstNum, LongInt secondNum); // Is 1st number greater than 2nd?
 
 	void add(LongInt secondNum); // Add a number TODO
 	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers TODO
@@ -252,8 +252,8 @@ void LongInt::set(LongInt input) {
 	this->_positive = input._positive;
 }
 
-// Are numbers equal?
-bool LongInt::areEqual(LongInt firstNum, LongInt secondNum) {
+// Is 1st number equal to 2nd?
+bool LongInt::isEqual(LongInt firstNum, LongInt secondNum) {
 	if ((firstNum.isPositive() != secondNum.isPositive()) or (firstNum.size() != secondNum.size())) {
 		return false;
 	}
@@ -265,8 +265,8 @@ bool LongInt::areEqual(LongInt firstNum, LongInt secondNum) {
 	return true;
 }
 
-// Is first number bigger?
-bool LongInt::isBigger(LongInt firstNum, LongInt secondNum) {
+// Is 1st number greater than 2nd?
+bool LongInt::isGreater(LongInt firstNum, LongInt secondNum) {
 	switch(LongInt::_compare(firstNum, secondNum)) {
 		case 1: return true; // Bigger
 		case 0: return false; // Equal
