@@ -27,6 +27,12 @@ int main(int argc, char *argv[]) {
 	// std::cout << LongNumberLib::LongInt::isBigger(x, y) << "\n";
 	// std::cout << LongNumberLib::LongInt::isBigger(y, x) << "\n";
 
+	// isEven() and isOdd() tests
+	// std::cout << LongNumberLib::LongInt::isEven(x) << "\n";
+	// std::cout << LongNumberLib::LongInt::isOdd(x) << "\n";
+	// std::cout << LongNumberLib::LongInt::isEven(y) << "\n";
+	// std::cout << LongNumberLib::LongInt::isOdd(y) << "\n";
+
 	// x.print();
 	// y.print();
 
