@@ -7,7 +7,7 @@
 int main(int argc, char *argv[]) {
 	std::cout << "Running tests:" << "\n\n";
 
-	LongNumberLib::LongInt x("90");
+	LongNumberLib::LongInt x("120");
 	LongNumberLib::LongInt y("95");
 	x.print();
 	y.print();

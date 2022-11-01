@@ -16,8 +16,8 @@ private:
 	bool _positive; // Is number positive?
 
 	void _checkDigitOverflow(); // Correct digits if they are beyond 9
-
-	static LongInt _sumPrimitive(LongInt biggerNum, LongInt smallerNum); // Primitive sum
+	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
+	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 
 public:
 	LongInt(); // Default constructor
@@ -66,9 +66,55 @@ void LongInt::_checkDigitOverflow() {
 	}
 }
 
-// Primitive sum
+// Compare 2 LongInt numbers
+// Returns: 1 -> bigger, 0 -> equal, -1 -> smaller
+int LongInt::_compare(LongInt firstNum, LongInt secondNum) {
+	// Signs: + -
+	if (firstNum.isPositive() and secondNum.isNegative()) {
+		return 1;
+	}
+	// Signs: - +
+	if (firstNum.isNegative() and secondNum.isPositive()) {
+		return -1;
+	}
+	// Signs: + +
+	if (firstNum.isPositive() and secondNum.isPositive()) {
+		if (firstNum.size() > secondNum.size()) {
+			return 1;
+		} else if (firstNum.size() < secondNum.size()) {
+			return -1;
+		} else {
+			for (long long i = firstNum.size() - 1; i >= 0; i--) {
+				if (firstNum._digits[i] > secondNum._digits[i]) {
+					return 1;
+				} else if (firstNum._digits[i] < secondNum._digits[i]) {
+					return -1;
+				}
+			}
+		}
+	}
+	// Signs: - -
+	if (firstNum.isNegative() and secondNum.isNegative()) {
+		if (firstNum.size() > secondNum.size()) {
+			return -1;
+		} else if (firstNum.size() < secondNum.size()) {
+			return 1;
+		} else {
+			for (long long i = firstNum.size() - 1; i >= 0; i--) {
+				if (firstNum._digits[i] > secondNum._digits[i]) {
+					return -1;
+				} else if (firstNum._digits[i] < secondNum._digits[i]) {
+					return 1;
+				}
+			}
+		}
+	}
+	return 0; // If numbers are equal
+}
+
+// Auxiliary function for sum()
 // Sums 2 positive numbers (biggerNum >= smallerNum)
-LongInt LongInt::_sumPrimitive(LongInt biggerNum, LongInt smallerNum) {
+LongInt LongInt::_sumAux(LongInt biggerNum, LongInt smallerNum) {
 	LongInt result;
 	result.set(biggerNum);
 	for (long long i = 0; i < smallerNum.size(); i++) {
@@ -221,47 +267,12 @@ bool LongInt::areEqual(LongInt firstNum, LongInt secondNum) {
 
 // Is first number bigger?
 bool LongInt::isBigger(LongInt firstNum, LongInt secondNum) {
-	// Signs: + -
-	if (firstNum.isPositive() and secondNum.isNegative()) {
-		return true;
+	switch(LongInt::_compare(firstNum, secondNum)) {
+		case 1: return true; // Bigger
+		case 0: return false; // Equal
+		case -1: return false; // Smaller
 	}
-	// Signs: - +
-	if (firstNum.isNegative() and secondNum.isPositive()) {
-		return false;
-	}
-	// Signs: + +
-	if (firstNum.isPositive() and secondNum.isPositive()) {
-		if (firstNum.size() > secondNum.size()) {
-			return true;
-		} else if (firstNum.size() < secondNum.size()) {
-			return false;
-		} else {
-			for (long long i = firstNum.size() - 1; i >= 0; i--) {
-				if (firstNum._digits[i] > secondNum._digits[i]) {
-					return true;
-				} else if (firstNum._digits[i] < secondNum._digits[i]) {
-					return false;
-				}
-			}
-		}
-	}
-	// Signs: - -
-	if (firstNum.isNegative() and secondNum.isNegative()) {
-		if (firstNum.size() > secondNum.size()) {
-			return false;
-		} else if (firstNum.size() < secondNum.size()) {
-			return true;
-		} else {
-			for (long long i = firstNum.size() - 1; i >= 0; i--) {
-				if (firstNum._digits[i] > secondNum._digits[i]) {
-					return false;
-				} else if (firstNum._digits[i] < secondNum._digits[i]) {
-					return true;
-				}
-			}
-		}
-	}
-	return false; // If numbers are equal
+	return false; // Duplicating '0' case to avoid warning
 }
 
 // Add a number
