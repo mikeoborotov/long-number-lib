@@ -19,12 +19,10 @@ private:
 	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
-
 public:
 	LongInt(); // Default constructor
 	LongInt(std::string input); // Overloaded constructor (for string)
 	~LongInt(); // Default destructor
-
 	std::string getString(); // Get number value as a string
 	LongInt abs(); // Get absolute number value
 	long long size(); // Get number size
@@ -40,27 +38,24 @@ public:
 	static bool isOdd(LongInt number); // Is number odd?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
-	// NEED TO ADD LETTER CHECK
-	void set(std::string input); // Set number value with string 
+	void set(std::string input); // Set number value with string NEED TO ADD LETTER CHECK
 	void set(LongInt input); // Set number value with LongInt
-
 	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
 	static bool isGreater(LongInt firstNum, LongInt secondNum); // Is 1st number greater than 2nd?
 	static bool isGreaterOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number greater or equal to 2nd?
 	static bool isLess(LongInt firstNum, LongInt secondNum); // Is 1st number less than 2nd?
 	static bool isLessOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number less or equal to 2nd?
-
 	void add(LongInt secondNum); // Add a number TODO
 	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers
 	static LongInt diff(LongInt firstNum, LongInt secondNum);// Difference of 2 numbers
-
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
+// Remove leading zeroes
 void LongInt::_checkLeadingZeroes() {
-	for (long long i = this->size() - 1; i > 0; i--) {
-		if (this->_digits[i] == 0) {
-			this->_digits.pop_back();
+	for (long long i = size() - 1; i > 0; i--) {
+		if (_digits[i] == 0) {
+			_digits.pop_back();
 		} else {
 			break;
 		}
@@ -69,18 +64,18 @@ void LongInt::_checkLeadingZeroes() {
 
 // Correct digits if they are beyond 9 or below 0
 void LongInt::_checkDigitOverflow() {
-	for (long long i = 0; i < this->size() - 1; i++) {
-		if (this->_digits[i] > 9) {
-			this->_digits[i] -= 10;
-			this->_digits[i + 1] += 1;
-		} else if (this->_digits[i] < 0) {
-			this->_digits[i] += 10;
-			this->_digits[i + 1] -= 1;
+	for (long long i = 0; i < size() - 1; i++) {
+		if (_digits[i] > 9) {
+			_digits[i] -= 10;
+			_digits[i + 1] += 1;
+		} else if (_digits[i] < 0) {
+			_digits[i] += 10;
+			_digits[i + 1] -= 1;
 		}
 	}
-	if (this->_digits[this->size() - 1] > 9) {
-		this->_digits[this->size() - 1] -= 10;
-		this->_digits.push_back(1);
+	if (_digits[size() - 1] > 9) {
+		_digits[size() - 1] -= 10;
+		_digits.push_back(1);
 	}
 }
 
@@ -163,7 +158,7 @@ LongInt::LongInt() {
 
 // Overloaded constructor (for string)
 LongInt::LongInt(std::string input) {
-	this->set(input);
+	set(input);
 }
 
 // Default destructor
@@ -172,10 +167,10 @@ LongInt::~LongInt() {}
 // Get number as a string
 std::string LongInt::getString() {
 	std::string output;
-	for (const auto &digit: this->_digits) {
+	for (const auto &digit: _digits) {
 		output.push_back(digit + '0');
 	}
-	if (this->isNegative()) {
+	if (isNegative()) {
 		output.push_back('-');
 	}
 	std::reverse(output.begin(), output.end());
@@ -192,12 +187,12 @@ LongInt LongInt::abs() {
 
 // Get number size
 long long LongInt::size() {
-	return this->_digits.size();
+	return _digits.size();
 }
 
 // Get number size, synonym to size()
 long long LongInt::length() {
-	return this->_digits.size();
+	return _digits.size();
 }
 
 // Is number even?
@@ -207,17 +202,17 @@ bool LongInt::isEven() {
 
 // Is number odd?
 bool LongInt::isOdd() {
-	return !this->isEven();
+	return !isEven();
 }
 
 // Is number positive?
 bool LongInt::isPositive() {
-	return this->_positive;
+	return _positive;
 }
 
 // Is number negative?
 bool LongInt::isNegative() {
-	return !this->_positive;
+	return !_positive;
 }
 
 // Get absolute number value
@@ -250,12 +245,12 @@ bool LongInt::isPositive(LongInt number) {
 	return number.isPositive();
 }
 
-// // Is number negative?
+// Is number negative?
 static bool isNegative(LongInt number) {
 	return number.isNegative();
 }
 
-// Set number value
+// Set number value with string
 void LongInt::set(std::string input) {
 	this->_digits.erase(this->_digits.begin(), this->_digits.end());
 	if (input.substr(0, 1) == "-") {
@@ -331,9 +326,7 @@ bool LongInt::isLessOrEqual(LongInt firstNum, LongInt secondNum) {
 
 // Add a number
 void LongInt::add(LongInt secondNum) {
-	if (this->isPositive() and secondNum.isPositive()) {
-		// TODO
-	}
+	// TODO
 }
 
 // Sum of 2 numbers
@@ -374,10 +367,10 @@ LongInt LongInt::diff(LongInt firstNum, LongInt secondNum) {
 
 // Print number, its size and sign (mostly for debug)
 void LongInt::print() {
-	std::cout << "Value: " << this->getString();
-	std::cout << "\nSize:  " << this->size();
+	std::cout << "Value: " << getString();
+	std::cout << "\nSize:  " << size();
 	std::cout << "\nSign:  ";
-	if (this->isPositive()) {
+	if (isPositive()) {
 		std::cout << "positive" << "\n\n";
 	} else {
 		std::cout << "negative" << "\n\n";
