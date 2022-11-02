@@ -18,6 +18,7 @@ private:
 	void _checkDigitOverflow(); // Correct digits if they are beyond 9
 	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
+	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 
 public:
 	LongInt(); // Default constructor
@@ -122,6 +123,18 @@ LongInt LongInt::_sumAux(LongInt biggerNum, LongInt smallerNum) {
 	result.set(biggerNum);
 	for (long long i = 0; i < smallerNum.size(); i++) {
 		result._digits[i] += smallerNum._digits[i];
+	}
+	result._checkDigitOverflow();
+	return result;
+}
+
+// Auxiliary function for sum()
+// Finds the difference of 2 positive numbers (biggerNum >= smallerNum)
+LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
+	LongInt result;
+	result.set(biggerNum);
+	for (long long i = 0; i < smallerNum.size(); i++) {
+		result._digits[i] -= smallerNum._digits[i];
 	}
 	result._checkDigitOverflow();
 	return result;
