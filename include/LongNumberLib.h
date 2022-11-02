@@ -174,14 +174,7 @@ long long LongInt::length() {
 
 // Is number even?
 bool LongInt::isEven() {
-	switch (this->_digits[0]) {
-		case 0: return true;
-		case 2: return true;
-		case 4: return true;
-		case 6: return true;
-		case 8: return true;
-		default: return false;
-	}
+	return (_digits[0] % 2 == 0);
 }
 
 // Is number odd?
