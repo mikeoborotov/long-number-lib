@@ -41,11 +41,14 @@ public:
 	void set(std::string input); // Set number value with string NEED TO ADD LETTER CHECK
 	void set(LongInt input); // Set number value with LongInt
 	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
+	static bool isNotEqual(LongInt firstNum, LongInt secondNum); // Is 1st number not equal to 2nd?
 	static bool isGreater(LongInt firstNum, LongInt secondNum); // Is 1st number greater than 2nd?
 	static bool isGreaterOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number greater or equal to 2nd?
 	static bool isLess(LongInt firstNum, LongInt secondNum); // Is 1st number less than 2nd?
 	static bool isLessOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number less or equal to 2nd?
 	void add(LongInt secondNum); // Add a number TODO
+	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
+	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
 	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers
 	static LongInt diff(LongInt firstNum, LongInt secondNum);// Difference of 2 numbers
 	void print(); // Print number, its size and sign (mainly for debug)
@@ -284,6 +287,11 @@ bool LongInt::isEqual(LongInt firstNum, LongInt secondNum) {
 	return true;
 }
 
+// Is 1st number not equal to 2nd?
+bool LongInt::isNotEqual(LongInt firstNum, LongInt secondNum) {
+	return !LongInt::isEqual(firstNum, secondNum);
+}
+
 // Is 1st number greater than 2nd?
 bool LongInt::isGreater(LongInt firstNum, LongInt secondNum) {
 	switch(LongInt::_compare(firstNum, secondNum)) {
@@ -327,6 +335,16 @@ bool LongInt::isLessOrEqual(LongInt firstNum, LongInt secondNum) {
 // Add a number
 void LongInt::add(LongInt secondNum) {
 	// TODO
+}
+
+// Sum of 2 numbers
+LongInt LongInt::operator +(LongInt secondNum) {
+	return LongInt::sum(*this, secondNum);
+}
+
+// Difference of 2 numbers
+LongInt LongInt::operator -(LongInt secondNum) {
+	return LongInt::diff(*this, secondNum);
 }
 
 // Sum of 2 numbers
