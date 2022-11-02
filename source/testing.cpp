@@ -7,8 +7,8 @@
 int main(int argc, char *argv[]) {
 	std::cout << "Running tests:" << "\n\n";
 
-	LongNumberLib::LongInt x("120");
-	LongNumberLib::LongInt y("95");
+	LongNumberLib::LongInt x("12000");
+	LongNumberLib::LongInt y("-1200");
 	x.print();
 	y.print();
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 	// y.print();
 
 	LongNumberLib::LongInt res;
-	res.set(LongNumberLib::LongInt::sum(x, y));
+	res.set(LongNumberLib::LongInt::diff(x, y));
 	res.print();
 
 	// areEqual() and isBigger() tests

@@ -51,7 +51,8 @@ public:
 	static bool isLessOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number less or equal to 2nd?
 
 	void add(LongInt secondNum); // Add a number TODO
-	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers TODO
+	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers
+	static LongInt diff(LongInt firstNum, LongInt secondNum);// Difference of 2 numbers
 
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -338,29 +339,37 @@ void LongInt::add(LongInt secondNum) {
 // Sum of 2 numbers
 LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
 	LongInt result;
-
-	if (firstNum.size() < secondNum.size()) {
-		// TODO
-	} else {
-		result.set(firstNum.getString());
+	if (firstNum.isPositive() and secondNum.isPositive()) {
 		// If (+,+) or (-,-)
-		if (firstNum.isPositive() == secondNum.isPositive()) {
-			for (long long i = 0; i < secondNum.size(); i++) {
-				result._digits[i] += secondNum._digits[i];
-			}
+		if (LongInt::isGreaterOrEqual(firstNum, secondNum)) {
+			result.set(_sumAux(firstNum, secondNum));
+		} else {
+			result.set(_sumAux(secondNum, firstNum));
 		}
-		// If (+,-) or (-,+)
-		if (firstNum.isPositive() != secondNum.isPositive()) {
-			for (long long i = 0; i < secondNum.size(); i++) {
-				result._digits[i] -= secondNum._digits[i];
-			}
+	} else if (firstNum.isPositive() and secondNum.isNegative()) {
+		// If (+,-)
+		if (LongInt::isGreaterOrEqual(firstNum, secondNum.abs())) {
+			result.set(_diffAux(firstNum, secondNum.abs()));
+		} else {
+			result.set(_diffAux(secondNum.abs(), firstNum));
+			result._positive = false;
+		}
+	} else {
+		// If (-,+)
+		if (LongInt::isGreaterOrEqual(firstNum.abs(), secondNum)) {
+			result.set(_diffAux(firstNum.abs(), secondNum));
+			result._positive = false;
+		} else {
+			result.set(_diffAux(secondNum, firstNum.abs()));
 		}
 	}
-
-	
-
-	result._checkDigitOverflow();
 	return result;
+}
+
+// Difference of 2 numbers
+LongInt LongInt::diff(LongInt firstNum, LongInt secondNum) {
+	secondNum._positive = !secondNum.isPositive();
+	return LongInt::sum(firstNum, secondNum);
 }
 
 // Print number, its size and sign (mostly for debug)
