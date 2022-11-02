@@ -62,6 +62,9 @@ void LongInt::_checkDigitOverflow() {
 		if (this->_digits[i] > 9) {
 			this->_digits[i] -= 10;
 			this->_digits[i + 1] += 1;
+		} else if (this->_digits[i] < 0) {
+			this->_digits[i] += 10;
+			this->_digits[i + 1] -= 1;
 		}
 	}
 	if (this->_digits[this->size() - 1] > 9) {
