@@ -14,8 +14,8 @@ class LongInt {
 private:
 	std::vector<int> _digits; // Number as a vector of digits
 	bool _positive; // Is number positive?
-
-	void _checkDigitOverflow(); // Correct digits if they are beyond 9
+	void _checkLeadingZeroes(); // Remove leading zeroes
+	void _checkDigitOverflow(); // Correct digits if they are beyond 9 or below 0
 	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
@@ -56,7 +56,17 @@ public:
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
-// Correct digits if they are beyond 9
+void LongInt::_checkLeadingZeroes() {
+	for (long long i = this->size() - 1; i > 0; i--) {
+		if (this->_digits[i] == 0) {
+			this->_digits.pop_back();
+		} else {
+			break;
+		}
+	}
+}
+
+// Correct digits if they are beyond 9 or below 0
 void LongInt::_checkDigitOverflow() {
 	for (long long i = 0; i < this->size() - 1; i++) {
 		if (this->_digits[i] > 9) {
@@ -140,6 +150,7 @@ LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
 		result._digits[i] -= smallerNum._digits[i];
 	}
 	result._checkDigitOverflow();
+	result._checkLeadingZeroes();
 	return result;
 }
 
