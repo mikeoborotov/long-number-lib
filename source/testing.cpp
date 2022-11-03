@@ -1,8 +1,7 @@
 // Testing the LongNumberLib.h
 
-#include <iostream>
-
 #include "../include/LongNumberLib.h"
+#include "../include/TestsForLNL.h"
 
 int main(int argc, char *argv[]) {
 	std::cout << "Running tests:" << "\n\n";

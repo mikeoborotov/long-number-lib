@@ -1,6 +1,7 @@
 // LongNumberLib is a library for long number arithmetics in C++
 
-#pragma once
+#ifndef LONGNUMBERLIB_H
+#define LONGNUMBERLIB_H
 
 #include <iostream>
 #include <vector>
@@ -444,3 +445,5 @@ void LongInt::print() {
 }
 
 } // Closing namespace "LongNumberLib"
+
+#endif // LONGNUMBERLIB_H
