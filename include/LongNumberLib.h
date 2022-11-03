@@ -38,6 +38,8 @@ public:
 	static bool isOdd(LongInt number); // Is number odd?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
+	void operator =(std::string input); // Set number value with string
+	void operator =(LongInt input); // Set number value with LongInt
 	void set(std::string input); // Set number value with string NEED TO ADD LETTER CHECK
 	void set(LongInt input); // Set number value with LongInt
 	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
@@ -251,6 +253,16 @@ bool LongInt::isPositive(LongInt number) {
 // Is number negative?
 static bool isNegative(LongInt number) {
 	return number.isNegative();
+}
+
+// Set number value with string
+void LongInt::operator =(std::string input) {
+	set(input);
+}
+
+// Set number value with LongInt
+void LongInt::operator =(LongInt input) {
+	set(input);
 }
 
 // Set number value with string
