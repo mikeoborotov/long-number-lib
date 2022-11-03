@@ -42,6 +42,12 @@ public:
 	void operator =(LongInt input); // Set number value with LongInt
 	void set(std::string input); // Set number value with string NEED TO ADD LETTER CHECK
 	void set(LongInt input); // Set number value with LongInt
+	bool operator ==(LongInt secondNum); // Is this number equal to 2nd?
+	bool operator !=(LongInt secondNum); // Is this number not equal to 2nd?
+	bool operator >(LongInt secondNum); // Is this number greater than 2nd?
+	bool operator >=(LongInt secondNum); // Is this number greater or equal to 2nd?
+	bool operator <(LongInt secondNum); // Is this number less than 2nd?
+	bool operator <=(LongInt secondNum); // Is this number less or equal to 2nd?
 	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
 	static bool isNotEqual(LongInt firstNum, LongInt secondNum); // Is 1st number not equal to 2nd?
 	static bool isGreater(LongInt firstNum, LongInt secondNum); // Is 1st number greater than 2nd?
@@ -284,6 +290,36 @@ void LongInt::set(std::string input) {
 void LongInt::set(LongInt input) {
 	this->_digits = input._digits;
 	this->_positive = input._positive;
+}
+
+// Is this number equal to 2nd?
+bool LongInt::operator ==(LongInt secondNum) {
+	return LongInt::isEqual(*this, secondNum);
+}
+
+// Is this number not equal to 2nd?
+bool LongInt::operator !=(LongInt secondNum) {
+	return LongInt::isNotEqual(*this, secondNum);
+}
+
+// Is this number greater than 2nd?
+bool LongInt::operator >(LongInt secondNum) {
+	return LongInt::isGreater(*this, secondNum);
+}
+
+// Is this number greater or equal to 2nd?
+bool LongInt::operator >=(LongInt secondNum) {
+	return LongInt::isGreaterOrEqual(*this, secondNum);
+}
+
+// Is this number less than 2nd?
+bool LongInt::operator <(LongInt secondNum) {
+	return LongInt::isLess(*this, secondNum);
+}
+
+// Is this number less or equal to 2nd?
+bool LongInt::operator <=(LongInt secondNum) {
+	return LongInt::isLessOrEqual(*this, secondNum);
 }
 
 // Is 1st number equal to 2nd?
