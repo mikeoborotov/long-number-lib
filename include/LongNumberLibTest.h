@@ -15,7 +15,7 @@ private:
 	static int failedTestsNum; // Number of failed tests
 public:
 	template <typename T1, typename T2> 
-	static bool test(std::string testName, T1 recieved, T2 expected); // Custom assert function
+	static bool verify(std::string testName, T1 recieved, T2 expected); // Custom assert function
 	static void runAllTests(); // Run all tests
 	static void printTestReport(); // Print out tests report
 	static void test_constructor(); // Test constructor
@@ -27,9 +27,9 @@ int Test::totalTestsNum = 0; // Total number of tests
 int Test::failedTestsNum = 0; // Number of failed tests
 
 // Something like a custom assert function
-// Checks if recieved value matches expected value
+// Verifies if recieved value matches expected value
 template <typename T1, typename T2>
-bool Test::test(std::string testName, T1 recieved, T2 expected) {
+bool Test::verify(std::string testName, T1 recieved, T2 expected) {
 	totalTestsNum++;
 	if (recieved == expected) {
 		return true;
@@ -47,29 +47,32 @@ void Test::runAllTests() {
 	test_sum();
 }
 
-// Print out tests report
+// Print out test report
 void Test::printTestReport() {
 	std::cout << "\nTEST REPORT\n";
 	std::cout << "Total tests:  " << totalTestsNum << "\n";
 	std::cout << "Failed tests: " << failedTestsNum << "\n";
 }
 
-// Test constructor
+// Test constructors
 void Test::test_constructor() {
-	test("constructor #1", LongInt("0"), LongInt("-0"));
+	verify("constructor #1", LongInt("0"), LongInt("-0"));
 }
 
 // Test getString() function
 void Test::test_getString() {
-	test("getString #1", LongInt("0").getString(), "0");
-	test("getString #2", LongInt("-0").getString(), "0");
+	verify("getString #1", LongInt("0").getString(), "0");
+	verify("getString #2", LongInt("-0").getString(), "0");
+	verify("getString #3", LongInt("123456789").getString(), "123456789");
+	verify("getString #4", LongInt("0123456789").getString(), "123456789");
+	verify("getString #5", LongInt("-123456789").getString(), "-123456789");
 }
 
-// Test sum function
+// Test sum() function
 void Test::test_sum() {
-	test("sum #1", LongInt("0") + LongInt("0"), LongInt("0"));
-	test("sum #2", LongInt("100") + LongInt("100"), LongInt("200"));
-	test("sum #3", LongInt("100") + LongInt("-100"), LongInt("0"));
+	verify("sum #1", LongInt("0") + LongInt("0"), LongInt("0"));
+	verify("sum #2", LongInt("100") + LongInt("100"), LongInt("200"));
+	verify("sum #3", LongInt("100") + LongInt("-100"), LongInt("0"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
