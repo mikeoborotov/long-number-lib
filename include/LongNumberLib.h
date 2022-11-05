@@ -44,8 +44,8 @@ public:
 	static bool isOne(LongInt number); // Is number equal to 1?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
-	void operator =(std::string input); // Set number value with string
-	void operator =(LongInt input); // Set number value with LongInt
+	LongInt operator =(std::string input); // Set number value with string
+	LongInt operator =(LongInt input); // Set number value with LongInt
 	bool operator ==(LongInt secondNum); // Is this number equal to 2nd?
 	bool operator !=(LongInt secondNum); // Is this number not equal to 2nd?
 	bool operator >(LongInt secondNum); // Is this number greater than 2nd?
@@ -54,6 +54,8 @@ public:
 	bool operator <=(LongInt secondNum); // Is this number less or equal to 2nd?
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
+	LongInt operator +=(LongInt secondNum); // Add another number
+	LongInt operator -=(LongInt secondNum); // Subtract another number
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
@@ -288,7 +290,7 @@ static bool isNegative(LongInt number) {
 }
 
 // Set number value with string
-void LongInt::operator =(std::string input) {
+LongInt LongInt::operator =(std::string input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	if (input.substr(0, 1) == "-") {
 		_positive = false;
@@ -303,7 +305,7 @@ void LongInt::operator =(std::string input) {
 			std::cout << "ERROR: A non-digit character \"" << digit;
 			std::cout << "\" is encountered when assigning a value of a LongInt with a string.";
 			std::cout << " Value is set to 0 by default.\n";
-			return;
+			return *this;
 		}
 		_digits.push_back(digit - '0');
 	}
@@ -312,13 +314,15 @@ void LongInt::operator =(std::string input) {
 	if (isZero()) {
 		_positive = true;
 	}
+	return *this;
 }
 
 // Set number value with LongInt
-void LongInt::operator =(LongInt input) {
+LongInt LongInt::operator =(LongInt input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	_digits = input._digits;
 	_positive = input._positive;
+	return *this;
 }
 
 // Is this number equal to 2nd?
@@ -413,6 +417,16 @@ LongInt LongInt::operator +(LongInt secondNum) {
 LongInt LongInt::operator -(LongInt secondNum) {
 	secondNum._positive = !secondNum.isPositive();
 	return *this + secondNum;
+}
+
+// Add another number
+LongInt LongInt::operator +=(LongInt secondNum) {
+	return *this = *this + secondNum;
+}
+
+// Subtract another number
+LongInt LongInt::operator -=(LongInt secondNum) {
+	return *this = *this - secondNum;
 }
 
 // Print number, its size and sign (mostly for debug)

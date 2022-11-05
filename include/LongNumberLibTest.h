@@ -190,6 +190,11 @@ void Test::test_sum() {
 	verify("sum #3", LongInt("100") + LongInt("-100"), LongInt("0"));
 	verify("sum #4", LongInt("99") + LongInt("99"), LongInt("198"));
 	verify("sum #5", LongInt("987654321") + LongInt("987654321"), LongInt("1975308642"));
+	verify("sum #6", LongInt("0") += LongInt("0"), LongInt("0"));
+	verify("sum #7", LongInt("100") += LongInt("100"), LongInt("200"));
+	verify("sum #8", LongInt("100") += LongInt("-100"), LongInt("0"));
+	verify("sum #9", LongInt("99") += LongInt("99"), LongInt("198"));
+	verify("sum #10", LongInt("987654321") += LongInt("987654321"), LongInt("1975308642"));
 }
 
 // Test operators -, -=
@@ -199,6 +204,11 @@ void Test::test_diff() {
 	verify("diff #3", LongInt("100") - LongInt("-100"), LongInt("200"));
 	verify("diff #4", LongInt("999999999999") - LongInt("999999999998"), LongInt("1"));
 	verify("diff #5", LongInt("1000000") - LongInt("2999999"), LongInt("-1999999"));
+	verify("diff #6", LongInt("0") -= LongInt("0"), LongInt("0"));
+	verify("diff #7", LongInt("100") -= LongInt("100"), LongInt("0"));
+	verify("diff #8", LongInt("100") -= LongInt("-100"), LongInt("200"));
+	verify("diff #9", LongInt("999999999999") -= LongInt("999999999998"), LongInt("1"));
+	verify("diff #10", LongInt("1000000") -= LongInt("2999999"), LongInt("-1999999"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
