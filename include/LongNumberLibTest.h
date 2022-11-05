@@ -1,7 +1,7 @@
 // This header contains tests for LongNumberLib
 
-#ifndef TESTLNL_H
-#define TESTLNL_H
+#ifndef LONGNUMBERLIBTEST_H
+#define LONGNUMBERLIBTEST_H
 
 #include "LongNumberLib.h"
 
@@ -56,4 +56,4 @@ void runAllTests() {
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
 
-#endif // TESTLNL_H
+#endif // LONGNUMBERLIBTEST_H
