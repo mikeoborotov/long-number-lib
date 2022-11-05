@@ -5,8 +5,8 @@
 
 int main(int argc, char *argv[]) {
 
-	TestLNL::runAllTests();
-	TestLNL::printTestsReport();
+	LNL::runAllTests();
+	LNL::printTestsReport();
 
 	return 0;
 }

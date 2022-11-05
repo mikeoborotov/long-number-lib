@@ -7,8 +7,8 @@
 #include <vector>
 #include <algorithm>
 
-// Opening namespace "LongNumberLib"
-namespace LongNumberLib {
+// Opening namespace "LNL" (short for "LongNumberLib")
+namespace LNL {
 
 // A class for arbitrary length integers
 class LongInt {
@@ -444,6 +444,6 @@ void LongInt::print() {
 	}
 }
 
-} // Closing namespace "LongNumberLib"
+} // Closing namespace "LNL" (short for "LongNumberLib")
 
 #endif // LONGNUMBERLIB_H

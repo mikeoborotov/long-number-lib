@@ -5,8 +5,8 @@
 
 #include "LongNumberLib.h"
 
-// Opening namespace "TestLNL"
-namespace TestLNL {
+// Opening namespace "LNL" (short for "LongNumberLib")
+namespace LNL {
 
 int totalTestsNum = 0; // Total number of tests
 int failedTestsNum = 0; // Number of failed tests
@@ -36,17 +36,17 @@ void printTestsReport() {
 // Test sum
 void test_sum() {
 	test("sum #1", 
-		LongNumberLib::LongInt("0") + 
-		LongNumberLib::LongInt("0"),
-		LongNumberLib::LongInt("0"));
+		LongInt("0") + 
+		LongInt("0"),
+		LongInt("0"));
 	test("sum #2", 
-		LongNumberLib::LongInt("100") + 
-		LongNumberLib::LongInt("100"),
-		LongNumberLib::LongInt("200"));
+		LongInt("100") + 
+		LongInt("100"),
+		LongInt("200"));
 	test("sum #3", 
-		LongNumberLib::LongInt("100") + 
-		LongNumberLib::LongInt("-100"),
-		LongNumberLib::LongInt("0"));
+		LongInt("100") + 
+		LongInt("-100"),
+		LongInt("0"));
 }
 
 // Run all tests
@@ -54,6 +54,6 @@ void runAllTests() {
 	test_sum();
 }
 
-} // Closing namespace "TestLNL"
+} // Closing namespace "LNL" (short for "LongNumberLib")
 
 #endif // TESTLNL_H
