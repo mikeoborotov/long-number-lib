@@ -19,6 +19,7 @@ public:
 	static void runAllTests(); // Run all tests
 	static void printTestReport(); // Print out tests report
 	static void test_constructor(); // Test constructor
+	static void test_getString(); // Test getString() function
 	static void test_sum(); // Test sum function
 };
 
@@ -42,6 +43,7 @@ bool Test::test(std::string testName, T1 recieved, T2 expected) {
 // Run all tests
 void Test::runAllTests() {
 	test_constructor();
+	test_getString();
 	test_sum();
 }
 
@@ -55,6 +57,12 @@ void Test::printTestReport() {
 // Test constructor
 void Test::test_constructor() {
 	test("constructor #1", LongInt("0"), LongInt("-0"));
+}
+
+// Test getString() function
+void Test::test_getString() {
+	test("getString #1", LongInt("0").getString(), "0");
+	test("getString #2", LongInt("-0").getString(), "0");
 }
 
 // Test sum function
