@@ -29,7 +29,8 @@ public:
 	static void test_isGreaterOrEqual(); // Test operator ">=" and isGreaterOrEqual() function
 	static void test_isLess(); // Test operator "<" and isLess() function
 	static void test_isLessOrEqual(); // Test operator "<=" and isLessOrEqual() function
-	static void test_sum(); // Test operator "+" and sum function
+	static void test_sum(); // Test operator "+", "+=" and sum function
+	static void test_diff(); // Test operator "-", "-=" and diff function
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -76,6 +77,7 @@ void Test::runAllTests() {
 	test_isLess();
 	test_isLessOrEqual();
 	test_sum();
+	test_diff();
 }
 
 // Print out test report
@@ -181,11 +183,22 @@ void Test::test_isLessOrEqual() {
 	verify("isLessOrEqual #8", LongInt("123456789") <= LongInt("123456789"), true);
 }
 
-// Test operator "+" and sum() function
+// Test operator "+", "+=" and sum function
 void Test::test_sum() {
 	verify("sum #1", LongInt("0") + LongInt("0"), LongInt("0"));
 	verify("sum #2", LongInt("100") + LongInt("100"), LongInt("200"));
 	verify("sum #3", LongInt("100") + LongInt("-100"), LongInt("0"));
+	verify("sum #4", LongInt("99") + LongInt("99"), LongInt("198"));
+	verify("sum #5", LongInt("987654321") + LongInt("987654321"), LongInt("1975308642"));
+}
+
+// Test operator "-", "-=" and diff function
+void Test::test_diff() {
+	verify("diff #1", LongInt("0") - LongInt("0"), LongInt("0"));
+	verify("diff #2", LongInt("100") - LongInt("100"), LongInt("0"));
+	verify("diff #3", LongInt("100") - LongInt("-100"), LongInt("200"));
+	verify("diff #4", LongInt("999999999999") - LongInt("999999999998"), LongInt("1"));
+	verify("diff #5", LongInt("1000000") - LongInt("2999999"), LongInt("-1999999"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
