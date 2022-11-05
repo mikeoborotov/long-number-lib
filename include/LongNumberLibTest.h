@@ -87,10 +87,12 @@ void Test::printTestReport() {
 	std::cout << "\nTEST REPORT\n";
 	std::cout << "Total tests:  " << totalTestNum << "\n";
 	std::cout << "Failed tests: " << failedTestNum << "\n";
-	if (failedTestNum == 0) {
+	if ((failedTestNum == 0) and (totalTestNum != 0)) {
 		std::cout << "\nALL TESTS PASSED CORRECTLY\n";
-	} else {
+	} else if (totalTestNum != 0) {
 		std::cout << "\nSOME TESTS FAILED TO PASS\n";
+	} else {
+		std::cout << "\nNO TESTS EXECUTED\n";
 	}
 }
 
@@ -212,7 +214,7 @@ void Test::test_diff() {
 	verify("diff #9", LongInt("999999999999") -= LongInt("999999999998"), LongInt("1"));
 	verify("diff #10", LongInt("1000000") -= LongInt("2999999"), LongInt("-1999999"));
 	verify("diff #11", LongInt("-123") - LongInt("150"), LongInt("-273"));
-	verify("diff #12", LongInt("-111111111111") - LongInt("-222222222222"), LongInt("-333333333333"));
+	verify("diff #12", LongInt("-111111111111") - LongInt("222222222222"), LongInt("-333333333333"));
 }
 
 // Unary operators +, -, ++, --

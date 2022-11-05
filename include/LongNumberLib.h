@@ -398,7 +398,7 @@ bool LongInt::operator <=(LongInt secondNum) {
 // Sum of 2 numbers
 LongInt LongInt::operator +(LongInt secondNum) {
 	LongInt result;
-	if (this->isPositive() and secondNum.isPositive()) {
+	if (this->isPositive() == secondNum.isPositive()) {
 		// If (+,+) or (-,-)
 		if (*this >= secondNum) {
 			result = _sumAux(*this, secondNum);
