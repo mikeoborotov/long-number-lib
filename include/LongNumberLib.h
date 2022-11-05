@@ -17,6 +17,7 @@ private:
 	bool _positive; // Is number positive?
 	void _checkLeadingZeroes(); // Remove leading zeroes
 	void _checkDigitOverflow(); // Correct digits if they are beyond 9 or below 0
+	void _checkNegativeZero(); // Correct -0 to 0
 	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
@@ -56,6 +57,12 @@ public:
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
 	LongInt operator +=(LongInt secondNum); // Add another number
 	LongInt operator -=(LongInt secondNum); // Subtract another number
+	LongInt operator +(); // Return this number (unary plus)
+	LongInt operator ++(); // Add 1 to the number (prefix)
+	LongInt operator ++(int); // Add 1 to the number (postfix)
+	LongInt operator -(); // Return opposite sign number (unary minus)
+	LongInt operator --(); // Subtract 1 from the number (prefix)
+	LongInt operator --(int); // Subtract 1 to the number (postfix)
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
@@ -84,6 +91,13 @@ void LongInt::_checkDigitOverflow() {
 	if (_digits[size() - 1] > 9) {
 		_digits[size() - 1] -= 10;
 		_digits.push_back(1);
+	}
+}
+
+// Correct -0 to 0
+void LongInt::_checkNegativeZero() {
+	if (isZero()) {
+		_positive = true;
 	}
 }
 
@@ -311,9 +325,7 @@ LongInt LongInt::operator =(std::string input) {
 	}
 	std::reverse(_digits.begin(), _digits.end());
 	_checkLeadingZeroes();
-	if (isZero()) {
-		_positive = true;
-	}
+	_checkNegativeZero();
 	return *this;
 }
 
@@ -410,6 +422,7 @@ LongInt LongInt::operator +(LongInt secondNum) {
 			result = _diffAux(secondNum, this->abs());
 		}
 	}
+	result._checkNegativeZero();
 	return result;
 }
 
@@ -427,6 +440,40 @@ LongInt LongInt::operator +=(LongInt secondNum) {
 // Subtract another number
 LongInt LongInt::operator -=(LongInt secondNum) {
 	return *this = *this - secondNum;
+}
+
+// Return this number (unary plus)
+LongInt LongInt::operator +() {
+	return *this;
+}
+
+// Add 1 to the number (prefix)
+LongInt LongInt::operator ++() {
+	return *this = *this + LongInt("1");
+}
+
+// Add 1 to the number (postfix)
+LongInt LongInt::operator ++(int) {
+	return *this = *this + LongInt("1");
+}
+
+// Return opposite sign number (unary minus)
+LongInt LongInt::operator -() {
+	LongInt result;
+	result = *this;
+	result._positive = !isPositive();
+	result._checkNegativeZero();
+	return result;
+}
+
+// Subtract 1 from the number (prefix)
+LongInt LongInt::operator --() {
+	return *this = *this - LongInt("1");
+}
+
+// Subtract 1 to the number (postfix)
+LongInt LongInt::operator --(int) {
+	return *this = *this - LongInt("1");
 }
 
 // Print number, its size and sign (mostly for debug)

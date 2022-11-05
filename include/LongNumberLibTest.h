@@ -31,6 +31,7 @@ public:
 	static void test_isLessOrEqual(); // Test operator <=
 	static void test_sum(); // Test operators +, +=
 	static void test_diff(); // Test operators -, -=
+	static void test_unaryOperators(); // Unary operators +, -, ++, --
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -78,6 +79,7 @@ void Test::runAllTests() {
 	test_isLessOrEqual();
 	test_sum();
 	test_diff();
+	test_unaryOperators();
 }
 
 // Print out test report
@@ -209,6 +211,38 @@ void Test::test_diff() {
 	verify("diff #8", LongInt("100") -= LongInt("-100"), LongInt("200"));
 	verify("diff #9", LongInt("999999999999") -= LongInt("999999999998"), LongInt("1"));
 	verify("diff #10", LongInt("1000000") -= LongInt("2999999"), LongInt("-1999999"));
+	verify("diff #11", LongInt("-123") - LongInt("150"), LongInt("-273"));
+	verify("diff #12", LongInt("-111111111111") - LongInt("-222222222222"), LongInt("-333333333333"));
+}
+
+// Unary operators +, -, ++, --
+void Test::test_unaryOperators() {
+	verify("unary #1", +LongInt("0"), LongInt("0"));
+	verify("unary #2", +LongInt("123"), LongInt("123"));
+	verify("unary #3", +LongInt("-123"), LongInt("-123"));
+	verify("unary #4", -LongInt("0"), LongInt("0"));
+	verify("unary #5", -LongInt("123"), LongInt("-123"));
+	verify("unary #6", -LongInt("-123"), LongInt("123"));
+	verify("unary #7", ++LongInt("-1"), LongInt("0"));
+	verify("unary #8", ++LongInt("0"), LongInt("1"));
+	verify("unary #9", ++LongInt("1"), LongInt("2"));
+	verify("unary #10", ++LongInt("99"), LongInt("100"));
+	verify("unary #11", ++LongInt("-99"), LongInt("-98"));
+	verify("unary #12", --LongInt("-2"), LongInt("-3"));
+	verify("unary #13", --LongInt("-1"), LongInt("-2"));
+	verify("unary #14", --LongInt("0"), LongInt("-1"));
+	verify("unary #15", --LongInt("1"), LongInt("0"));
+	verify("unary #16", --LongInt("99"), LongInt("98"));
+	verify("unary #17", LongInt("-1")++, LongInt("0"));
+	verify("unary #18", LongInt("0")++, LongInt("1"));
+	verify("unary #19", LongInt("1")++, LongInt("2"));
+	verify("unary #20", LongInt("99")++, LongInt("100"));
+	verify("unary #21", LongInt("-99")++, LongInt("-98"));
+	verify("unary #22", LongInt("-2")--, LongInt("-3"));
+	verify("unary #23", LongInt("-1")--, LongInt("-2"));
+	verify("unary #24", LongInt("0")--, LongInt("-1"));
+	verify("unary #25", LongInt("1")--, LongInt("0"));
+	verify("unary #26", LongInt("99")--, LongInt("98"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
