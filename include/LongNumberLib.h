@@ -30,6 +30,8 @@ public:
 	long long length(); // Get number size
 	bool isEven(); // Is number even?
 	bool isOdd(); // Is number odd?
+	bool isZero(); // Is number equal to 0?
+	bool isOne(); // Is number equal to 1?
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
 	static LongInt abs(LongInt number); // Get absolute number value
@@ -37,6 +39,8 @@ public:
 	static long long length(LongInt number); // Get number size
 	static bool isEven(LongInt number); // Is number even?
 	static bool isOdd(LongInt number); // Is number odd?
+	static bool isZero(LongInt number); // Is number equal to 0?
+	static bool isOne(LongInt number); // Is number equal to 1?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
 	void operator =(std::string input); // Set number value with string
@@ -217,6 +221,22 @@ bool LongInt::isOdd() {
 	return !isEven();
 }
 
+// Is number equal to 0?
+bool LongInt::isZero(){
+	if ((size() == 1) and (_digits[0] == 0)) {
+		return true;
+	}
+	return false;
+}
+
+// Is number equal to 1?
+bool LongInt::isOne() {
+	if ((size() == 1) and (_digits[0] == 1) and _positive) {
+		return true;
+	}
+	return false;
+}
+
 // Is number positive?
 bool LongInt::isPositive() {
 	return _positive;
@@ -252,6 +272,16 @@ bool LongInt::isOdd(LongInt number) {
 	return number.isOdd();
 }
 
+// Is number equal to 0?
+bool LongInt::isZero(LongInt number){
+	return number.isZero();
+}
+
+// Is number equal to 1?
+bool LongInt::isOne(LongInt number) {
+	return number.isOne();
+}
+
 // Is number positive?
 bool LongInt::isPositive(LongInt number) {
 	return number.isPositive();
@@ -282,16 +312,21 @@ void LongInt::set(std::string input) {
 		_positive = true;
 	}
 	for (const auto &digit: input) {
-		// if ((digit < 48) or (digit > 57)) {
-		// 	set("0");
-		// 	std::cout << "ERROR: A non-digit character \"" << digit << "\" is 
-		// 	encountered when assigning a value with a string. Value is set to 
-		// 	0 by default.";
-		// 	return;
-		// }
+		// In case of a non-digit character
+		if ((digit < 48) or (digit > 57)) {
+			set("0");
+			std::cout << "ERROR: A non-digit character \"" << digit;
+			std::cout << "\" is encountered when assigning a value of a LongInt with a string.";
+			std::cout << " Value is set to 0 by default.\n";
+			return;
+		}
 		_digits.push_back(digit - '0');
 	}
 	std::reverse(_digits.begin(), _digits.end());
+	_checkLeadingZeroes();
+	if (isZero()) {
+		_positive = true;
+	}
 }
 
 // Set number value with LongInt

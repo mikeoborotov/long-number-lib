@@ -85,6 +85,8 @@ void Test::printTestReport() {
 	std::cout << "Failed tests: " << failedTestNum << "\n";
 	if (failedTestNum == 0) {
 		std::cout << "\nALL TESTS PASSED CORRECTLY\n";
+	} else {
+		std::cout << "\nSOME TESTS FAILED TO PASS\n";
 	}
 }
 
@@ -96,6 +98,7 @@ void Test::test_constructor() {
 	verify("constructor #4", LongInt("-000123"), LongInt("-123"));
 	verify("constructor #5", LongInt("1234someword56789"), LongInt("0"));
 	verify("constructor #6", LongInt("-someword123456789"), LongInt("0"));
+	verify("constructor #7", LongInt("-00000000000000000"), LongInt("0"));
 }
 
 // Test getString() function
@@ -124,7 +127,7 @@ void Test::test_isEqual() {
 // Test operator "!=" and isNotEqual() function
 void Test::test_isNotEqual() {
 	verify("isNotEqual #1", LongInt("0") != LongInt("-0"), false);
-	verify("isNotEqual #2", LongInt("0") != LongInt("-0"), true);
+	verify("isNotEqual #2", LongInt("0") != LongInt("0"), false);
 	verify("isNotEqual #3", LongInt("0") != LongInt("1"), true);
 	verify("isNotEqual #4", LongInt("123456789") != LongInt("123456789"), false);
 	verify("isNotEqual #5", LongInt("123456789") != LongInt("-123456789"), true);
