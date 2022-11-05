@@ -11,11 +11,14 @@ namespace LNL {
 // A class for testing LongInt class
 class Test {
 private:
-	static int totalTestsNum; // Total number of tests
-	static int failedTestsNum; // Number of failed tests
+	static int totalTestNum; // Total number of tests
+	static int failedTestNum; // Number of failed tests
 public:
 	template <typename T1, typename T2> 
 	static bool verify(std::string testName, T1 recieved, T2 expected); // Custom assert function
+	static int getTotal(); // Get total number of tests
+	static int getFailed(); // Get number of failed tests
+	static void resetTestNum(); // Reset test counter
 	static void runAllTests(); // Run all tests
 	static void printTestReport(); // Print out tests report
 	static void test_constructor(); // Test constructor
@@ -23,21 +26,37 @@ public:
 	static void test_sum(); // Test sum function
 };
 
-int Test::totalTestsNum = 0; // Total number of tests
-int Test::failedTestsNum = 0; // Number of failed tests
+int Test::totalTestNum = 0; // Total number of tests
+int Test::failedTestNum = 0; // Number of failed tests
 
 // Something like a custom assert function
 // Verifies if recieved value matches expected value
 template <typename T1, typename T2>
 bool Test::verify(std::string testName, T1 recieved, T2 expected) {
-	totalTestsNum++;
+	totalTestNum++;
 	if (recieved == expected) {
 		return true;
 	} else {
-		failedTestsNum++;
+		failedTestNum++;
 		std::cout << "FAILED: " << testName << "\n";
 		return false;
 	}
+}
+
+// Get total number of tests
+int Test::getTotal() {
+	return totalTestNum;
+}
+
+// Get number of failed tests
+int Test::getFailed() {
+	return failedTestNum;
+}
+
+// Reset test counter
+void Test::resetTestNum() {
+	totalTestNum = 0;
+	failedTestNum = 0;
 }
 
 // Run all tests
@@ -50,8 +69,8 @@ void Test::runAllTests() {
 // Print out test report
 void Test::printTestReport() {
 	std::cout << "\nTEST REPORT\n";
-	std::cout << "Total tests:  " << totalTestsNum << "\n";
-	std::cout << "Failed tests: " << failedTestsNum << "\n";
+	std::cout << "Total tests:  " << totalTestNum << "\n";
+	std::cout << "Failed tests: " << failedTestNum << "\n";
 }
 
 // Test constructors
