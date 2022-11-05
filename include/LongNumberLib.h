@@ -34,6 +34,7 @@ public:
 	bool isOne(); // Is number equal to 1?
 	bool isPositive(); // Is number positive?
 	bool isNegative(); // Is number negative?
+	static std::string getString(LongInt number); // Get number value as a string
 	static LongInt abs(LongInt number); // Get absolute number value
 	static long long size(LongInt number); // Get number size
 	static long long length(LongInt number); // Get number size
@@ -245,6 +246,11 @@ bool LongInt::isPositive() {
 // Is number negative?
 bool LongInt::isNegative() {
 	return !_positive;
+}
+
+// Get number value as a string
+std::string LongInt::getString(LongInt number) {
+	return number.getString();
 }
 
 // Get absolute number value
