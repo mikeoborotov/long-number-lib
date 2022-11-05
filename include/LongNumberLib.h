@@ -45,7 +45,7 @@ public:
 	static bool isNegative(LongInt number); // Is number negative?
 	void operator =(std::string input); // Set number value with string
 	void operator =(LongInt input); // Set number value with LongInt
-	void set(std::string input); // Set number value with string NEED TO ADD LETTER CHECK
+	void set(std::string input); // Set number value with string
 	void set(LongInt input); // Set number value with LongInt
 	bool operator ==(LongInt secondNum); // Is this number equal to 2nd?
 	bool operator !=(LongInt secondNum); // Is this number not equal to 2nd?
@@ -294,16 +294,6 @@ static bool isNegative(LongInt number) {
 
 // Set number value with string
 void LongInt::operator =(std::string input) {
-	set(input);
-}
-
-// Set number value with LongInt
-void LongInt::operator =(LongInt input) {
-	set(input);
-}
-
-// Set number value with string
-void LongInt::set(std::string input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	if (input.substr(0, 1) == "-") {
 		_positive = false;
@@ -330,9 +320,20 @@ void LongInt::set(std::string input) {
 }
 
 // Set number value with LongInt
+void LongInt::operator =(LongInt input) {
+	_digits.erase(_digits.begin(), _digits.end());
+	_digits = input._digits;
+	_positive = input._positive;
+}
+
+// Set number value with string
+void LongInt::set(std::string input) {
+	*this = input;
+}
+
+// Set number value with LongInt
 void LongInt::set(LongInt input) {
-	this->_digits = input._digits;
-	this->_positive = input._positive;
+	*this = input;
 }
 
 // Is this number equal to 2nd?
@@ -430,48 +431,48 @@ void LongInt::add(LongInt secondNum) {
 
 // Sum of 2 numbers
 LongInt LongInt::operator +(LongInt secondNum) {
-	return LongInt::sum(*this, secondNum);
-}
-
-// Difference of 2 numbers
-LongInt LongInt::operator -(LongInt secondNum) {
-	return LongInt::diff(*this, secondNum);
-}
-
-// Sum of 2 numbers
-LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
 	LongInt result;
-	if (firstNum.isPositive() and secondNum.isPositive()) {
+	if (this->isPositive() and secondNum.isPositive()) {
 		// If (+,+) or (-,-)
-		if (LongInt::isGreaterOrEqual(firstNum, secondNum)) {
-			result.set(_sumAux(firstNum, secondNum));
+		if (*this >= secondNum) {
+			result = _sumAux(*this, secondNum);
 		} else {
-			result.set(_sumAux(secondNum, firstNum));
+			result = _sumAux(secondNum, *this);
 		}
-	} else if (firstNum.isPositive() and secondNum.isNegative()) {
+	} else if (this->isPositive() and secondNum.isNegative()) {
 		// If (+,-)
-		if (LongInt::isGreaterOrEqual(firstNum, secondNum.abs())) {
-			result.set(_diffAux(firstNum, secondNum.abs()));
+		if (*this >= secondNum.abs()) {
+			result = _diffAux(*this, secondNum.abs());
 		} else {
-			result.set(_diffAux(secondNum.abs(), firstNum));
+			result = _diffAux(secondNum.abs(), *this);
 			result._positive = false;
 		}
 	} else {
 		// If (-,+)
-		if (LongInt::isGreaterOrEqual(firstNum.abs(), secondNum)) {
-			result.set(_diffAux(firstNum.abs(), secondNum));
+		if (this->abs() > secondNum) {
+			result = _diffAux(this->abs(), secondNum);
 			result._positive = false;
 		} else {
-			result.set(_diffAux(secondNum, firstNum.abs()));
+			result = _diffAux(secondNum, this->abs());
 		}
 	}
 	return result;
 }
 
 // Difference of 2 numbers
-LongInt LongInt::diff(LongInt firstNum, LongInt secondNum) {
+LongInt LongInt::operator -(LongInt secondNum) {
 	secondNum._positive = !secondNum.isPositive();
-	return LongInt::sum(firstNum, secondNum);
+	return *this + secondNum;
+}
+
+// Sum of 2 numbers
+LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
+	return firstNum + secondNum;
+}
+
+// Difference of 2 numbers
+LongInt LongInt::diff(LongInt firstNum, LongInt secondNum) {
+	return firstNum - secondNum;
 }
 
 // Print number, its size and sign (mostly for debug)
