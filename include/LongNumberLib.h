@@ -274,15 +274,22 @@ void LongInt::operator =(LongInt input) {
 
 // Set number value with string
 void LongInt::set(std::string input) {
-	this->_digits.erase(this->_digits.begin(), this->_digits.end());
+	_digits.erase(_digits.begin(), _digits.end());
 	if (input.substr(0, 1) == "-") {
-		this->_positive = false;
+		_positive = false;
 		input = input.substr(1, input.size());
 	} else {
-		this->_positive = true;
+		_positive = true;
 	}
 	for (const auto &digit: input) {
-		this->_digits.push_back(digit - '0');
+		// if ((digit < 48) or (digit > 57)) {
+		// 	set("0");
+		// 	std::cout << "ERROR: A non-digit character \"" << digit << "\" is 
+		// 	encountered when assigning a value with a string. Value is set to 
+		// 	0 by default.";
+		// 	return;
+		// }
+		_digits.push_back(digit - '0');
 	}
 	std::reverse(_digits.begin(), _digits.end());
 }

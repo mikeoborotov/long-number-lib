@@ -90,7 +90,12 @@ void Test::printTestReport() {
 
 // Test constructors
 void Test::test_constructor() {
-	verify("constructor #1", LongInt("0"), LongInt("-0"));
+	verify("constructor #1", LongInt("-0"), LongInt("0"));
+	verify("constructor #2", LongInt("0"), LongInt("0"));
+	verify("constructor #3", LongInt("000123"), LongInt("123"));
+	verify("constructor #4", LongInt("-000123"), LongInt("-123"));
+	verify("constructor #5", LongInt("1234someword56789"), LongInt("0"));
+	verify("constructor #6", LongInt("-someword123456789"), LongInt("0"));
 }
 
 // Test getString() function
@@ -104,6 +109,7 @@ void Test::test_getString() {
 	verify("getString #7", LongInt("-000000000000123").getString(), "-123");
 	verify("getString #8", LongInt("00000000000010203").getString(), "10203");
 	verify("getString #9", LongInt("-00000000000010203").getString(), "-10203");
+	verify("getString #10", LongInt("-123000000000").getString(), "-123000000000");
 }
 
 // Test operator "==" and isEqual() function
