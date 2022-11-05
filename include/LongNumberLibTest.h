@@ -23,14 +23,14 @@ public:
 	static void printTestReport(); // Print out tests report
 	static void test_constructor(); // Test constructor
 	static void test_getString(); // Test getString() function
-	static void test_isEqual(); // Test operator "==" and isEqual() function
-	static void test_isNotEqual(); // Test operator "!=" and isNotEqual() function
-	static void test_isGreater(); // Test operator ">" and isGreater() function
-	static void test_isGreaterOrEqual(); // Test operator ">=" and isGreaterOrEqual() function
-	static void test_isLess(); // Test operator "<" and isLess() function
-	static void test_isLessOrEqual(); // Test operator "<=" and isLessOrEqual() function
-	static void test_sum(); // Test operator "+", "+=" and sum function
-	static void test_diff(); // Test operator "-", "-=" and diff function
+	static void test_isEqual(); // Test operator ==
+	static void test_isNotEqual(); // Test operator !=
+	static void test_isGreater(); // Test operator >
+	static void test_isGreaterOrEqual(); // Test operator >=
+	static void test_isLess(); // Test operator <
+	static void test_isLessOrEqual(); // Test operator <=
+	static void test_sum(); // Test operators +, +=
+	static void test_diff(); // Test operators -, -=
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -117,7 +117,7 @@ void Test::test_getString() {
 	verify("getString #10", LongInt("-123000000000").getString(), "-123000000000");
 }
 
-// Test operator "==" and isEqual() function
+// Test operator ==
 void Test::test_isEqual() {
 	verify("isEqual #1", LongInt("0") == LongInt("-0"), true);
 	verify("isEqual #2", LongInt("0") == LongInt("0"), true);
@@ -126,7 +126,7 @@ void Test::test_isEqual() {
 	verify("isEqual #5", LongInt("123456789") == LongInt("-123456789"), false);
 }
 
-// Test operator "!=" and isNotEqual() function
+// Test operator !=
 void Test::test_isNotEqual() {
 	verify("isNotEqual #1", LongInt("0") != LongInt("-0"), false);
 	verify("isNotEqual #2", LongInt("0") != LongInt("0"), false);
@@ -135,7 +135,7 @@ void Test::test_isNotEqual() {
 	verify("isNotEqual #5", LongInt("123456789") != LongInt("-123456789"), true);
 }
 
-// Test operator ">" and isGreater() function
+// Test operator >
 void Test::test_isGreater() {
 	verify("isGreater #1", LongInt("0") > LongInt("-0"), false);
 	verify("isGreater #2", LongInt("1") > LongInt("0"), true);
@@ -147,7 +147,7 @@ void Test::test_isGreater() {
 	verify("isGreater #8", LongInt("123456789") > LongInt("123456789"), false);
 }
 
-// Test operator ">=" and isGreaterOrEqual() function
+// Test operator >=
 void Test::test_isGreaterOrEqual() {
 	verify("isGreaterOrEqual #1", LongInt("0") >= LongInt("-0"), true);
 	verify("isGreaterOrEqual #2", LongInt("1") >= LongInt("0"), true);
@@ -159,7 +159,7 @@ void Test::test_isGreaterOrEqual() {
 	verify("isGreaterOrEqual #8", LongInt("123456789") >= LongInt("123456789"), true);
 }
 
-// Test operator "<" and isLess() function
+// Test operator <
 void Test::test_isLess() {
 	verify("isLess #1", LongInt("0") < LongInt("-0"), false);
 	verify("isLess #2", LongInt("1") < LongInt("0"), false);
@@ -171,7 +171,7 @@ void Test::test_isLess() {
 	verify("isLess #8", LongInt("123456789") < LongInt("123456789"), false);
 }
 
-// Test operator "<=" and isLessOrEqual() function
+// Test operator <=
 void Test::test_isLessOrEqual() {
 	verify("isLessOrEqual #1", LongInt("0") <= LongInt("-0"), true);
 	verify("isLessOrEqual #2", LongInt("1") <= LongInt("0"), false);
@@ -183,7 +183,7 @@ void Test::test_isLessOrEqual() {
 	verify("isLessOrEqual #8", LongInt("123456789") <= LongInt("123456789"), true);
 }
 
-// Test operator "+", "+=" and sum function
+// Test operators +, +=
 void Test::test_sum() {
 	verify("sum #1", LongInt("0") + LongInt("0"), LongInt("0"));
 	verify("sum #2", LongInt("100") + LongInt("100"), LongInt("200"));
@@ -192,7 +192,7 @@ void Test::test_sum() {
 	verify("sum #5", LongInt("987654321") + LongInt("987654321"), LongInt("1975308642"));
 }
 
-// Test operator "-", "-=" and diff function
+// Test operators -, -=
 void Test::test_diff() {
 	verify("diff #1", LongInt("0") - LongInt("0"), LongInt("0"));
 	verify("diff #2", LongInt("100") - LongInt("100"), LongInt("0"));

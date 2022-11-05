@@ -46,25 +46,14 @@ public:
 	static bool isNegative(LongInt number); // Is number negative?
 	void operator =(std::string input); // Set number value with string
 	void operator =(LongInt input); // Set number value with LongInt
-	void set(std::string input); // Set number value with string
-	void set(LongInt input); // Set number value with LongInt
 	bool operator ==(LongInt secondNum); // Is this number equal to 2nd?
 	bool operator !=(LongInt secondNum); // Is this number not equal to 2nd?
 	bool operator >(LongInt secondNum); // Is this number greater than 2nd?
 	bool operator >=(LongInt secondNum); // Is this number greater or equal to 2nd?
 	bool operator <(LongInt secondNum); // Is this number less than 2nd?
 	bool operator <=(LongInt secondNum); // Is this number less or equal to 2nd?
-	static bool isEqual(LongInt firstNum, LongInt secondNum); // Is 1st number equal to 2nd?
-	static bool isNotEqual(LongInt firstNum, LongInt secondNum); // Is 1st number not equal to 2nd?
-	static bool isGreater(LongInt firstNum, LongInt secondNum); // Is 1st number greater than 2nd?
-	static bool isGreaterOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number greater or equal to 2nd?
-	static bool isLess(LongInt firstNum, LongInt secondNum); // Is 1st number less than 2nd?
-	static bool isLessOrEqual(LongInt firstNum, LongInt secondNum); // Is 1st number less or equal to 2nd?
-	void add(LongInt secondNum); // Add a number TODO
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
-	static LongInt sum(LongInt firstNum, LongInt secondNum); // Sum of 2 numbers
-	static LongInt diff(LongInt firstNum, LongInt secondNum);// Difference of 2 numbers
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
@@ -146,7 +135,7 @@ int LongInt::_compare(LongInt firstNum, LongInt secondNum) {
 // Sums 2 positive numbers (biggerNum >= smallerNum)
 LongInt LongInt::_sumAux(LongInt biggerNum, LongInt smallerNum) {
 	LongInt result;
-	result.set(biggerNum);
+	result = biggerNum;
 	for (long long i = 0; i < smallerNum.size(); i++) {
 		result._digits[i] += smallerNum._digits[i];
 	}
@@ -158,7 +147,7 @@ LongInt LongInt::_sumAux(LongInt biggerNum, LongInt smallerNum) {
 // Finds the difference of 2 positive numbers (biggerNum >= smallerNum)
 LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
 	LongInt result;
-	result.set(biggerNum);
+	result = biggerNum;
 	for (long long i = 0; i < smallerNum.size(); i++) {
 		result._digits[i] -= smallerNum._digits[i];
 	}
@@ -175,7 +164,7 @@ LongInt::LongInt() {
 
 // Overloaded constructor (for string)
 LongInt::LongInt(std::string input) {
-	set(input);
+	*this = input;
 }
 
 // Default destructor
@@ -197,7 +186,7 @@ std::string LongInt::getString() {
 // Get absolute number value
 LongInt LongInt::abs() {
 	LongInt result;
-	result.set(*this);
+	result = *this;
 	result._positive = true;
 	return result;
 }
@@ -310,7 +299,7 @@ void LongInt::operator =(std::string input) {
 	for (const auto &digit: input) {
 		// In case of a non-digit character
 		if ((digit < 48) or (digit > 57)) {
-			set("0");
+			*this = "0";
 			std::cout << "ERROR: A non-digit character \"" << digit;
 			std::cout << "\" is encountered when assigning a value of a LongInt with a string.";
 			std::cout << " Value is set to 0 by default.\n";
@@ -330,16 +319,6 @@ void LongInt::operator =(LongInt input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	_digits = input._digits;
 	_positive = input._positive;
-}
-
-// Set number value with string
-void LongInt::set(std::string input) {
-	*this = input;
-}
-
-// Set number value with LongInt
-void LongInt::set(LongInt input) {
-	*this = input;
 }
 
 // Is this number equal to 2nd?
@@ -400,41 +379,6 @@ bool LongInt::operator <=(LongInt secondNum) {
 	return true; // Duplicating '0' case to avoid warning
 }
 
-// Is 1st number equal to 2nd?
-bool LongInt::isEqual(LongInt firstNum, LongInt secondNum) {
-	return firstNum == secondNum;
-}
-
-// Is 1st number not equal to 2nd?
-bool LongInt::isNotEqual(LongInt firstNum, LongInt secondNum) {
-	return firstNum != secondNum;
-}
-
-// Is 1st number greater than 2nd?
-bool LongInt::isGreater(LongInt firstNum, LongInt secondNum) {
-	return firstNum > secondNum;
-}
-
-// Is 1st number greater or equal to 2nd?
-bool LongInt::isGreaterOrEqual(LongInt firstNum, LongInt secondNum) {
-	return firstNum >= secondNum;
-}
-
-// Is 1st number less than 2nd?
-bool LongInt::isLess(LongInt firstNum, LongInt secondNum) {
-	return firstNum < secondNum;
-}
-
-// Is 1st number less or equal to 2nd?
-bool LongInt::isLessOrEqual(LongInt firstNum, LongInt secondNum) {
-	return firstNum <= secondNum;
-}
-
-// Add a number
-void LongInt::add(LongInt secondNum) {
-	// TODO
-}
-
 // Sum of 2 numbers
 LongInt LongInt::operator +(LongInt secondNum) {
 	LongInt result;
@@ -469,16 +413,6 @@ LongInt LongInt::operator +(LongInt secondNum) {
 LongInt LongInt::operator -(LongInt secondNum) {
 	secondNum._positive = !secondNum.isPositive();
 	return *this + secondNum;
-}
-
-// Sum of 2 numbers
-LongInt LongInt::sum(LongInt firstNum, LongInt secondNum) {
-	return firstNum + secondNum;
-}
-
-// Difference of 2 numbers
-LongInt LongInt::diff(LongInt firstNum, LongInt secondNum) {
-	return firstNum - secondNum;
 }
 
 // Print number, its size and sign (mostly for debug)
