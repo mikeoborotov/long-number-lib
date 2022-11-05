@@ -29,6 +29,7 @@ public:
 	static void test_isGreaterOrEqual(); // Test operator >=
 	static void test_isLess(); // Test operator <
 	static void test_isLessOrEqual(); // Test operator <=
+	static void test_max_min(); // Test max() and min() functions
 	static void test_sum(); // Test operators +, +=
 	static void test_diff(); // Test operators -, -=
 	static void test_unaryOperators(); // Unary operators +, -, ++, --
@@ -77,6 +78,7 @@ void Test::runAllTests() {
 	test_isGreaterOrEqual();
 	test_isLess();
 	test_isLessOrEqual();
+	test_max_min();
 	test_sum();
 	test_diff();
 	test_unaryOperators();
@@ -185,6 +187,20 @@ void Test::test_isLessOrEqual() {
 	verify("isLessOrEqual #6", LongInt("-98") <= LongInt("-99"), false);
 	verify("isLessOrEqual #7", LongInt("-123456789") <= LongInt("123456789"), true);
 	verify("isLessOrEqual #8", LongInt("123456789") <= LongInt("123456789"), true);
+}
+
+// Test max() and min() functions
+void Test::test_max_min() {
+	verify("max/min #1", LongInt::max(LongInt("0"), LongInt("0")), LongInt("0"));
+	verify("max/min #2", LongInt::max(LongInt("1"), LongInt("2")), LongInt("2"));
+	verify("max/min #3", LongInt::max(LongInt("-321"), LongInt("123")), LongInt("123"));
+	verify("max/min #4", LongInt::max(LongInt("-999"), LongInt("-998")), LongInt("-998"));
+	verify("max/min #5", LongInt::max(LongInt("0"), LongInt("-12345")), LongInt("0"));
+	verify("max/min #6", LongInt::min(LongInt("0"), LongInt("0")), LongInt("0"));
+	verify("max/min #7", LongInt::min(LongInt("1"), LongInt("2")), LongInt("1"));
+	verify("max/min #8", LongInt::min(LongInt("-321"), LongInt("123")), LongInt("-321"));
+	verify("max/min #9", LongInt::min(LongInt("-999"), LongInt("-998")), LongInt("-999"));
+	verify("max/min #10", LongInt::min(LongInt("0"), LongInt("-12345")), LongInt("-12345"));
 }
 
 // Test operators +, +=

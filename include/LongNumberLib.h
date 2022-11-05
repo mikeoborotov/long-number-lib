@@ -53,6 +53,8 @@ public:
 	bool operator >=(LongInt secondNum); // Is this number greater or equal to 2nd?
 	bool operator <(LongInt secondNum); // Is this number less than 2nd?
 	bool operator <=(LongInt secondNum); // Is this number less or equal to 2nd?
+	static LongInt max(LongInt firstNum, LongInt secondNum); // Return max number
+	static LongInt min(LongInt firstNum, LongInt secondNum); // Return min number
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
 	LongInt operator +=(LongInt secondNum); // Add another number
@@ -393,6 +395,22 @@ bool LongInt::operator <=(LongInt secondNum) {
 		case -1: return true; // Less
 	}
 	return true; // Duplicating '0' case to avoid warning
+}
+
+// Return max number
+LongInt LongInt::max(LongInt firstNum, LongInt secondNum) {
+	if (firstNum >= secondNum) {
+		return firstNum;
+	}
+	return secondNum;
+}
+
+// Return min number
+LongInt LongInt::min(LongInt firstNum, LongInt secondNum) {
+	if (firstNum <= secondNum) {
+		return firstNum;
+	}
+	return secondNum;
 }
 
 // Sum of 2 numbers
