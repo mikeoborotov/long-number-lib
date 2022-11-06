@@ -45,6 +45,14 @@ public:
 	static bool isOne(LongInt number); // Is number equal to 1?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
+	LongInt operator =(signed short input); // Set number value with short
+	LongInt operator =(unsigned short input); // Set number value with unsigned short
+	LongInt operator =(signed int input); // Set number value with int
+	LongInt operator =(unsigned int input); // Set number value with unsigned int
+	LongInt operator =(signed long input); // Set number value with long
+	LongInt operator =(unsigned long input); // Set number value with unsigned long
+	LongInt operator =(signed long long input); // Set number value with long long
+	LongInt operator =(unsigned long long input); // Set number value with unsigned long long
 	LongInt operator =(std::string input); // Set number value with string
 	LongInt operator =(LongInt input); // Set number value with LongInt
 	bool operator ==(LongInt secondNum); // Is this number equal to 2nd?
@@ -303,6 +311,46 @@ bool LongInt::isPositive(LongInt number) {
 // Is number negative?
 static bool isNegative(LongInt number) {
 	return number.isNegative();
+}
+
+// Set number value with short
+LongInt operator =(signed short input) {
+
+}
+
+// Set number value with unsigned short
+LongInt operator =(unsigned short input) {
+
+}
+
+// Set number value with int
+LongInt operator =(signed int input) {
+
+}
+
+// Set number value with unsigned int
+LongInt operator =(unsigned int input) {
+
+}
+
+// Set number value with long
+LongInt operator =(signed long input) {
+
+}
+
+// Set number value with unsigned long
+LongInt operator =(unsigned long input) {
+
+}
+
+// Set number value with long long
+LongInt operator =(signed long long input) {
+
+}
+
+// Set number value with unsigned long long
+LongInt operator =(unsigned long long input) {
+
 }
 
 // Set number value with string
