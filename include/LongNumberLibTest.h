@@ -23,6 +23,7 @@ public:
 	static void printTestReport(); // Print out tests report
 	static void test_constructor(); // Test constructor
 	static void test_getString(); // Test getString() function
+	static void test_assignment(); // Test operator =
 	static void test_isEqual(); // Test operator ==
 	static void test_isNotEqual(); // Test operator !=
 	static void test_isGreater(); // Test operator >
@@ -72,6 +73,7 @@ void Test::resetTestNum() {
 void Test::runAllTests() {
 	test_constructor();
 	test_getString();
+	test_assignment();
 	test_isEqual();
 	test_isNotEqual();
 	test_isGreater();
@@ -121,6 +123,19 @@ void Test::test_getString() {
 	verify("getString #8", LongInt("00000000000010203").getString(), "10203");
 	verify("getString #9", LongInt("-00000000000010203").getString(), "-10203");
 	verify("getString #10", LongInt("-123000000000").getString(), "-123000000000");
+}
+
+// Test operator =
+void Test::test_assignment() {
+	verify("assignment #1", LongInt::getString(LongInt() = short(0)), "0");
+	verify("assignment #2", LongInt::getString(LongInt() = short(5)), "5");
+	verify("assignment #3", LongInt::getString(LongInt() = short(-5)), "-5");
+	verify("assignment #4", LongInt::getString(LongInt() = int(0)), "0");
+	verify("assignment #5", LongInt::getString(LongInt() = int(5)), "5");
+	verify("assignment #6", LongInt::getString(LongInt() = int(-5)), "-5");
+	verify("assignment #7", LongInt::getString(LongInt() = long(0)), "0");
+	verify("assignment #8", LongInt::getString(LongInt() = long(5)), "5");
+	verify("assignment #9", LongInt::getString(LongInt() = long(-5)), "-5");
 }
 
 // Test operator ==

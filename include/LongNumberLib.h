@@ -314,43 +314,51 @@ static bool isNegative(LongInt number) {
 }
 
 // Set number value with short
-LongInt operator =(signed short input) {
-
+LongInt LongInt::operator =(signed short input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with unsigned short
-LongInt operator =(unsigned short input) {
-
+LongInt LongInt::operator =(unsigned short input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with int
-LongInt operator =(signed int input) {
-
+LongInt LongInt::operator =(signed int input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with unsigned int
-LongInt operator =(unsigned int input) {
-
+LongInt LongInt::operator =(unsigned int input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with long
-LongInt operator =(signed long input) {
-
+LongInt LongInt::operator =(signed long input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with unsigned long
-LongInt operator =(unsigned long input) {
-
+LongInt LongInt::operator =(unsigned long input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with long long
-LongInt operator =(signed long long input) {
-
+LongInt LongInt::operator =(signed long long input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with unsigned long long
-LongInt operator =(unsigned long long input) {
-
+LongInt LongInt::operator =(unsigned long long input) {
+	*this = std::to_string(input);
+	return *this;
 }
 
 // Set number value with string
