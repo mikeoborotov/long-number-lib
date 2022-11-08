@@ -136,6 +136,27 @@ void Test::test_assignment() {
 	verify("assignment #7", LongInt::getString(LongInt() = long(0)), "0");
 	verify("assignment #8", LongInt::getString(LongInt() = long(5)), "5");
 	verify("assignment #9", LongInt::getString(LongInt() = long(-5)), "-5");
+	verify("assignment #10", LongInt::getString(LongInt() = (long long)int(0)), "0");
+	verify("assignment #11", LongInt::getString(LongInt() = (long long)int(5)), "5");
+	verify("assignment #12", LongInt::getString(LongInt() = (long long)int(-5)), "-5");
+	verify("assignment #13", LongInt::getString(LongInt() = (unsigned short)int(0)), "0");
+	verify("assignment #14", LongInt::getString(LongInt() = (unsigned short)int(5)), "5");
+	verify("assignment #15", LongInt::getString(LongInt() = (unsigned int)int(0)), "0");
+	verify("assignment #16", LongInt::getString(LongInt() = (unsigned int)int(5)), "5");
+	verify("assignment #17", LongInt::getString(LongInt() = (unsigned long)int(0)), "0");
+	verify("assignment #18", LongInt::getString(LongInt() = (unsigned long)int(5)), "5");
+	verify("assignment #19", LongInt::getString(LongInt() = (unsigned long long)int(0)), "0");
+	verify("assignment #20", LongInt::getString(LongInt() = (unsigned long long)int(5)), "5");
+	verify("assignment #21", LongInt::getString(LongInt() = "0"), "0");
+	verify("assignment #22", LongInt::getString(LongInt() = "-0"), "0");
+	verify("assignment #23", LongInt::getString(LongInt() = "12345678987654321"), "12345678987654321");
+	verify("assignment #24", LongInt::getString(LongInt() = "-12345678987654321"), "-12345678987654321");
+	verify("assignment #25", LongInt::getString(LongInt() = "-000000123456789"), "-123456789");
+	verify("assignment #26", LongInt::getString(LongInt() = LongInt("0")), "0");
+	verify("assignment #27", LongInt::getString(LongInt() = LongInt("-0")), "0");
+	verify("assignment #28", LongInt::getString(LongInt() = LongInt("12345678987654321")), "12345678987654321");
+	verify("assignment #29", LongInt::getString(LongInt() = LongInt("-12345678987654321")), "-12345678987654321");
+	verify("assignment #30", LongInt::getString(LongInt() = LongInt("-000000123456789")), "-123456789");
 }
 
 // Test operator ==
