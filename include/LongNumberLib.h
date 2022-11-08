@@ -23,8 +23,15 @@ private:
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 public:
 	LongInt(); // Default constructor
-	LongInt(std::string input); // Overloaded constructor (for string)
-	~LongInt(); // Default destructor
+	LongInt(signed short input); // Constructor for short
+	LongInt(unsigned short input); // Constructor for unsigned short
+	LongInt(signed int input); // Constructor for int
+	LongInt(unsigned int input); // Constructor for unsigned int
+	LongInt(signed long input); // Constructor for long
+	LongInt(unsigned long input); // Constructor for unsigned long
+	LongInt(signed long long input); // Constructor for long long
+	LongInt(unsigned long long input); // Constructor for unsigned long long
+	LongInt(std::string input); // Constructor for string
 	std::string getString(); // Get number value as a string
 	LongInt abs(); // Get absolute number value
 	long long size(); // Get number size
@@ -188,13 +195,50 @@ LongInt::LongInt() {
 	_positive = true;
 }
 
-// Overloaded constructor (for string)
-LongInt::LongInt(std::string input) {
+// Constructor for short
+LongInt::LongInt(signed short input) {
 	*this = input;
 }
 
-// Default destructor
-LongInt::~LongInt() {}
+// Constructor for unsigned short
+LongInt::LongInt(unsigned short input) {
+	*this = input;
+}
+
+// Constructor for int
+LongInt::LongInt(signed int input) {
+	*this = input;
+}
+
+// Constructor for unsigned int
+LongInt::LongInt(unsigned int input) {
+	*this = input;
+}
+
+// Constructor for long
+LongInt::LongInt(signed long input) {
+	*this = input;
+}
+
+// Constructor for unsigned long
+LongInt::LongInt(unsigned long input) {
+	*this = input;
+}
+
+// Constructor for long long
+LongInt::LongInt(signed long long input) {
+	*this = input;
+}
+
+// Constructor for unsigned long long
+LongInt::LongInt(unsigned long long input) {
+	*this = input;
+}
+
+// Constructor for string
+LongInt::LongInt(std::string input) {
+	*this = input;
+}
 
 // Get number as a string
 std::string LongInt::getString() {

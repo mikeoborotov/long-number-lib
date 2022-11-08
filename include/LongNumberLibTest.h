@@ -106,9 +106,29 @@ void Test::test_constructor() {
 	verify("constructor #2", LongInt("0"), LongInt("0"));
 	verify("constructor #3", LongInt("000123"), LongInt("123"));
 	verify("constructor #4", LongInt("-000123"), LongInt("-123"));
-	verify("constructor #5", LongInt("1234someword56789"), LongInt("0"));
-	verify("constructor #6", LongInt("-someword123456789"), LongInt("0"));
+	verify("constructor #5", LongInt("1234someword56789"), LongInt("0")); // Testing error situation
+	verify("constructor #6", LongInt("-someword123456789"), LongInt("0")); // Testing error situation
 	verify("constructor #7", LongInt("-00000000000000000"), LongInt("0"));
+	verify("constructor #8", LongInt::getString(LongInt(short(0))), "0");
+	verify("constructor #9", LongInt::getString(LongInt(short(16))), "16");
+	verify("constructor #10", LongInt::getString(LongInt(short(-16))), "-16");
+	verify("constructor #11", LongInt::getString(LongInt(int(0))), "0");
+	verify("constructor #12", LongInt::getString(LongInt(int(16))), "16");
+	verify("constructor #13", LongInt::getString(LongInt(int(-16))), "-16");
+	verify("constructor #14", LongInt::getString(LongInt(long(0))), "0");
+	verify("constructor #15", LongInt::getString(LongInt(long(16))), "16");
+	verify("constructor #16", LongInt::getString(LongInt(long(-16))), "-16");
+	verify("constructor #17", LongInt::getString(LongInt((long long)int(0))), "0");
+	verify("constructor #18", LongInt::getString(LongInt((long long)int(16))), "16");
+	verify("constructor #19", LongInt::getString(LongInt((long long)int(-16))), "-16");
+	verify("constructor #20", LongInt::getString(LongInt((unsigned short)int(0))), "0");
+	verify("constructor #21", LongInt::getString(LongInt((unsigned short)int(16))), "16");
+	verify("constructor #22", LongInt::getString(LongInt((unsigned int)int(0))), "0");
+	verify("constructor #23", LongInt::getString(LongInt((unsigned int)int(16))), "16");
+	verify("constructor #24", LongInt::getString(LongInt((unsigned long)int(0))), "0");
+	verify("constructor #25", LongInt::getString(LongInt((unsigned long)int(16))), "16");
+	verify("constructor #26", LongInt::getString(LongInt((unsigned long long)int(0))), "0");
+	verify("constructor #27", LongInt::getString(LongInt((unsigned long long)int(16))), "16");
 }
 
 // Test getString() function
