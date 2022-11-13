@@ -655,8 +655,39 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		std::cout << "ERROR: Division by zero!";
 		return {LongInt(0), LongInt(0)};
 	}
+	// Checking division by one
+	if (secondNum == LongInt(1)) {
+		return {firstNum, LongInt(0)};
+	}
+	if (secondNum == LongInt(-1)) {
+		firstNum._positive = !firstNum.isPositive();
+		return {firstNum, LongInt(0)};
+	}
+	// Checking division by 10 in some power
+	bool isPowerOfTen = true;
+	long long power = 0;
+	for (long long i = 0; i < secondNum.size() - 1; i++) {
+		if (secondNum._digits[i] != 0) {
+			isPowerOfTen = false;
+			break;
+		} else {
+			power++;
+		}
+	}
+	if (secondNum._digits[secondNum.size() - 1] != 1) {
+		isPowerOfTen = false;
+	}
 	lidiv_t result;
-	// TODO
+	if (isPowerOfTen) {
+		// Division is secondNum is a 10 in some power
+		std::reverse(firstNum._digits.begin(), firstNum._digits.begin());
+		for (long long i = 0; i < power; i++) {
+			
+		}
+	} else {
+		// General division
+
+	}
 	return result;
 }
 
