@@ -72,8 +72,12 @@ public:
 	static LongInt min(LongInt firstNum, LongInt secondNum); // Return min number
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
+	LongInt operator *(LongInt secondNum); // Product of 2 numbers
+	LongInt operator /(LongInt secondNum); // Quotient of 2 numbers
 	LongInt operator +=(LongInt secondNum); // Add another number
 	LongInt operator -=(LongInt secondNum); // Subtract another number
+	LongInt operator *=(LongInt secondNum); // Multiply by another number
+	LongInt operator /=(LongInt secondNum); // Divide by another number
 	LongInt operator +(); // Return this number (unary plus)
 	LongInt operator ++(); // Add 1 to the number (prefix)
 	LongInt operator ++(int); // Add 1 to the number (postfix)
@@ -550,6 +554,20 @@ LongInt LongInt::operator -(LongInt secondNum) {
 	return *this + secondNum;
 }
 
+// Product of 2 numbers
+LongInt LongInt::operator *(LongInt secondNum) {
+	LongInt result;
+	// TODO
+	return result;
+}
+
+// Quotient of 2 numbers
+LongInt LongInt::operator /(LongInt secondNum) {
+	LongInt result;
+	// TODO
+	return result;
+}
+
 // Add another number
 LongInt LongInt::operator +=(LongInt secondNum) {
 	return *this = *this + secondNum;
@@ -558,6 +576,16 @@ LongInt LongInt::operator +=(LongInt secondNum) {
 // Subtract another number
 LongInt LongInt::operator -=(LongInt secondNum) {
 	return *this = *this - secondNum;
+}
+
+// Multiply by another number
+LongInt LongInt::operator *=(LongInt secondNum) {
+	return *this = *this * secondNum;
+}
+
+// Divide by another number
+LongInt LongInt::operator /=(LongInt secondNum) {
+	return *this = *this / secondNum;
 }
 
 // Return this number (unary plus)
