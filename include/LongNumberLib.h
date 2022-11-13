@@ -89,8 +89,6 @@ public:
 	LongInt operator -(); // Return opposite sign number (unary minus)
 	LongInt operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
-	LongInt div10(long long power); // Divide by 10 in some power
-	LongInt mod10(long long power); // Remainder of dividing by 10 in some power
 	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -644,20 +642,6 @@ LongInt LongInt::operator --() {
 // Subtract 1 to the number (postfix)
 LongInt LongInt::operator --(int) {
 	return *this = *this - LongInt("1");
-}
-
-// Divide by 10 in some power
-LongInt LongInt::div10(long long power) {
-	LongInt result;
-	// TODO
-	return result;
-}
-
-// Remainder of dividing by 10 in some power
-LongInt LongInt::mod10(long long power) {
-	LongInt result;
-	// TODO
-	return result;
 }
 
 // Division
