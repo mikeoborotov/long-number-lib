@@ -33,7 +33,9 @@ public:
 	static void test_max_min(); // Test max() and min() functions
 	static void test_sum(); // Test operators +, +=
 	static void test_diff(); // Test operators -, -=
-	static void test_unaryOperators(); // Unary operators +, -, ++, --
+	static void test_div(); // Test operators /, /=
+	static void test_mod(); // Test operators %, %=
+	static void test_unaryOperators(); // Test unary operators +, -, ++, --
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -48,7 +50,7 @@ bool Test::verify(std::string testName, T1 recieved, T2 expected) {
 		return true;
 	} else {
 		failedTestNum++;
-		std::cout << "FAILED: " << testName << "\n";
+		std::cout << "FAILED TEST: " << testName << "\n";
 		return false;
 	}
 }
@@ -83,12 +85,14 @@ void Test::runAllTests() {
 	test_max_min();
 	test_sum();
 	test_diff();
+	test_div();
+	test_mod();
 	test_unaryOperators();
 }
 
 // Print out test report
 void Test::printTestReport() {
-	std::cout << "\nTEST REPORT\n";
+	std::cout << "\n\nTEST REPORT\n";
 	std::cout << "Total tests:  " << totalTestNum << "\n";
 	std::cout << "Failed tests: " << failedTestNum << "\n";
 	if ((failedTestNum == 0) and (totalTestNum != 0)) {
@@ -289,7 +293,27 @@ void Test::test_diff() {
 	verify("diff #12", LongInt("-111111111111") - LongInt("222222222222"), LongInt("-333333333333"));
 }
 
-// Unary operators +, -, ++, --
+// Test operators /, /=
+void Test::test_div() {
+	verify("div #1", LongInt(123) / LongInt(0), LongInt(0));
+	verify("div #2", LongInt(123) / LongInt(1), LongInt(123));
+	verify("div #3", LongInt(123) / LongInt(-1), LongInt(-123));
+	verify("div #4", LongInt(1234) / LongInt(1000), LongInt(1));
+	verify("div #5", LongInt(1234) / LongInt(100), LongInt(12));
+	verify("div #6", LongInt(1234) / LongInt(10), LongInt(123));
+}
+
+// Test operators %, %=
+void Test::test_mod() {
+	verify("mod #1", LongInt(123) / LongInt(0), LongInt(0));
+	verify("mod #2", LongInt(123) / LongInt(1), LongInt(0));
+	verify("mod #3", LongInt(123) / LongInt(-1), LongInt(0));
+	verify("mod #4", LongInt(1234) / LongInt(1000), LongInt(234));
+	verify("mod #5", LongInt(1234) / LongInt(100), LongInt(34));
+	verify("mod #6", LongInt(1234) / LongInt(10), LongInt(4));
+}
+
+// Test unary operators +, -, ++, --
 void Test::test_unaryOperators() {
 	verify("unary #1", +LongInt("0"), LongInt("0"));
 	verify("unary #2", +LongInt("123"), LongInt("123"));

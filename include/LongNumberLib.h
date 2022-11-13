@@ -76,11 +76,13 @@ public:
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
 	LongInt operator *(LongInt secondNum); // Product of 2 numbers
-	LongInt operator /(LongInt secondNum); // Quotient of 2 numbers
+	LongInt operator /(LongInt secondNum); // Quotient of 2 numbers division
+	LongInt operator %(LongInt secondNum); // Remainder of 2 numbers division
 	LongInt operator +=(LongInt secondNum); // Add another number
 	LongInt operator -=(LongInt secondNum); // Subtract another number
 	LongInt operator *=(LongInt secondNum); // Multiply by another number
 	LongInt operator /=(LongInt secondNum); // Divide by another number
+	LongInt operator %=(LongInt secondNum); // Remainder of division by another number
 	LongInt operator +(); // Return this number (unary plus)
 	LongInt operator ++(); // Add 1 to the number (prefix)
 	LongInt operator ++(int); // Add 1 to the number (postfix)
@@ -575,9 +577,14 @@ LongInt LongInt::operator *(LongInt secondNum) {
 
 // Quotient of 2 numbers
 LongInt LongInt::operator /(LongInt secondNum) {
-	LongInt result;
-	// TODO
-	return result;
+	lidiv_t temp = div(*this, secondNum);
+	return temp.quot;
+}
+
+// Remainder of 2 numbers division
+LongInt LongInt::operator %(LongInt secondNum) {
+	lidiv_t temp = div(*this, secondNum);
+	return temp.rem;
 }
 
 // Add another number
@@ -598,6 +605,11 @@ LongInt LongInt::operator *=(LongInt secondNum) {
 // Divide by another number
 LongInt LongInt::operator /=(LongInt secondNum) {
 	return *this = *this / secondNum;
+}
+
+// Remainder of division by another number
+LongInt LongInt::operator %=(LongInt secondNum) {
+	return *this = *this % secondNum;
 }
 
 // Return this number (unary plus)
@@ -652,7 +664,7 @@ LongInt LongInt::mod10(long long power) {
 lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 	// Checking division by zero
 	if (secondNum == LongInt(0)) {
-		std::cout << "ERROR: Division by zero!";
+		std::cout << "ERROR: Division by zero!\n";
 		return {LongInt(0), LongInt(0)};
 	}
 	// Checking division by one
@@ -682,8 +694,11 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		// Division is secondNum is a 10 in some power
 		std::reverse(firstNum._digits.begin(), firstNum._digits.begin());
 		for (long long i = 0; i < power; i++) {
-			
+			result.rem._digits.push_back(firstNum._digits[firstNum.size() - 1]);
+			firstNum._digits.pop_back();
 		}
+		std::reverse(firstNum._digits.begin(), firstNum._digits.begin());
+		result.quot._digits = firstNum._digits;
 	} else {
 		// General division
 
