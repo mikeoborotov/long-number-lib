@@ -652,12 +652,25 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		return {LongInt(0), LongInt(0)};
 	}
 	// Checking division by one
-	if (secondNum == LongInt(1)) {
-		return {firstNum, LongInt(0)};
+	if (secondNum.abs() == LongInt(1)) {
+		if (secondNum.isPositive()) {
+			return {firstNum, LongInt(0)};
+		} else {
+			firstNum._positive = false;
+			return {firstNum, LongInt(0)};
+		}
 	}
-	if (secondNum == LongInt(-1)) {
-		firstNum._positive = !firstNum.isPositive();
-		return {firstNum, LongInt(0)};
+	// If the divisor is bigger than divident (in absolute values)
+	if (secondNum.abs() > firstNum.abs()) {
+		return {LongInt(0), firstNum};
+	}
+	// If the divisor is equal to divident (in absolute values)
+	if (secondNum.abs() == firstNum.abs()) {
+		if (firstNum.isPositive() == secondNum.isPositive()) {
+			return {LongInt(1), LongInt(0)};
+		} else {
+			return {LongInt(-1), LongInt(0)};
+		}
 	}
 	// Checking division by 10 in some power
 	bool isPowerOfTen = true;
@@ -674,15 +687,18 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		isPowerOfTen = false;
 	}
 	lidiv_t result;
+	result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
+	result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
 	if (isPowerOfTen) {
-		// Division is secondNum is a 10 in some power
-		std::reverse(firstNum._digits.begin(), firstNum._digits.begin());
+		// Division if secondNum is a 10 in some power
 		for (long long i = 0; i < power; i++) {
-			result.rem._digits.push_back(firstNum._digits[firstNum.size() - 1]);
-			firstNum._digits.pop_back();
+			result.rem._digits.push_back(firstNum._digits.front());
+			firstNum._digits.erase(firstNum._digits.begin());
 		}
-		std::reverse(firstNum._digits.begin(), firstNum._digits.begin());
 		result.quot._digits = firstNum._digits;
+		// Checking signs
+		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
+		result.rem._positive = firstNum.isPositive();
 	} else {
 		// General division
 
