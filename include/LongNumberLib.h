@@ -27,7 +27,9 @@ private:
 	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
+	static LongInt _multAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static isPowerOfTen_t _isPowerOfTen(LongInt number); // Is number a power of 10?
+	static LongInt _karatsubaAlg(LongInt firstNum, LongInt secondNum); // Karatsuba algorithm
 public:
 	LongInt(); // Default constructor
 	LongInt(signed short input); // Constructor for short
@@ -124,10 +126,11 @@ void LongInt::_checkLeadingZeroes() {
 // Correct digits if they are beyond 9 or below 0
 void LongInt::_checkDigitOverflow() {
 	for (long long i = 0; i < size() - 1; i++) {
-		if (_digits[i] > 9) {
+		while (_digits[i] > 9) {
 			_digits[i] -= 10;
 			_digits[i + 1] += 1;
-		} else if (_digits[i] < 0) {
+		}
+		while (_digits[i] < 0) {
 			_digits[i] += 10;
 			_digits[i + 1] -= 1;
 		}
@@ -135,6 +138,10 @@ void LongInt::_checkDigitOverflow() {
 	if (_digits[size() - 1] > 9) {
 		_digits[size() - 1] -= 10;
 		_digits.push_back(1);
+	}
+	while (_digits[size() - 2] > 9) {
+		_digits[size() - 2] -= 10;
+		_digits[size() - 1] += 1;
 	}
 }
 
@@ -216,6 +223,18 @@ LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
 	return result;
 }
 
+// Auxiliary function
+LongInt LongInt::_multAux(LongInt biggerNum, LongInt smallerNum) {
+	LongInt result;
+	result = biggerNum;
+	for (long long i = 0; i < smallerNum.size(); i++) {
+		result._digits[i] *= smallerNum._digits[i];
+	}
+	result._checkDigitOverflow();
+	result._checkLeadingZeroes();
+	return result;
+}
+
 // Is number a power of 10?
 isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
 	bool isPowerOfTen = true;
@@ -232,6 +251,13 @@ isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
 		isPowerOfTen = false;
 	}
 	return {isPowerOfTen, power};
+}
+
+// Karatsuba algorithm
+LongInt LongInt::_karatsubaAlg(LongInt firstNum, LongInt secondNum) {
+	LongInt result;
+	
+	return result;
 }
 
 // Default constructor
@@ -628,6 +654,7 @@ LongInt LongInt::operator *(LongInt secondNum) {
 		return result;
 	} else {
 		// General multiplication
+		return _karatsubaAlg(*this, secondNum);
 	}
 
 	return result;
