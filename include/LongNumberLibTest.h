@@ -351,6 +351,16 @@ void Test::test_remainder() {
 	verify("remainder #12", LongInt(12345) % LongInt(-123456789), LongInt(12345));
 	verify("remainder #13", LongInt(-12345) % LongInt(123456789), LongInt(-12345));
 	verify("remainder #14", LongInt(-12345) % LongInt(-123456789), LongInt(-12345));
+	verify("quotient #15", LongInt(123) % LongInt(5), LongInt(3));
+	verify("quotient #16", LongInt(123) % LongInt(-5), LongInt(3));
+	verify("quotient #17", LongInt(-123) % LongInt(-5), LongInt(-3));
+	verify("quotient #18", LongInt(-123) % LongInt(5), LongInt(-3));
+	verify("quotient #19", LongInt(10) % LongInt(3), LongInt(1));
+	verify("quotient #20", LongInt(-10) % LongInt(4), LongInt(-2));
+	verify("quotient #21", LongInt(123456789) % LongInt(123), LongInt(90));
+	verify("quotient #22", LongInt(123456789) % LongInt(12345), LongInt(6789));
+	verify("quotient #23", LongInt(-12345678987654321) % LongInt(123456789), LongInt(-87654321));
+	verify("quotient #24", LongInt(123456789) % LongInt(-987), LongInt(855));
 }
 
 // Test unary operators +, -, ++, --
