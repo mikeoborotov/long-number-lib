@@ -305,6 +305,18 @@ void Test::test_mult() {
 	verify("mult #4", LongInt(123) * LongInt(-1000000), LongInt(-123000000));
 	verify("mult #5", LongInt(-123) * LongInt(1000000), LongInt(-123000000));
 	verify("mult #6", LongInt(-123) * LongInt(-1000000), LongInt(123000000));
+	verify("mult #7", LongInt(-123) * LongInt(1), LongInt(-123));
+	verify("mult #8", LongInt(-123) * LongInt(-1), LongInt(123));
+	verify("mult #9", LongInt(123) * LongInt(0), LongInt(0));
+	verify("mult #10", LongInt(-123) * LongInt(0), LongInt(0));
+	verify("mult #11", LongInt(0) * LongInt(123), LongInt(0));
+	verify("mult #12", LongInt(0) * LongInt(-123), LongInt(0));
+	verify("mult #13", LongInt(10) * LongInt(123), LongInt(1230));
+	verify("mult #14", LongInt(1000) * LongInt(123), LongInt(123000));
+	verify("mult #15", LongInt(1000000) * LongInt(123), LongInt(123000000));
+	verify("mult #16", LongInt(-1000000) * LongInt(123), LongInt(-123000000));
+	verify("mult #17", LongInt(1000000) * LongInt(-123), LongInt(-123000000));
+	verify("mult #18", LongInt(-1000000) * LongInt(-123), LongInt(123000000));
 }
 
 // Test operators /, /=

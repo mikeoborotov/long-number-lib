@@ -13,6 +13,9 @@ namespace LNL {
 // Structure for quotient and remainder for LongInt div() function
 struct lidiv_t;
 
+// Structure for _isPowerOfTen() function
+struct isPowerOfTen_t;
+
 // A class for arbitrary length integers
 class LongInt {
 private:
@@ -24,6 +27,7 @@ private:
 	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
+	static isPowerOfTen_t _isPowerOfTen(LongInt number); // Is number a power of 10?
 public:
 	LongInt(); // Default constructor
 	LongInt(signed short input); // Constructor for short
@@ -98,6 +102,12 @@ public:
 struct lidiv_t {
 	LongInt quot;
 	LongInt rem;
+};
+
+// Structure for _isPowerOfTen() function
+struct isPowerOfTen_t {
+	bool isPowerOfTen;
+	long long power;
 };
 
 // Remove leading zeroes
@@ -204,6 +214,24 @@ LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
 	result._checkDigitOverflow();
 	result._checkLeadingZeroes();
 	return result;
+}
+
+// Is number a power of 10?
+isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
+	bool isPowerOfTen = true;
+	long long power = 0;
+	for (long long i = 0; i < number.size() - 1; i++) {
+		if (number._digits[i] != 0) {
+			isPowerOfTen = false;
+			break;
+		} else {
+			power++;
+		}
+	}
+	if (number._digits[number.size() - 1] != 1) {
+		isPowerOfTen = false;
+	}
+	return {isPowerOfTen, power};
 }
 
 // Default constructor
@@ -569,31 +597,37 @@ LongInt LongInt::operator -(LongInt secondNum) {
 
 // Product of 2 numbers
 LongInt LongInt::operator *(LongInt secondNum) {
+	// Checking multiplication by zero
+	if (this->isZero() or secondNum.isZero()) {
+		return LongInt(0);
+	}
 	// Checking multiplication by 10 in some power
-	bool isPowerOfTen = true;
-	long long power = 0;
-	for (long long i = 0; i < secondNum.size() - 1; i++) {
-		if (secondNum._digits[i] != 0) {
-			isPowerOfTen = false;
-			break;
-		} else {
-			power++;
-		}
-	}
-	if (secondNum._digits[secondNum.size() - 1] != 1) {
-		isPowerOfTen = false;
-	}
+	isPowerOfTen_t thisInfo = _isPowerOfTen(*this);
+	isPowerOfTen_t secondInfo = _isPowerOfTen(secondNum);
+	// Algorithm
 	LongInt result;
-	if (isPowerOfTen) {
-		// Multiplication if secondNum is a 10 in some power
-		result = *this;
+	if (thisInfo.isPowerOfTen) {
+		// Multiplication if firstNum is a 10 in some power
+		result = secondNum;
 		std::reverse(result._digits.begin(), result._digits.end());
-		for (long long i = 0; i < power; i++) {
+		for (long long i = 0; i < thisInfo.power; i++) {
 			result._digits.push_back(0);
 		}
 		std::reverse(result._digits.begin(), result._digits.end());
 		result._positive = (this->isPositive() == secondNum.isPositive());
 		return result;
+	} else if (secondInfo.isPowerOfTen) {
+		// Multiplication if secondNum is a 10 in some power
+		result = *this;
+		std::reverse(result._digits.begin(), result._digits.end());
+		for (long long i = 0; i < secondInfo.power; i++) {
+			result._digits.push_back(0);
+		}
+		std::reverse(result._digits.begin(), result._digits.end());
+		result._positive = (this->isPositive() == secondNum.isPositive());
+		return result;
+	} else {
+		// General multiplication
 	}
 
 	return result;
@@ -672,31 +706,19 @@ LongInt LongInt::operator --(int) {
 
 // firstNum to the power of secondNum
 LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
-	// If in the power of 0
+	// If in to the power of 0
 	if (secondNum.isZero()) {
 		return LongInt(1);
 	}
-	// If in the power of 0
+	// If in to the power of 1
 	if (secondNum.isOne()) {
 		return firstNum;
 	}
-	// Checking if firstNum is 10 in some power
-	bool isPowerOfTen = true;
-	long long power = 0;
-	for (long long i = 0; i < firstNum.size() - 1; i++) {
-		if (firstNum._digits[i] != 0) {
-			isPowerOfTen = false;
-			break;
-		} else {
-			power++;
-		}
-	}
-	if (firstNum._digits[firstNum.size() - 1] != 1) {
-		isPowerOfTen = false;
-	}
+	// Checking if firstNum is a 10 to some power
+	isPowerOfTen_t firstInfo = _isPowerOfTen(firstNum);
 	// Algorithm
 	LongInt result;
-	if (isPowerOfTen) {
+	if (firstInfo.isPowerOfTen) {
 		result = firstNum;
 		// Checking result sign
 		if (firstNum.isNegative() and secondNum.isEven()) {
@@ -706,7 +728,7 @@ LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
 		// If firstNum is a 10 in some power
 		std::reverse(result._digits.begin(), result._digits.end());
 		while (secondNum > LongInt(0)) {
-			for (long long i = 0; i < power; i++) {
+			for (long long i = 0; i < firstInfo.power; i++) {
 				result._digits.push_back(0);
 			}
 			secondNum--;
@@ -745,27 +767,15 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 			return {LongInt(-1), LongInt(0)};
 		}
 	}
-	// Checking division by 10 in some power
-	bool isPowerOfTen = true;
-	long long power = 0;
-	for (long long i = 0; i < secondNum.size() - 1; i++) {
-		if (secondNum._digits[i] != 0) {
-			isPowerOfTen = false;
-			break;
-		} else {
-			power++;
-		}
-	}
-	if (secondNum._digits[secondNum.size() - 1] != 1) {
-		isPowerOfTen = false;
-	}
+	// Checking if divisor is a 10 to some power
+	isPowerOfTen_t secondInfo = _isPowerOfTen(secondNum);
 	// Algorithm
 	lidiv_t result;
 	result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
 	result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
-	if (isPowerOfTen) {
+	if (secondInfo.isPowerOfTen) {
 		// Division if secondNum is a 10 in some power
-		for (long long i = 0; i < power; i++) {
+		for (long long i = 0; i < secondInfo.power; i++) {
 			result.rem._digits.push_back(firstNum._digits.front());
 			firstNum._digits.erase(firstNum._digits.begin());
 		}
