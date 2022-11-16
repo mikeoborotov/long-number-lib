@@ -33,6 +33,7 @@ public:
 	static void test_max_min(); // Test max() and min() functions
 	static void test_sum(); // Test operators +, +=
 	static void test_diff(); // Test operators -, -=
+	static void test_mult(); // Test operators *, *=
 	static void test_quotient(); // Test operators /, /=
 	static void test_remainder(); // Test operators %, %=
 	static void test_unaryOperators(); // Test unary operators +, -, ++, --
@@ -85,6 +86,7 @@ void Test::runAllTests() {
 	test_max_min();
 	test_sum();
 	test_diff();
+	test_mult();
 	test_quotient();
 	test_remainder();
 	test_unaryOperators();
@@ -291,6 +293,16 @@ void Test::test_diff() {
 	verify("diff #10", LongInt("1000000") -= LongInt("2999999"), LongInt("-1999999"));
 	verify("diff #11", LongInt("-123") - LongInt("150"), LongInt("-273"));
 	verify("diff #12", LongInt("-111111111111") - LongInt("222222222222"), LongInt("-333333333333"));
+}
+
+// Test operators *, *=
+void Test::test_mult() {
+	verify("mult #1", LongInt(123) * LongInt(10), LongInt(1230));
+	verify("mult #2", LongInt(123) * LongInt(1000), LongInt(123000));
+	verify("mult #3", LongInt(123) * LongInt(1000000), LongInt(123000000));
+	verify("mult #4", LongInt(123) * LongInt(-1000000), LongInt(-123000000));
+	verify("mult #5", LongInt(-123) * LongInt(1000000), LongInt(-123000000));
+	verify("mult #6", LongInt(-123) * LongInt(-1000000), LongInt(123000000));
 }
 
 // Test operators /, /=

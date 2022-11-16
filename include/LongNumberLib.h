@@ -568,8 +568,33 @@ LongInt LongInt::operator -(LongInt secondNum) {
 
 // Product of 2 numbers
 LongInt LongInt::operator *(LongInt secondNum) {
+	// Checking multiplication by 10 in some power
+	bool isPowerOfTen = true;
+	long long power = 0;
+	for (long long i = 0; i < secondNum.size() - 1; i++) {
+		if (secondNum._digits[i] != 0) {
+			isPowerOfTen = false;
+			break;
+		} else {
+			power++;
+		}
+	}
+	if (secondNum._digits[secondNum.size() - 1] != 1) {
+		isPowerOfTen = false;
+	}
 	LongInt result;
-	// TODO
+	if (isPowerOfTen) {
+		// Multiplication if secondNum is a 10 in some power
+		result = *this;
+		std::reverse(result._digits.begin(), result._digits.end());
+		for (long long i = 0; i < power; i++) {
+			result._digits.push_back(0);
+		}
+		std::reverse(result._digits.begin(), result._digits.end());
+		result._positive = (this->isPositive() == secondNum.isPositive());
+		return result;
+	}
+
 	return result;
 }
 
@@ -701,6 +726,9 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		result.rem._positive = firstNum.isPositive();
 	} else {
 		// General division
+		long long sizeDiff = firstNum.size() - secondNum.size();
+		LongInt firstNumAbs = firstNum.abs();
+		LongInt secondNumAbs = secondNum.abs();
 
 	}
 	return result;
