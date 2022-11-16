@@ -223,12 +223,12 @@ LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
 	return result;
 }
 
-// Auxiliary function
+// Auxiliary function (smallerNum length = 1)
 LongInt LongInt::_multAux(LongInt biggerNum, LongInt smallerNum) {
 	LongInt result;
 	result = biggerNum;
-	for (long long i = 0; i < smallerNum.size(); i++) {
-		result._digits[i] *= smallerNum._digits[i];
+	for (long long i = 0; i < result.size(); i++) {
+		result._digits[i] *= smallerNum._digits.front();
 	}
 	result._checkDigitOverflow();
 	result._checkLeadingZeroes();
@@ -253,10 +253,27 @@ isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
 	return {isPowerOfTen, power};
 }
 
-// Karatsuba algorithm
+// Karatsuba algorithm (firstNum and secondNum are absolute values)
 LongInt LongInt::_karatsubaAlg(LongInt firstNum, LongInt secondNum) {
+	// If one of the numbers is 1 digit long
+	if (firstNum.size() == 1) {
+		return _multAux(secondNum, firstNum);
+	}
+	if (secondNum.size() == 1) {
+		return _multAux(firstNum, secondNum);
+	}
+	// Algorithm
 	LongInt result;
-	
+	long long base = std::max(firstNum.size(), secondNum.size());
+	long long halfBase = base / 2;
+	LongInt A = firstNum / pow(LongInt(10), halfBase);
+	LongInt B = firstNum % pow(LongInt(10), halfBase);
+	LongInt C = secondNum / pow(LongInt(10), halfBase);
+	LongInt D = secondNum % pow(LongInt(10), halfBase);
+	LongInt AC = _karatsubaAlg(A, C);
+	LongInt BD = _karatsubaAlg(B, D);
+	LongInt ADplusBC = _karatsubaAlg(A + B, C + D) - AC - BD;
+	result = AC * pow(LongInt(10), 2 * halfBase) + (ADplusBC * pow(LongInt(10), halfBase)) + BD;
 	return result;
 }
 
@@ -654,9 +671,10 @@ LongInt LongInt::operator *(LongInt secondNum) {
 		return result;
 	} else {
 		// General multiplication
-		return _karatsubaAlg(*this, secondNum);
+		result = _karatsubaAlg(this->abs(), secondNum.abs());
+		result._positive = (this->isPositive() == secondNum.isPositive());
+		return result;
 	}
-
 	return result;
 }
 
