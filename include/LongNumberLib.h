@@ -28,8 +28,8 @@ private:
 	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
 	static LongInt _multAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
-	static isPowerOfTen_t _isPowerOfTen(LongInt number); // Is number a power of 10?
 	static LongInt _karatsubaAlg(LongInt firstNum, LongInt secondNum); // Karatsuba algorithm
+	static isPowerOfTen_t _isPowerOfTen(LongInt number); // Is number a power of 10?
 public:
 	LongInt(); // Default constructor
 	LongInt(signed short input); // Constructor for short
@@ -235,24 +235,6 @@ LongInt LongInt::_multAux(LongInt biggerNum, LongInt smallerNum) {
 	return result;
 }
 
-// Is number a power of 10?
-isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
-	bool isPowerOfTen = true;
-	long long power = 0;
-	for (long long i = 0; i < number.size() - 1; i++) {
-		if (number._digits[i] != 0) {
-			isPowerOfTen = false;
-			break;
-		} else {
-			power++;
-		}
-	}
-	if (number._digits[number.size() - 1] != 1) {
-		isPowerOfTen = false;
-	}
-	return {isPowerOfTen, power};
-}
-
 // Karatsuba algorithm (firstNum and secondNum are absolute values)
 LongInt LongInt::_karatsubaAlg(LongInt firstNum, LongInt secondNum) {
 	// If one of the numbers is 1 digit long
@@ -275,6 +257,24 @@ LongInt LongInt::_karatsubaAlg(LongInt firstNum, LongInt secondNum) {
 	LongInt ADplusBC = _karatsubaAlg(A + B, C + D) - AC - BD;
 	result = AC * pow(LongInt(10), 2 * halfBase) + (ADplusBC * pow(LongInt(10), halfBase)) + BD;
 	return result;
+}
+
+// Is number a power of 10?
+isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
+	bool isPowerOfTen = true;
+	long long power = 0;
+	for (long long i = 0; i < number.size() - 1; i++) {
+		if (number._digits[i] != 0) {
+			isPowerOfTen = false;
+			break;
+		} else {
+			power++;
+		}
+	}
+	if (number._digits[number.size() - 1] != 1) {
+		isPowerOfTen = false;
+	}
+	return {isPowerOfTen, power};
 }
 
 // Default constructor
