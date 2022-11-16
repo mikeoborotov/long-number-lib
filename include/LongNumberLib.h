@@ -89,6 +89,7 @@ public:
 	LongInt operator -(); // Return opposite sign number (unary minus)
 	LongInt operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
+	static LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
 	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -667,6 +668,53 @@ LongInt LongInt::operator --() {
 // Subtract 1 to the number (postfix)
 LongInt LongInt::operator --(int) {
 	return *this = *this - LongInt("1");
+}
+
+// firstNum to the power of secondNum
+LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
+	// If in the power of 0
+	if (secondNum.isZero()) {
+		return LongInt(1);
+	}
+	// If in the power of 0
+	if (secondNum.isOne()) {
+		return firstNum;
+	}
+	// Checking if firstNum is 10 in some power
+	bool isPowerOfTen = true;
+	long long power = 0;
+	for (long long i = 0; i < firstNum.size() - 1; i++) {
+		if (firstNum._digits[i] != 0) {
+			isPowerOfTen = false;
+			break;
+		} else {
+			power++;
+		}
+	}
+	if (firstNum._digits[firstNum.size() - 1] != 1) {
+		isPowerOfTen = false;
+	}
+	// Algorithm
+	LongInt result;
+	if (isPowerOfTen) {
+		result = firstNum;
+		// Checking result sign
+		if (firstNum.isNegative() and secondNum.isEven()) {
+			result._positive = true;
+		}
+		secondNum--;
+		// If firstNum is a 10 in some power
+		std::reverse(result._digits.begin(), result._digits.end());
+		while (secondNum > LongInt(0)) {
+			for (long long i = 0; i < power; i++) {
+				result._digits.push_back(0);
+			}
+			secondNum--;
+		}
+		std::reverse(result._digits.begin(), result._digits.end());
+		return result;
+	}
+	return result;
 }
 
 // Division

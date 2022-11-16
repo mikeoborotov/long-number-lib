@@ -37,6 +37,7 @@ public:
 	static void test_quotient(); // Test operators /, /=
 	static void test_remainder(); // Test operators %, %=
 	static void test_unaryOperators(); // Test unary operators +, -, ++, --
+	static void test_pow(); // Test pow() function
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -90,6 +91,7 @@ void Test::runAllTests() {
 	test_quotient();
 	test_remainder();
 	test_unaryOperators();
+	test_pow();
 }
 
 // Print out test report
@@ -369,6 +371,18 @@ void Test::test_unaryOperators() {
 	verify("unary #24", LongInt("0")--, LongInt("-1"));
 	verify("unary #25", LongInt("1")--, LongInt("0"));
 	verify("unary #26", LongInt("99")--, LongInt("98"));
+}
+
+// Test pow() function
+void Test::test_pow() {
+	verify("pow #1", LongInt::pow(LongInt(10), LongInt(0)), LongInt(1));
+	verify("pow #2", LongInt::pow(LongInt(-10), LongInt(0)), LongInt(1));
+	verify("pow #3", LongInt::pow(LongInt(10), LongInt(1)), LongInt(10));
+	verify("pow #4", LongInt::pow(LongInt(10), LongInt(2)), LongInt(100));
+	verify("pow #5", LongInt::pow(LongInt(10), LongInt(3)), LongInt(1000));
+	verify("pow #6", LongInt::pow(LongInt(1000), LongInt(3)), LongInt(1000000000));
+	verify("pow #7", LongInt::pow(LongInt(-100), LongInt(3)), LongInt(-1000000));
+	verify("pow #8", LongInt::pow(LongInt(-100), LongInt(4)), LongInt(100000000));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
