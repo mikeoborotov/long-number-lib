@@ -317,6 +317,27 @@ void Test::test_mult() {
 	verify("mult #16", LongInt(-1000000) * LongInt(123), LongInt(-123000000));
 	verify("mult #17", LongInt(1000000) * LongInt(-123), LongInt(-123000000));
 	verify("mult #18", LongInt(-1000000) * LongInt(-123), LongInt(123000000));
+	verify("mult #19", LongInt(2) * LongInt(3), LongInt(6));
+	verify("mult #20", LongInt(123) * LongInt(789), LongInt(97047));
+	verify("mult #21", LongInt(123) * LongInt(-789), LongInt(-97047));
+	verify("mult #22", LongInt(-123) * LongInt(789), LongInt(-97047));
+	verify("mult #23", LongInt(-123) * LongInt(-789), LongInt(97047));
+	verify("mult #24", LongInt(6432) * LongInt(12345), LongInt(79403040));
+	verify("mult #25", LongInt(12345) * LongInt(6432), LongInt(79403040));
+	verify("mult #26", LongInt("123456789987654321123456789") * LongInt("987654321123456789987654321"), LongInt("121932632103337905905959456328608443662094193112635269"));
+	verify("mult #27", LongInt("123456789987654321123456789") * LongInt("-987654321123456789987654321"), LongInt("-121932632103337905905959456328608443662094193112635269"));
+	verify("mult #28", LongInt("-123456789987654321123456789") * LongInt("987654321123456789987654321"), LongInt("-121932632103337905905959456328608443662094193112635269"));
+	verify("mult #29", LongInt("-123456789987654321123456789") * LongInt("-987654321123456789987654321"), LongInt("121932632103337905905959456328608443662094193112635269"));
+	verify("mult #30", LongInt(123) *= LongInt(789), LongInt(97047));
+	verify("mult #31", LongInt(123) *= LongInt(-789), LongInt(-97047));
+	verify("mult #32", LongInt(-123) *= LongInt(789), LongInt(-97047));
+	verify("mult #33", LongInt(-123) *= LongInt(-789), LongInt(97047));
+	verify("mult #34", LongInt(6432) *= LongInt(12345), LongInt(79403040));
+	verify("mult #35", LongInt(12345) *= LongInt(6432), LongInt(79403040));
+	verify("mult #36", LongInt("123456789987654321123456789") *= LongInt("987654321123456789987654321"), LongInt("121932632103337905905959456328608443662094193112635269"));
+	verify("mult #37", LongInt("123456789987654321123456789") *= LongInt("-987654321123456789987654321"), LongInt("-121932632103337905905959456328608443662094193112635269"));
+	verify("mult #38", LongInt("-123456789987654321123456789") *= LongInt("987654321123456789987654321"), LongInt("-121932632103337905905959456328608443662094193112635269"));
+	verify("mult #39", LongInt("-123456789987654321123456789") *= LongInt("-987654321123456789987654321"), LongInt("121932632103337905905959456328608443662094193112635269"));
 }
 
 // Test operators /, /=
