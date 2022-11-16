@@ -323,6 +323,16 @@ void Test::test_quotient() {
 	verify("quotient #12", LongInt(12345) / LongInt(-123456789), LongInt(0));
 	verify("quotient #13", LongInt(-12345) / LongInt(123456789), LongInt(0));
 	verify("quotient #14", LongInt(-12345) / LongInt(-123456789), LongInt(0));
+	verify("quotient #15", LongInt(123) / LongInt(5), LongInt(24));
+	verify("quotient #16", LongInt(123) / LongInt(-5), LongInt(-24));
+	verify("quotient #17", LongInt(-123) / LongInt(-5), LongInt(24));
+	verify("quotient #18", LongInt(-123) / LongInt(5), LongInt(-24));
+	verify("quotient #19", LongInt(10) / LongInt(3), LongInt(3));
+	verify("quotient #20", LongInt(-10) / LongInt(4), LongInt(-2));
+	verify("quotient #21", LongInt(123456789) / LongInt(123), LongInt(1003713));
+	verify("quotient #22", LongInt(123456789) / LongInt(12345), LongInt(10000));
+	verify("quotient #23", LongInt(-12345678987654321) / LongInt(123456789), LongInt(-100000000));
+	verify("quotient #24", LongInt(123456789) / LongInt(-987), LongInt(-125082));
 }
 
 // Test operators %, %=

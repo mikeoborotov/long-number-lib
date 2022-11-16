@@ -759,6 +759,7 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 	if (secondNum._digits[secondNum.size() - 1] != 1) {
 		isPowerOfTen = false;
 	}
+	// Algorithm
 	lidiv_t result;
 	result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
 	result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
@@ -774,10 +775,21 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		result.rem._positive = firstNum.isPositive();
 	} else {
 		// General division
+		result.rem = firstNum.abs();
+		LongInt divisor = secondNum.abs();
 		long long sizeDiff = firstNum.size() - secondNum.size();
-		LongInt firstNumAbs = firstNum.abs();
-		LongInt secondNumAbs = secondNum.abs();
-
+		while (sizeDiff >= 0) {
+			LongInt remStep = divisor * pow(LongInt(10), sizeDiff);
+			while (result.rem >= remStep) {
+				result.quot += pow(LongInt(10), sizeDiff);
+				result.rem -= remStep;
+			}
+			sizeDiff--;
+		}
+		//result.rem = firstNumAbs;
+		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
+		result.rem._positive = firstNum.isPositive();
+		return result;
 	}
 	return result;
 }
