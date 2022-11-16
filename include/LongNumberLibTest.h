@@ -436,6 +436,17 @@ void Test::test_pow() {
 	verify("pow #6", LongInt::pow(LongInt(1000), LongInt(3)), LongInt(1000000000));
 	verify("pow #7", LongInt::pow(LongInt(-100), LongInt(3)), LongInt(-1000000));
 	verify("pow #8", LongInt::pow(LongInt(-100), LongInt(4)), LongInt(100000000));
+	verify("pow #9", LongInt::pow(LongInt(0), LongInt(123456789)), LongInt(0));
+	verify("pow #10", LongInt::pow(LongInt(1), LongInt(123456789)), LongInt(1));
+	verify("pow #11", LongInt::pow(LongInt(-1), LongInt(123456789)), LongInt(-1));
+	verify("pow #12", LongInt::pow(LongInt(-2), LongInt(0)), LongInt(1));
+	verify("pow #13", LongInt::pow(LongInt(-2), LongInt(1)), LongInt(-2));
+	verify("pow #14", LongInt::pow(LongInt(-2), LongInt(2)), LongInt(4));
+	verify("pow #15", LongInt::pow(LongInt(-2), LongInt(7)), LongInt(-128));
+	verify("pow #16", LongInt::pow(LongInt(-2), LongInt(10)), LongInt(1024));
+	verify("pow #17", LongInt::pow(LongInt(123), LongInt(10)), LongInt("792594609605189126649"));
+	verify("pow #18", LongInt::pow(LongInt(123), LongInt(32)), LongInt("7532923656948158115977791009617077340797226775839122176340459265921"));
+	verify("pow #19", LongInt::pow(LongInt(-123), LongInt(47)), LongInt("-168089365432861366649544350793392541075881428948402902169684248440774393337801463143123536109842547"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")

@@ -759,12 +759,23 @@ LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
 	if (secondNum.isOne()) {
 		return firstNum;
 	}
+	// If 0 in some power
+	if (firstNum.isZero()) {
+		return LongInt(0);
+	}
+	// If 1 or -1 in some power
+	if (isOne(abs(firstNum))) {
+		if (secondNum.isEven()) {
+			firstNum._positive = true;
+		}
+		return firstNum;
+	}
 	// Checking if firstNum is a 10 to some power
 	isPowerOfTen_t firstInfo = _isPowerOfTen(firstNum);
 	// Algorithm
 	LongInt result;
+	result = firstNum;
 	if (firstInfo.isPowerOfTen) {
-		result = firstNum;
 		// Checking result sign
 		if (firstNum.isNegative() and secondNum.isEven()) {
 			result._positive = true;
@@ -779,7 +790,12 @@ LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
 			secondNum--;
 		}
 		std::reverse(result._digits.begin(), result._digits.end());
-		return result;
+	} else {
+		// General case pow()
+		while (secondNum > LongInt(1)) {
+			result *= firstNum;
+			secondNum--;
+		}
 	}
 	return result;
 }
