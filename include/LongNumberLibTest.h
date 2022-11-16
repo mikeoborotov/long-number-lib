@@ -38,6 +38,7 @@ public:
 	static void test_remainder(); // Test operators %, %=
 	static void test_unaryOperators(); // Test unary operators +, -, ++, --
 	static void test_pow(); // Test pow() function
+	static void test_factorial(); // Test factorial() function
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -92,6 +93,7 @@ void Test::runAllTests() {
 	test_remainder();
 	test_unaryOperators();
 	test_pow();
+	test_factorial();
 }
 
 // Print out test report
@@ -447,6 +449,23 @@ void Test::test_pow() {
 	verify("pow #17", LongInt::pow(LongInt(123), LongInt(10)), LongInt("792594609605189126649"));
 	verify("pow #18", LongInt::pow(LongInt(123), LongInt(32)), LongInt("7532923656948158115977791009617077340797226775839122176340459265921"));
 	verify("pow #19", LongInt::pow(LongInt(-123), LongInt(47)), LongInt("-168089365432861366649544350793392541075881428948402902169684248440774393337801463143123536109842547"));
+}
+
+// Test factorial() function
+void Test::test_factorial() {
+	verify("factorial #1", LongInt::factorial(LongInt(0)), LongInt(1));
+	verify("factorial #2", LongInt::factorial(LongInt(1)), LongInt(1));
+	verify("factorial #3", LongInt::factorial(LongInt(2)), LongInt(2));
+	verify("factorial #4", LongInt::factorial(LongInt(3)), LongInt(6));
+	verify("factorial #5", LongInt::factorial(LongInt(4)), LongInt(24));
+	verify("factorial #6", LongInt::factorial(LongInt(5)), LongInt(120));
+	verify("factorial #7", LongInt::factorial(LongInt(6)), LongInt(720));
+	verify("factorial #8", LongInt::factorial(LongInt(7)), LongInt(5040));
+	verify("factorial #9", LongInt::factorial(LongInt(8)), LongInt(40320));
+	verify("factorial #10", LongInt::factorial(LongInt(9)), LongInt(362880));
+	verify("factorial #11", LongInt::factorial(LongInt(10)), LongInt(3628800));
+	verify("factorial #12", LongInt::factorial(LongInt(20)), LongInt("2432902008176640000"));
+	verify("factorial #13", LongInt::factorial(LongInt(30)), LongInt("265252859812191058636308480000000"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")

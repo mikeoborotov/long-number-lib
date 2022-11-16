@@ -97,6 +97,7 @@ public:
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
 	static LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
 	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
+	static LongInt factorial(LongInt number); // Factorial of a number
 	void print(); // Print number, its size and sign (mainly for debug)
 };
 
@@ -861,6 +862,15 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
 		result.rem._positive = firstNum.isPositive();
 		return result;
+	}
+	return result;
+}
+
+// Factorial of a number
+LongInt LongInt::factorial(LongInt number) {
+	LongInt result(1);
+	for (LongInt i = 1; i <= number; i++) {
+		result *= i;
 	}
 	return result;
 }
