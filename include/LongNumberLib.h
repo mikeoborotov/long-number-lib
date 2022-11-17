@@ -21,12 +21,12 @@ private:
 	void _checkLeadingZeroes(); // Remove leading zeroes
 	void _checkDigitOverflow(); // Correct digits if they are beyond 9 or below 0
 	void _checkNegativeZero(); // Correct -0 to 0
-	static int _compare(LongInt firstNum, LongInt secondNum); // Compare numbers
-	static LongInt _sumAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
-	static LongInt _diffAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
-	static LongInt _multAux(LongInt biggerNum, LongInt smallerNum); // Auxiliary function
+	static int _compare(const LongInt& firstNum, const LongInt& secondNum); // Compare numbers
+	static LongInt _sumAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
+	static LongInt _diffAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
+	static LongInt _multAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
 	static LongInt _karatsubaAlg(LongInt firstNum, LongInt secondNum); // Karatsuba algorithm
-	static isPowerOfTen_t _isPowerOfTen(LongInt number); // Is number a power of 10?
+	static isPowerOfTen_t _isPowerOfTen(const LongInt& number); // Is number a power of 10?
 public:
 	LongInt(); // Default constructor
 	LongInt(signed short input); // Constructor for short
@@ -48,16 +48,16 @@ public:
 	bool isOne() const; // Is number equal to 1?
 	bool isPositive() const; // Is number positive?
 	bool isNegative() const; // Is number negative?
-	friend std::string getString(LongInt number); // Get number value as a string
+	friend std::string getString(const LongInt& number); // Get number value as a string
 	friend LongInt abs(const LongInt& number); // Get absolute number value
-	friend long long size(LongInt number); // Get number size
-	friend long long length(LongInt number); // Get number size
-	friend bool isEven(LongInt number); // Is number even?
-	friend bool isOdd(LongInt number); // Is number odd?
-	friend bool isZero(LongInt number); // Is number equal to 0?
-	friend bool isOne(LongInt number); // Is number equal to 1?
-	friend bool isPositive(LongInt number); // Is number positive?
-	friend bool isNegative(LongInt number); // Is number negative?
+	friend long long size(const LongInt& number); // Get number size
+	friend long long length(const LongInt& number); // Get number size
+	friend bool isEven(const LongInt& number); // Is number even?
+	friend bool isOdd(const LongInt& number); // Is number odd?
+	friend bool isZero(const LongInt& number); // Is number equal to 0?
+	friend bool isOne(const LongInt& number); // Is number equal to 1?
+	friend bool isPositive(const LongInt& number); // Is number positive?
+	friend bool isNegative(const LongInt& number); // Is number negative?
 	friend std::istream& operator >>(std::istream& in, LongInt& number); // Input stream operator
 	friend std::ostream& operator <<(std::ostream& out, const LongInt& number); // Output stream operator
 	LongInt operator =(signed short input); // Set number value with short
@@ -69,15 +69,15 @@ public:
 	LongInt operator =(signed long long input); // Set number value with long long
 	LongInt operator =(unsigned long long input); // Set number value with unsigned long long
 	LongInt operator =(std::string input); // Set number value with string
-	LongInt operator =(LongInt input); // Set number value with LongInt
-	bool operator ==(LongInt secondNum); // Is this number equal to 2nd?
-	bool operator !=(LongInt secondNum); // Is this number not equal to 2nd?
-	bool operator >(LongInt secondNum); // Is this number greater than 2nd?
-	bool operator >=(LongInt secondNum); // Is this number greater or equal to 2nd?
-	bool operator <(LongInt secondNum); // Is this number less than 2nd?
-	bool operator <=(LongInt secondNum); // Is this number less or equal to 2nd?
-	friend LongInt max(LongInt firstNum, LongInt secondNum); // Return max number
-	friend LongInt min(LongInt firstNum, LongInt secondNum); // Return min number
+	LongInt operator =(const LongInt& input); // Set number value with LongInt
+	bool operator ==(const LongInt& secondNum) const; // Is this number equal to 2nd?
+	bool operator !=(const LongInt& secondNum) const; // Is this number not equal to 2nd?
+	bool operator >(const LongInt& secondNum) const; // Is this number greater than 2nd?
+	bool operator >=(const LongInt& secondNum) const; // Is this number greater or equal to 2nd?
+	bool operator <(const LongInt& secondNum) const; // Is this number less than 2nd?
+	bool operator <=(const LongInt& secondNum) const; // Is this number less or equal to 2nd?
+	friend LongInt max(const LongInt& firstNum, const LongInt& secondNum); // Return max number
+	friend LongInt min(const LongInt& firstNum, const LongInt& secondNum); // Return min number
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
 	LongInt operator *(LongInt secondNum); // Product of 2 numbers
@@ -99,7 +99,7 @@ public:
 	friend LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
 	friend LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
 	friend LongInt lcm(LongInt firstNum, LongInt secondNum); // Least common multiple
-	friend LongInt factorial(LongInt number); // Factorial of a number
+	friend LongInt factorial(const LongInt& number); // Factorial of a number
 };
 
 // Structure for quotient and remainder for LongInt div() function
@@ -156,7 +156,7 @@ void LongInt::_checkNegativeZero() {
 
 // Compare 2 LongInt numbers (1st relative to 2nd)
 // Returns: 1 -> greater, 0 -> equal, -1 -> less
-int LongInt::_compare(LongInt firstNum, LongInt secondNum) {
+int LongInt::_compare(const LongInt& firstNum, const LongInt& secondNum) {
 	// Signs: + -
 	if (firstNum.isPositive() and secondNum.isNegative()) {
 		return 1;
@@ -202,9 +202,8 @@ int LongInt::_compare(LongInt firstNum, LongInt secondNum) {
 
 // Auxiliary function for sum()
 // Sums 2 positive numbers (biggerNum >= smallerNum)
-LongInt LongInt::_sumAux(LongInt biggerNum, LongInt smallerNum) {
-	LongInt result;
-	result = biggerNum;
+LongInt LongInt::_sumAux(const LongInt& biggerNum, const LongInt& smallerNum) {
+	LongInt result = biggerNum;
 	for (long long i = 0; i < smallerNum.size(); i++) {
 		result._digits[i] += smallerNum._digits[i];
 	}
@@ -214,9 +213,8 @@ LongInt LongInt::_sumAux(LongInt biggerNum, LongInt smallerNum) {
 
 // Auxiliary function for sum()
 // Finds the difference of 2 positive numbers (biggerNum >= smallerNum)
-LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
-	LongInt result;
-	result = biggerNum;
+LongInt LongInt::_diffAux(const LongInt& biggerNum, const LongInt& smallerNum) {
+	LongInt result = biggerNum;
 	for (long long i = 0; i < smallerNum.size(); i++) {
 		result._digits[i] -= smallerNum._digits[i];
 	}
@@ -226,9 +224,8 @@ LongInt LongInt::_diffAux(LongInt biggerNum, LongInt smallerNum) {
 }
 
 // Auxiliary function (smallerNum length = 1)
-LongInt LongInt::_multAux(LongInt biggerNum, LongInt smallerNum) {
-	LongInt result;
-	result = biggerNum;
+LongInt LongInt::_multAux(const LongInt& biggerNum, const LongInt& smallerNum) {
+	LongInt result = biggerNum;
 	for (long long i = 0; i < result.size(); i++) {
 		result._digits[i] *= smallerNum._digits.front();
 	}
@@ -262,7 +259,7 @@ LongInt LongInt::_karatsubaAlg(LongInt firstNum, LongInt secondNum) {
 }
 
 // Is number a power of 10?
-isPowerOfTen_t LongInt::_isPowerOfTen(LongInt number) {
+isPowerOfTen_t LongInt::_isPowerOfTen(const LongInt& number) {
 	bool isPowerOfTen = true;
 	long long power = 0;
 	for (long long i = 0; i < number.size() - 1; i++) {
@@ -398,7 +395,7 @@ bool LongInt::isNegative() const {
 }
 
 // Get number value as a string
-std::string getString(LongInt number) {
+std::string getString(const LongInt& number) {
 	return number.getString();
 }
 
@@ -408,42 +405,42 @@ LongInt abs(const LongInt& number) {
 }
 
 // Get number size
-long long size(LongInt number) {
+long long size(const LongInt& number) {
 	return number.size();
 }
 
 // Get number size, synonym to size()
-long long length(LongInt number) {
+long long length(const LongInt& number) {
 	return number.length();
 }
 
 // Is number even?
-bool isEven(LongInt number) {
+bool isEven(const LongInt& number) {
 	return number.isEven();
 }
 
 // Is number odd?
-bool isOdd(LongInt number) {
+bool isOdd(const LongInt& number) {
 	return number.isOdd();
 }
 
 // Is number equal to 0?
-bool isZero(LongInt number){
+bool isZero(const LongInt& number){
 	return number.isZero();
 }
 
 // Is number equal to 1?
-bool isOne(LongInt number) {
+bool isOne(const LongInt& number) {
 	return number.isOne();
 }
 
 // Is number positive?
-bool isPositive(LongInt number) {
+bool isPositive(const LongInt& number) {
 	return number.isPositive();
 }
 
 // Is number negative?
-bool isNegative(LongInt number) {
+bool isNegative(const LongInt& number) {
 	return number.isNegative();
 }
 
@@ -536,7 +533,7 @@ LongInt LongInt::operator =(std::string input) {
 }
 
 // Set number value with LongInt
-LongInt LongInt::operator =(LongInt input) {
+LongInt LongInt::operator =(const LongInt& input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	_digits = input._digits;
 	_positive = input._positive;
@@ -544,7 +541,7 @@ LongInt LongInt::operator =(LongInt input) {
 }
 
 // Is this number equal to 2nd?
-bool LongInt::operator ==(LongInt secondNum) {
+bool LongInt::operator ==(const LongInt& secondNum) const {
 	if ((this->isPositive() != secondNum.isPositive()) or (this->size() != secondNum.size())) {
 		return false;
 	}
@@ -557,12 +554,12 @@ bool LongInt::operator ==(LongInt secondNum) {
 }
 
 // Is this number not equal to 2nd?
-bool LongInt::operator !=(LongInt secondNum) {
+bool LongInt::operator !=(const LongInt& secondNum) const {
 	return !(*this == secondNum);
 }
 
 // Is this number greater than 2nd?
-bool LongInt::operator >(LongInt secondNum) {
+bool LongInt::operator >(const LongInt& secondNum) const {
 	switch(LongInt::_compare(*this, secondNum)) {
 		case 1: return true; // Greater
 		case 0: return false; // Equal
@@ -572,7 +569,7 @@ bool LongInt::operator >(LongInt secondNum) {
 }
 
 // Is this number greater or equal to 2nd?
-bool LongInt::operator >=(LongInt secondNum) {
+bool LongInt::operator >=(const LongInt& secondNum) const {
 	switch(LongInt::_compare(*this, secondNum)) {
 		case 1: return true; // Greater
 		case 0: return true; // Equal
@@ -582,7 +579,7 @@ bool LongInt::operator >=(LongInt secondNum) {
 }
 
 // Is this number less than 2nd?
-bool LongInt::operator <(LongInt secondNum) {
+bool LongInt::operator <(const LongInt& secondNum) const {
 	switch(LongInt::_compare(*this, secondNum)) {
 		case 1: return false; // Greater
 		case 0: return false; // Equal
@@ -592,7 +589,7 @@ bool LongInt::operator <(LongInt secondNum) {
 }
 
 // Is this number less or equal to 2nd?
-bool LongInt::operator <=(LongInt secondNum) {
+bool LongInt::operator <=(const LongInt& secondNum) const {
 	switch(LongInt::_compare(*this, secondNum)) {
 		case 1: return false; // Greater
 		case 0: return true; // Equal
@@ -602,7 +599,7 @@ bool LongInt::operator <=(LongInt secondNum) {
 }
 
 // Return max number
-LongInt max(LongInt firstNum, LongInt secondNum) {
+LongInt max(const LongInt& firstNum, const LongInt& secondNum) {
 	if (firstNum >= secondNum) {
 		return firstNum;
 	}
@@ -610,7 +607,7 @@ LongInt max(LongInt firstNum, LongInt secondNum) {
 }
 
 // Return min number
-LongInt min(LongInt firstNum, LongInt secondNum) {
+LongInt min(const LongInt& firstNum, const LongInt& secondNum) {
 	if (firstNum <= secondNum) {
 		return firstNum;
 	}
@@ -950,7 +947,7 @@ LongInt lcm(LongInt firstNum, LongInt secondNum) {
 }
 
 // Factorial of a number
-LongInt factorial(LongInt number) {
+LongInt factorial(const LongInt& number) {
 	LongInt result(1);
 	for (LongInt i = 1; i <= number; i++) {
 		result *= i;
