@@ -38,6 +38,7 @@ public:
 	static void test_remainder(); // Test operators %, %=
 	static void test_unaryOperators(); // Test unary operators +, -, ++, --
 	static void test_pow(); // Test pow() function
+	static void test_mod(); // Test mod() function
 	static void test_factorial(); // Test factorial() function
 };
 
@@ -93,6 +94,7 @@ void Test::runAllTests() {
 	test_remainder();
 	test_unaryOperators();
 	test_pow();
+	test_mod();
 	test_factorial();
 }
 
@@ -449,6 +451,30 @@ void Test::test_pow() {
 	verify("pow #17", LongInt::pow(LongInt(123), LongInt(10)), LongInt("792594609605189126649"));
 	verify("pow #18", LongInt::pow(LongInt(123), LongInt(32)), LongInt("7532923656948158115977791009617077340797226775839122176340459265921"));
 	verify("pow #19", LongInt::pow(LongInt(-123), LongInt(47)), LongInt("-168089365432861366649544350793392541075881428948402902169684248440774393337801463143123536109842547"));
+}
+
+// Test mod() function
+void Test::test_mod() {
+	verify("mod #1", LongInt::mod(LongInt(5), LongInt(16)), LongInt(5));
+	verify("mod #2", LongInt::mod(LongInt(5), LongInt(-16)), LongInt(-11));
+	verify("mod #3", LongInt::mod(LongInt(-5), LongInt(16)), LongInt(11));
+	verify("mod #4", LongInt::mod(LongInt(-5), LongInt(-16)), LongInt(-5));
+	verify("mod #5", LongInt::mod(LongInt(0), LongInt(16)), LongInt(0));
+	verify("mod #6", LongInt::mod(LongInt(0), LongInt(-16)), LongInt(0));
+	verify("mod #7", LongInt::mod(LongInt(16), LongInt(0)), LongInt(0));
+	verify("mod #8", LongInt::mod(LongInt(-16), LongInt(0)), LongInt(0));
+	verify("mod #9", LongInt::mod(LongInt(15), LongInt(27)), LongInt(15));
+	verify("mod #10", LongInt::mod(LongInt(15), LongInt(-27)), LongInt(-12));
+	verify("mod #11", LongInt::mod(LongInt(-15), LongInt(27)), LongInt(12));
+	verify("mod #12", LongInt::mod(LongInt(-15), LongInt(-27)), LongInt(-15));
+	verify("mod #13", LongInt::mod(LongInt(123), LongInt(17)), LongInt(4));
+	verify("mod #14", LongInt::mod(LongInt(123), LongInt(-17)), LongInt(-13));
+	verify("mod #15", LongInt::mod(LongInt(-123), LongInt(17)), LongInt(13));
+	verify("mod #16", LongInt::mod(LongInt(-123), LongInt(-17)), LongInt(-4));
+	verify("mod #17", LongInt::mod(LongInt(123456789), LongInt(987)), LongInt(855));
+	verify("mod #18", LongInt::mod(LongInt(123456789), LongInt(-987)), LongInt(-132));
+	verify("mod #19", LongInt::mod(LongInt(-123456789), LongInt(987)), LongInt(132));
+	verify("mod #20", LongInt::mod(LongInt(-123456789), LongInt(-987)), LongInt(-855));
 }
 
 // Test factorial() function

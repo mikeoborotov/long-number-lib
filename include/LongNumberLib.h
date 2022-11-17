@@ -97,6 +97,7 @@ public:
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
 	static LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
 	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
+	static LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
 	static LongInt factorial(LongInt number); // Factorial of a number
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -862,6 +863,36 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
 		result.rem._positive = firstNum.isPositive();
 		return result;
+	}
+	return result;
+}
+
+// Modulo
+LongInt LongInt::mod(LongInt firstNum, LongInt secondNum) {
+	LongInt result;
+	// If modulo zero
+	if (secondNum.isZero()) {
+		std::cout << "ERROR: Modulo zero is an undefined value!\n";
+		return result;
+	}
+	// If modulo of zero
+	if (firstNum.isZero()) {
+		return firstNum;
+	}
+	// If no need for division
+	if (firstNum.abs() < secondNum.abs()) {
+		result = firstNum;
+		if (firstNum.isPositive() != secondNum.isPositive()) {
+			result += secondNum;
+		}
+		return result;
+	} else {
+		// If firstNum is bigger or equal to secondNum
+		lidiv_t divResults = div(firstNum, secondNum);
+		if (firstNum.isPositive() != secondNum.isPositive()) {
+			divResults.rem += secondNum;
+		}
+		return divResults.rem;
 	}
 	return result;
 }
