@@ -41,7 +41,7 @@ public:
 	LongInt(signed long long input); // Constructor for long long
 	LongInt(unsigned long long input); // Constructor for unsigned long long
 	LongInt(std::string input); // Constructor for string
-	std::string getString(); // Get number value as a string
+	std::string getString() const; // Get number value as a string
 	LongInt abs(); // Get absolute number value
 	long long size(); // Get number size
 	long long length(); // Get number size
@@ -49,8 +49,8 @@ public:
 	bool isOdd(); // Is number odd?
 	bool isZero(); // Is number equal to 0?
 	bool isOne(); // Is number equal to 1?
-	bool isPositive(); // Is number positive?
-	bool isNegative(); // Is number negative?
+	bool isPositive() const; // Is number positive?
+	bool isNegative() const; // Is number negative?
 	static std::string getString(LongInt number); // Get number value as a string
 	static LongInt abs(LongInt number); // Get absolute number value
 	static long long size(LongInt number); // Get number size
@@ -61,7 +61,8 @@ public:
 	static bool isOne(LongInt number); // Is number equal to 1?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
-	friend std::ostream& operator <<(std::ostream& out, LongInt number); // Output stream operator
+	friend std::istream& operator >>(std::istream& in, LongInt& number); // Input stream operator
+	friend std::ostream& operator <<(std::ostream& out, const LongInt& number); // Output stream operator
 	LongInt operator =(signed short input); // Set number value with short
 	LongInt operator =(unsigned short input); // Set number value with unsigned short
 	LongInt operator =(signed int input); // Set number value with int
@@ -333,7 +334,7 @@ LongInt::LongInt(std::string input) {
 }
 
 // Get number as a string
-std::string LongInt::getString() {
+std::string LongInt::getString() const {
 	std::string output;
 	for (const auto &digit: _digits) {
 		output.push_back(digit + '0');
@@ -390,12 +391,12 @@ bool LongInt::isOne() {
 }
 
 // Is number positive?
-bool LongInt::isPositive() {
+bool LongInt::isPositive() const {
 	return _positive;
 }
 
 // Is number negative?
-bool LongInt::isNegative() {
+bool LongInt::isNegative() const {
 	return !_positive;
 }
 
@@ -445,12 +446,20 @@ bool LongInt::isPositive(LongInt number) {
 }
 
 // Is number negative?
-static bool isNegative(LongInt number) {
+bool LongInt::isNegative(LongInt number) {
 	return number.isNegative();
 }
 
+// Input stream operator
+std::istream& operator >>(std::istream& in, LongInt& number) {
+	std::string input;
+	in >> input;
+	number = input;
+	return in;
+}
+
 // Output stream operator
-std::ostream& operator <<(std::ostream& out, LongInt number) {
+std::ostream& operator <<(std::ostream& out, const LongInt& number) {
 	out << number.getString();
 	return out;
 }
