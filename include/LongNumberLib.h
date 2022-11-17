@@ -25,7 +25,7 @@ private:
 	static LongInt _sumAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
 	static LongInt _diffAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
 	static LongInt _multAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
-	static LongInt _karatsubaAlg(LongInt firstNum, LongInt secondNum); // Karatsuba algorithm
+	static LongInt _karatsubaAlg(const LongInt& firstNum, const LongInt& secondNum); // Karatsuba algorithm
 	static isPowerOfTen_t _isPowerOfTen(const LongInt& number); // Is number a power of 10?
 public:
 	LongInt(); // Default constructor
@@ -37,7 +37,7 @@ public:
 	LongInt(unsigned long input); // Constructor for unsigned long
 	LongInt(signed long long input); // Constructor for long long
 	LongInt(unsigned long long input); // Constructor for unsigned long long
-	LongInt(std::string input); // Constructor for string
+	LongInt(const std::string& input); // Constructor for string
 	std::string getString() const; // Get number value as a string
 	LongInt abs() const; // Get absolute number value
 	long long size() const; // Get number size
@@ -68,7 +68,7 @@ public:
 	LongInt operator =(unsigned long input); // Set number value with unsigned long
 	LongInt operator =(signed long long input); // Set number value with long long
 	LongInt operator =(unsigned long long input); // Set number value with unsigned long long
-	LongInt operator =(std::string input); // Set number value with string
+	LongInt operator =(const std::string& input); // Set number value with string
 	LongInt operator =(const LongInt& input); // Set number value with LongInt
 	bool operator ==(const LongInt& secondNum) const; // Is this number equal to 2nd?
 	bool operator !=(const LongInt& secondNum) const; // Is this number not equal to 2nd?
@@ -78,27 +78,27 @@ public:
 	bool operator <=(const LongInt& secondNum) const; // Is this number less or equal to 2nd?
 	friend LongInt max(const LongInt& firstNum, const LongInt& secondNum); // Return max number
 	friend LongInt min(const LongInt& firstNum, const LongInt& secondNum); // Return min number
-	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
-	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
-	LongInt operator *(LongInt secondNum); // Product of 2 numbers
-	LongInt operator /(LongInt secondNum); // Quotient of 2 numbers division
-	LongInt operator %(LongInt secondNum); // Remainder of 2 numbers division
-	LongInt operator +=(LongInt secondNum); // Add another number
-	LongInt operator -=(LongInt secondNum); // Subtract another number
-	LongInt operator *=(LongInt secondNum); // Multiply by another number
-	LongInt operator /=(LongInt secondNum); // Divide by another number
-	LongInt operator %=(LongInt secondNum); // Remainder of division by another number
+	LongInt operator +(const LongInt& secondNum) const; // Sum of 2 numbers
+	LongInt operator -(const LongInt& secondNum) const; // Difference of 2 numbers
+	LongInt operator *(const LongInt& secondNum) const; // Product of 2 numbers
+	LongInt operator /(const LongInt& secondNum) const; // Quotient of 2 numbers division
+	LongInt operator %(const LongInt& secondNum) const; // Remainder of 2 numbers division
+	LongInt operator +=(const LongInt& secondNum); // Add another number
+	LongInt operator -=(const LongInt& secondNum); // Subtract another number
+	LongInt operator *=(const LongInt& secondNum); // Multiply by another number
+	LongInt operator /=(const LongInt& secondNum); // Divide by another number
+	LongInt operator %=(const LongInt& secondNum); // Remainder of division by another number
 	LongInt operator +(); // Return this number (unary plus)
 	LongInt operator ++(); // Add 1 to the number (prefix)
 	LongInt operator ++(int); // Add 1 to the number (postfix)
 	LongInt operator -(); // Return opposite sign number (unary minus)
 	LongInt operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
-	friend LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
-	friend lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
-	friend LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
-	friend LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
-	friend LongInt lcm(LongInt firstNum, LongInt secondNum); // Least common multiple
+	friend LongInt pow(const LongInt& firstNum, const LongInt& secondNum); // firstNum to the power of secondNum
+	friend lidiv_t div(const LongInt& firstNum, const LongInt& secondNum); // Division
+	friend LongInt mod(const LongInt& firstNum, const LongInt& secondNum); // Modulo
+	friend LongInt gcd(const LongInt& firstNum, const LongInt& secondNum); // Greatest common divisor
+	friend LongInt lcm(const LongInt& firstNum, const LongInt& secondNum); // Least common multiple
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
 };
 
@@ -235,7 +235,7 @@ LongInt LongInt::_multAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 }
 
 // Karatsuba algorithm (firstNum and secondNum are absolute values)
-LongInt LongInt::_karatsubaAlg(LongInt firstNum, LongInt secondNum) {
+LongInt LongInt::_karatsubaAlg(const LongInt& firstNum, const LongInt& secondNum) {
 	// If one of the numbers is 1 digit long
 	if (firstNum.size() == 1) {
 		return _multAux(secondNum, firstNum);
@@ -323,7 +323,7 @@ LongInt::LongInt(unsigned long long input) {
 }
 
 // Constructor for string
-LongInt::LongInt(std::string input) {
+LongInt::LongInt(const std::string& input) {
 	*this = input;
 }
 
@@ -507,24 +507,26 @@ LongInt LongInt::operator =(unsigned long long input) {
 }
 
 // Set number value with string
-LongInt LongInt::operator =(std::string input) {
+LongInt LongInt::operator =(const std::string& input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	if (input.substr(0, 1) == "-") {
 		_positive = false;
-		input = input.substr(1, input.size());
 	} else {
 		_positive = true;
 	}
-	for (const auto &digit: input) {
+	for (long long i = 0; i < input.size(); i++) {
+		if ((i == 0) and !_positive) {
+			continue;
+		}
 		// In case of a non-digit character
-		if ((digit < 48) or (digit > 57)) {
+		if ((input[i] < 48) or (input[i]  > 57)) {
 			*this = "0";
-			std::cout << "ERROR: A non-digit character \"" << digit;
+			std::cout << "ERROR: A non-digit character \"" << input[i] ;
 			std::cout << "\" is encountered when assigning a value of a LongInt with a string.";
 			std::cout << " Value is set to 0 by default.\n";
 			return *this;
 		}
-		_digits.push_back(digit - '0');
+		_digits.push_back(input[i] - '0');
 	}
 	std::reverse(_digits.begin(), _digits.end());
 	_checkLeadingZeroes();
@@ -615,7 +617,7 @@ LongInt min(const LongInt& firstNum, const LongInt& secondNum) {
 }
 
 // Sum of 2 numbers
-LongInt LongInt::operator +(LongInt secondNum) {
+LongInt LongInt::operator +(const LongInt& secondNum) const {
 	LongInt result;
 	if (this->isPositive() == secondNum.isPositive()) {
 		// If (+,+) or (-,-)
@@ -646,13 +648,14 @@ LongInt LongInt::operator +(LongInt secondNum) {
 }
 
 // Difference of 2 numbers
-LongInt LongInt::operator -(LongInt secondNum) {
-	secondNum._positive = !secondNum.isPositive();
-	return *this + secondNum;
+LongInt LongInt::operator -(const LongInt& secondNum) const {
+	LongInt temp = secondNum;
+	temp._positive = !temp.isPositive();
+	return *this + temp;
 }
 
 // Product of 2 numbers
-LongInt LongInt::operator *(LongInt secondNum) {
+LongInt LongInt::operator *(const LongInt& secondNum) const {
 	// Checking multiplication by zero
 	if (this->isZero() or secondNum.isZero()) {
 		return LongInt(0);
@@ -692,39 +695,39 @@ LongInt LongInt::operator *(LongInt secondNum) {
 }
 
 // Quotient of 2 numbers
-LongInt LongInt::operator /(LongInt secondNum) {
+LongInt LongInt::operator /(const LongInt& secondNum) const {
 	lidiv_t temp = div(*this, secondNum);
 	return temp.quot;
 }
 
 // Remainder of 2 numbers division
-LongInt LongInt::operator %(LongInt secondNum) {
+LongInt LongInt::operator %(const LongInt& secondNum) const {
 	lidiv_t temp = div(*this, secondNum);
 	return temp.rem;
 }
 
 // Add another number
-LongInt LongInt::operator +=(LongInt secondNum) {
+LongInt LongInt::operator +=(const LongInt& secondNum) {
 	return *this = *this + secondNum;
 }
 
 // Subtract another number
-LongInt LongInt::operator -=(LongInt secondNum) {
+LongInt LongInt::operator -=(const LongInt& secondNum) {
 	return *this = *this - secondNum;
 }
 
 // Multiply by another number
-LongInt LongInt::operator *=(LongInt secondNum) {
+LongInt LongInt::operator *=(const LongInt& secondNum) {
 	return *this = *this * secondNum;
 }
 
 // Divide by another number
-LongInt LongInt::operator /=(LongInt secondNum) {
+LongInt LongInt::operator /=(const LongInt& secondNum) {
 	return *this = *this / secondNum;
 }
 
 // Remainder of division by another number
-LongInt LongInt::operator %=(LongInt secondNum) {
+LongInt LongInt::operator %=(const LongInt& secondNum) {
 	return *this = *this % secondNum;
 }
 
@@ -763,58 +766,61 @@ LongInt LongInt::operator --(int) {
 }
 
 // firstNum to the power of secondNum
-LongInt pow(LongInt firstNum, LongInt secondNum) {
+LongInt pow(const LongInt& firstNum, const LongInt& secondNum) {
+	LongInt result;
+	LongInt first = firstNum;
+	LongInt second = secondNum;
 	// If in to the power of 0
-	if (secondNum.isZero()) {
+	if (second.isZero()) {
 		return LongInt(1);
 	}
 	// If in to the power of 1
-	if (secondNum.isOne()) {
-		return firstNum;
+	if (second.isOne()) {
+		return first;
 	}
 	// If 0 in some power
-	if (firstNum.isZero()) {
+	if (first.isZero()) {
 		return LongInt(0);
 	}
 	// If 1 or -1 in some power
-	if (isOne(abs(firstNum))) {
-		if (secondNum.isEven()) {
-			firstNum._positive = true;
+	if (isOne(abs(first))) {
+		if (second.isEven()) {
+			first._positive = true;
 		}
-		return firstNum;
+		return first;
 	}
 	// Checking if firstNum is a 10 to some power
-	isPowerOfTen_t firstInfo = LongInt::_isPowerOfTen(firstNum);
+	isPowerOfTen_t firstInfo = LongInt::_isPowerOfTen(first);
 	// Algorithm
-	LongInt result;
-	result = firstNum;
+	result = first;
 	if (firstInfo.isPowerOfTen) {
 		// Checking result sign
-		if (firstNum.isNegative() and secondNum.isEven()) {
+		if (first.isNegative() and second.isEven()) {
 			result._positive = true;
 		}
-		secondNum--;
+		second--;
 		// If firstNum is a 10 in some power
 		std::reverse(result._digits.begin(), result._digits.end());
-		while (secondNum > LongInt(0)) {
+		while (second > LongInt(0)) {
 			for (long long i = 0; i < firstInfo.power; i++) {
 				result._digits.push_back(0);
 			}
-			secondNum--;
+			second--;
 		}
 		std::reverse(result._digits.begin(), result._digits.end());
 	} else {
 		// General case pow()
-		while (secondNum > LongInt(1)) {
-			result *= firstNum;
-			secondNum--;
+		while (second > LongInt(1)) {
+			result *= first;
+			second--;
 		}
 	}
 	return result;
 }
 
 // Division
-lidiv_t div(LongInt firstNum, LongInt secondNum) {
+lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
+	lidiv_t result;
 	// Checking division by zero
 	if (secondNum == LongInt(0)) {
 		std::cout << "ERROR: Division by zero!\n";
@@ -825,8 +831,10 @@ lidiv_t div(LongInt firstNum, LongInt secondNum) {
 		if (secondNum.isPositive()) {
 			return {firstNum, LongInt(0)};
 		} else {
-			firstNum._positive = false;
-			return {firstNum, LongInt(0)};
+			result.quot = firstNum;
+			result.quot._positive = false;
+			result.rem = LongInt(0);
+			return result;
 		}
 	}
 	// If the divisor is bigger than divident (in absolute values)
@@ -844,16 +852,16 @@ lidiv_t div(LongInt firstNum, LongInt secondNum) {
 	// Checking if divisor is a 10 to some power
 	isPowerOfTen_t secondInfo = LongInt::_isPowerOfTen(secondNum);
 	// Algorithm
-	lidiv_t result;
 	result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
 	result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
 	if (secondInfo.isPowerOfTen) {
 		// Division if secondNum is a 10 in some power
 		for (long long i = 0; i < secondInfo.power; i++) {
-			result.rem._digits.push_back(firstNum._digits.front());
-			firstNum._digits.erase(firstNum._digits.begin());
+			result.rem._digits.push_back(firstNum._digits[i]);
 		}
-		result.quot._digits = firstNum._digits;
+		for (long long i = secondInfo.power; i < firstNum.size(); i++) {
+			result.quot._digits.push_back(firstNum._digits[i]);
+		}
 		// Checking signs
 		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
 		result.rem._positive = firstNum.isPositive();
@@ -879,7 +887,7 @@ lidiv_t div(LongInt firstNum, LongInt secondNum) {
 }
 
 // Modulo
-LongInt mod(LongInt firstNum, LongInt secondNum) {
+LongInt mod(const LongInt& firstNum, const LongInt& secondNum) {
 	LongInt result;
 	// If modulo zero
 	if (secondNum.isZero()) {
@@ -909,41 +917,45 @@ LongInt mod(LongInt firstNum, LongInt secondNum) {
 }
 
 // Greatest common divisor
-LongInt gcd(LongInt firstNum, LongInt secondNum) {
-	firstNum._positive = true;
-	secondNum._positive = true;
-	// If firstNum is zero
-	if (firstNum.isZero()) {
-		if (secondNum.isZero()) {
+LongInt gcd(const LongInt& firstNum, const LongInt& secondNum) {
+	LongInt first = firstNum;
+	LongInt second = secondNum;
+	first._positive = true;
+	second._positive = true;
+	// If first is zero
+	if (first.isZero()) {
+		if (second.isZero()) {
 			std::cout << "ERROR: Unable to find the greatest common divisor as both numbers are zero!\n";
 			return LongInt(0);
 		}
-		return secondNum;
+		return second;
 	}
-	// If secondNum is zero
-	if (secondNum.isZero()) {
-		return firstNum;
+	// If second is zero
+	if (second.isZero()) {
+		return first;
 	}
 	// Algorithm
-	while (!firstNum.isZero() and !secondNum.isZero()) {
-		if (firstNum > secondNum) {
-			firstNum %= secondNum;
+	while (!first.isZero() and !second.isZero()) {
+		if (first > second) {
+			first %= second;
 		} else {
-			secondNum %= firstNum;
+			second %= first;
 		}
 	}
-	return firstNum + secondNum;
+	return first + second;
 }
 
 // Least common multiple
-LongInt lcm(LongInt firstNum, LongInt secondNum) {
+LongInt lcm(const LongInt& firstNum, const LongInt& secondNum) {
+	LongInt first = firstNum;
+	LongInt second = secondNum;
+	first._positive = true;
+	second._positive = true;
 	// If one of the numbers is zero
-	if (firstNum.isZero() or secondNum.isZero()) {
+	if (first.isZero() or second.isZero()) {
 		return LongInt(0);
 	}
-	firstNum._positive = true;
-	secondNum._positive = true;
-	return firstNum * secondNum / gcd(firstNum, secondNum);
+	return first * second / gcd(first, second);
 }
 
 // Factorial of a number
