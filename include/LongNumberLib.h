@@ -61,6 +61,7 @@ public:
 	static bool isOne(LongInt number); // Is number equal to 1?
 	static bool isPositive(LongInt number); // Is number positive?
 	static bool isNegative(LongInt number); // Is number negative?
+	friend std::ostream& operator <<(std::ostream& out, LongInt number); // Output stream operator
 	LongInt operator =(signed short input); // Set number value with short
 	LongInt operator =(unsigned short input); // Set number value with unsigned short
 	LongInt operator =(signed int input); // Set number value with int
@@ -446,6 +447,12 @@ bool LongInt::isPositive(LongInt number) {
 // Is number negative?
 static bool isNegative(LongInt number) {
 	return number.isNegative();
+}
+
+// Output stream operator
+std::ostream& operator <<(std::ostream& out, LongInt number) {
+	out << number.getString();
+	return out;
 }
 
 // Set number value with short
