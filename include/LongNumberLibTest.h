@@ -125,26 +125,26 @@ void Test::test_constructor() {
 	verify("constructor #5", LongInt("1234someword56789"), LongInt("0")); // Testing error situation
 	verify("constructor #6", LongInt("-someword123456789"), LongInt("0")); // Testing error situation
 	verify("constructor #7", LongInt("-00000000000000000"), LongInt("0"));
-	verify("constructor #8", LongInt::getString(LongInt(short(0))), "0");
-	verify("constructor #9", LongInt::getString(LongInt(short(16))), "16");
-	verify("constructor #10", LongInt::getString(LongInt(short(-16))), "-16");
-	verify("constructor #11", LongInt::getString(LongInt(int(0))), "0");
-	verify("constructor #12", LongInt::getString(LongInt(int(16))), "16");
-	verify("constructor #13", LongInt::getString(LongInt(int(-16))), "-16");
-	verify("constructor #14", LongInt::getString(LongInt(long(0))), "0");
-	verify("constructor #15", LongInt::getString(LongInt(long(16))), "16");
-	verify("constructor #16", LongInt::getString(LongInt(long(-16))), "-16");
-	verify("constructor #17", LongInt::getString(LongInt((long long)int(0))), "0");
-	verify("constructor #18", LongInt::getString(LongInt((long long)int(16))), "16");
-	verify("constructor #19", LongInt::getString(LongInt((long long)int(-16))), "-16");
-	verify("constructor #20", LongInt::getString(LongInt((unsigned short)int(0))), "0");
-	verify("constructor #21", LongInt::getString(LongInt((unsigned short)int(16))), "16");
-	verify("constructor #22", LongInt::getString(LongInt((unsigned int)int(0))), "0");
-	verify("constructor #23", LongInt::getString(LongInt((unsigned int)int(16))), "16");
-	verify("constructor #24", LongInt::getString(LongInt((unsigned long)int(0))), "0");
-	verify("constructor #25", LongInt::getString(LongInt((unsigned long)int(16))), "16");
-	verify("constructor #26", LongInt::getString(LongInt((unsigned long long)int(0))), "0");
-	verify("constructor #27", LongInt::getString(LongInt((unsigned long long)int(16))), "16");
+	verify("constructor #8", getString(LongInt(short(0))), "0");
+	verify("constructor #9", getString(LongInt(short(16))), "16");
+	verify("constructor #10", getString(LongInt(short(-16))), "-16");
+	verify("constructor #11", getString(LongInt(int(0))), "0");
+	verify("constructor #12", getString(LongInt(int(16))), "16");
+	verify("constructor #13", getString(LongInt(int(-16))), "-16");
+	verify("constructor #14", getString(LongInt(long(0))), "0");
+	verify("constructor #15", getString(LongInt(long(16))), "16");
+	verify("constructor #16", getString(LongInt(long(-16))), "-16");
+	verify("constructor #17", getString(LongInt((long long)int(0))), "0");
+	verify("constructor #18", getString(LongInt((long long)int(16))), "16");
+	verify("constructor #19", getString(LongInt((long long)int(-16))), "-16");
+	verify("constructor #20", getString(LongInt((unsigned short)int(0))), "0");
+	verify("constructor #21", getString(LongInt((unsigned short)int(16))), "16");
+	verify("constructor #22", getString(LongInt((unsigned int)int(0))), "0");
+	verify("constructor #23", getString(LongInt((unsigned int)int(16))), "16");
+	verify("constructor #24", getString(LongInt((unsigned long)int(0))), "0");
+	verify("constructor #25", getString(LongInt((unsigned long)int(16))), "16");
+	verify("constructor #26", getString(LongInt((unsigned long long)int(0))), "0");
+	verify("constructor #27", getString(LongInt((unsigned long long)int(16))), "16");
 }
 
 // Test getString() function
@@ -163,36 +163,36 @@ void Test::test_getString() {
 
 // Test operator =
 void Test::test_assignment() {
-	verify("assignment #1", LongInt::getString(LongInt() = short(0)), "0");
-	verify("assignment #2", LongInt::getString(LongInt() = short(5)), "5");
-	verify("assignment #3", LongInt::getString(LongInt() = short(-5)), "-5");
-	verify("assignment #4", LongInt::getString(LongInt() = int(0)), "0");
-	verify("assignment #5", LongInt::getString(LongInt() = int(5)), "5");
-	verify("assignment #6", LongInt::getString(LongInt() = int(-5)), "-5");
-	verify("assignment #7", LongInt::getString(LongInt() = long(0)), "0");
-	verify("assignment #8", LongInt::getString(LongInt() = long(5)), "5");
-	verify("assignment #9", LongInt::getString(LongInt() = long(-5)), "-5");
-	verify("assignment #10", LongInt::getString(LongInt() = (long long)int(0)), "0");
-	verify("assignment #11", LongInt::getString(LongInt() = (long long)int(5)), "5");
-	verify("assignment #12", LongInt::getString(LongInt() = (long long)int(-5)), "-5");
-	verify("assignment #13", LongInt::getString(LongInt() = (unsigned short)int(0)), "0");
-	verify("assignment #14", LongInt::getString(LongInt() = (unsigned short)int(5)), "5");
-	verify("assignment #15", LongInt::getString(LongInt() = (unsigned int)int(0)), "0");
-	verify("assignment #16", LongInt::getString(LongInt() = (unsigned int)int(5)), "5");
-	verify("assignment #17", LongInt::getString(LongInt() = (unsigned long)int(0)), "0");
-	verify("assignment #18", LongInt::getString(LongInt() = (unsigned long)int(5)), "5");
-	verify("assignment #19", LongInt::getString(LongInt() = (unsigned long long)int(0)), "0");
-	verify("assignment #20", LongInt::getString(LongInt() = (unsigned long long)int(5)), "5");
-	verify("assignment #21", LongInt::getString(LongInt() = "0"), "0");
-	verify("assignment #22", LongInt::getString(LongInt() = "-0"), "0");
-	verify("assignment #23", LongInt::getString(LongInt() = "12345678987654321"), "12345678987654321");
-	verify("assignment #24", LongInt::getString(LongInt() = "-12345678987654321"), "-12345678987654321");
-	verify("assignment #25", LongInt::getString(LongInt() = "-000000123456789"), "-123456789");
-	verify("assignment #26", LongInt::getString(LongInt() = LongInt("0")), "0");
-	verify("assignment #27", LongInt::getString(LongInt() = LongInt("-0")), "0");
-	verify("assignment #28", LongInt::getString(LongInt() = LongInt("12345678987654321")), "12345678987654321");
-	verify("assignment #29", LongInt::getString(LongInt() = LongInt("-12345678987654321")), "-12345678987654321");
-	verify("assignment #30", LongInt::getString(LongInt() = LongInt("-000000123456789")), "-123456789");
+	verify("assignment #1", getString(LongInt() = short(0)), "0");
+	verify("assignment #2", getString(LongInt() = short(5)), "5");
+	verify("assignment #3", getString(LongInt() = short(-5)), "-5");
+	verify("assignment #4", getString(LongInt() = int(0)), "0");
+	verify("assignment #5", getString(LongInt() = int(5)), "5");
+	verify("assignment #6", getString(LongInt() = int(-5)), "-5");
+	verify("assignment #7", getString(LongInt() = long(0)), "0");
+	verify("assignment #8", getString(LongInt() = long(5)), "5");
+	verify("assignment #9", getString(LongInt() = long(-5)), "-5");
+	verify("assignment #10", getString(LongInt() = (long long)int(0)), "0");
+	verify("assignment #11", getString(LongInt() = (long long)int(5)), "5");
+	verify("assignment #12", getString(LongInt() = (long long)int(-5)), "-5");
+	verify("assignment #13", getString(LongInt() = (unsigned short)int(0)), "0");
+	verify("assignment #14", getString(LongInt() = (unsigned short)int(5)), "5");
+	verify("assignment #15", getString(LongInt() = (unsigned int)int(0)), "0");
+	verify("assignment #16", getString(LongInt() = (unsigned int)int(5)), "5");
+	verify("assignment #17", getString(LongInt() = (unsigned long)int(0)), "0");
+	verify("assignment #18", getString(LongInt() = (unsigned long)int(5)), "5");
+	verify("assignment #19", getString(LongInt() = (unsigned long long)int(0)), "0");
+	verify("assignment #20", getString(LongInt() = (unsigned long long)int(5)), "5");
+	verify("assignment #21", getString(LongInt() = "0"), "0");
+	verify("assignment #22", getString(LongInt() = "-0"), "0");
+	verify("assignment #23", getString(LongInt() = "12345678987654321"), "12345678987654321");
+	verify("assignment #24", getString(LongInt() = "-12345678987654321"), "-12345678987654321");
+	verify("assignment #25", getString(LongInt() = "-000000123456789"), "-123456789");
+	verify("assignment #26", getString(LongInt() = LongInt("0")), "0");
+	verify("assignment #27", getString(LongInt() = LongInt("-0")), "0");
+	verify("assignment #28", getString(LongInt() = LongInt("12345678987654321")), "12345678987654321");
+	verify("assignment #29", getString(LongInt() = LongInt("-12345678987654321")), "-12345678987654321");
+	verify("assignment #30", getString(LongInt() = LongInt("-000000123456789")), "-123456789");
 }
 
 // Test operator ==
@@ -263,16 +263,16 @@ void Test::test_isLessOrEqual() {
 
 // Test max() and min() functions
 void Test::test_max_min() {
-	verify("max/min #1", LongInt::max(LongInt("0"), LongInt("0")), LongInt("0"));
-	verify("max/min #2", LongInt::max(LongInt("1"), LongInt("2")), LongInt("2"));
-	verify("max/min #3", LongInt::max(LongInt("-321"), LongInt("123")), LongInt("123"));
-	verify("max/min #4", LongInt::max(LongInt("-999"), LongInt("-998")), LongInt("-998"));
-	verify("max/min #5", LongInt::max(LongInt("0"), LongInt("-12345")), LongInt("0"));
-	verify("max/min #6", LongInt::min(LongInt("0"), LongInt("0")), LongInt("0"));
-	verify("max/min #7", LongInt::min(LongInt("1"), LongInt("2")), LongInt("1"));
-	verify("max/min #8", LongInt::min(LongInt("-321"), LongInt("123")), LongInt("-321"));
-	verify("max/min #9", LongInt::min(LongInt("-999"), LongInt("-998")), LongInt("-999"));
-	verify("max/min #10", LongInt::min(LongInt("0"), LongInt("-12345")), LongInt("-12345"));
+	verify("max/min #1", max(LongInt("0"), LongInt("0")), LongInt("0"));
+	verify("max/min #2", max(LongInt("1"), LongInt("2")), LongInt("2"));
+	verify("max/min #3", max(LongInt("-321"), LongInt("123")), LongInt("123"));
+	verify("max/min #4", max(LongInt("-999"), LongInt("-998")), LongInt("-998"));
+	verify("max/min #5", max(LongInt("0"), LongInt("-12345")), LongInt("0"));
+	verify("max/min #6", min(LongInt("0"), LongInt("0")), LongInt("0"));
+	verify("max/min #7", min(LongInt("1"), LongInt("2")), LongInt("1"));
+	verify("max/min #8", min(LongInt("-321"), LongInt("123")), LongInt("-321"));
+	verify("max/min #9", min(LongInt("-999"), LongInt("-998")), LongInt("-999"));
+	verify("max/min #10", min(LongInt("0"), LongInt("-12345")), LongInt("-12345"));
 }
 
 // Test operators +, +=
@@ -436,103 +436,103 @@ void Test::test_unaryOperators() {
 
 // Test pow() function
 void Test::test_pow() {
-	verify("pow #1", LongInt::pow(LongInt(10), LongInt(0)), LongInt(1));
-	verify("pow #2", LongInt::pow(LongInt(-10), LongInt(0)), LongInt(1));
-	verify("pow #3", LongInt::pow(LongInt(10), LongInt(1)), LongInt(10));
-	verify("pow #4", LongInt::pow(LongInt(10), LongInt(2)), LongInt(100));
-	verify("pow #5", LongInt::pow(LongInt(10), LongInt(3)), LongInt(1000));
-	verify("pow #6", LongInt::pow(LongInt(1000), LongInt(3)), LongInt(1000000000));
-	verify("pow #7", LongInt::pow(LongInt(-100), LongInt(3)), LongInt(-1000000));
-	verify("pow #8", LongInt::pow(LongInt(-100), LongInt(4)), LongInt(100000000));
-	verify("pow #9", LongInt::pow(LongInt(0), LongInt(123456789)), LongInt(0));
-	verify("pow #10", LongInt::pow(LongInt(1), LongInt(123456789)), LongInt(1));
-	verify("pow #11", LongInt::pow(LongInt(-1), LongInt(123456789)), LongInt(-1));
-	verify("pow #12", LongInt::pow(LongInt(-2), LongInt(0)), LongInt(1));
-	verify("pow #13", LongInt::pow(LongInt(-2), LongInt(1)), LongInt(-2));
-	verify("pow #14", LongInt::pow(LongInt(-2), LongInt(2)), LongInt(4));
-	verify("pow #15", LongInt::pow(LongInt(-2), LongInt(7)), LongInt(-128));
-	verify("pow #16", LongInt::pow(LongInt(-2), LongInt(10)), LongInt(1024));
-	verify("pow #17", LongInt::pow(LongInt(123), LongInt(10)), LongInt("792594609605189126649"));
-	verify("pow #18", LongInt::pow(LongInt(123), LongInt(32)), LongInt("7532923656948158115977791009617077340797226775839122176340459265921"));
-	verify("pow #19", LongInt::pow(LongInt(-123), LongInt(47)), LongInt("-168089365432861366649544350793392541075881428948402902169684248440774393337801463143123536109842547"));
+	verify("pow #1", pow(LongInt(10), LongInt(0)), LongInt(1));
+	verify("pow #2", pow(LongInt(-10), LongInt(0)), LongInt(1));
+	verify("pow #3", pow(LongInt(10), LongInt(1)), LongInt(10));
+	verify("pow #4", pow(LongInt(10), LongInt(2)), LongInt(100));
+	verify("pow #5", pow(LongInt(10), LongInt(3)), LongInt(1000));
+	verify("pow #6", pow(LongInt(1000), LongInt(3)), LongInt(1000000000));
+	verify("pow #7", pow(LongInt(-100), LongInt(3)), LongInt(-1000000));
+	verify("pow #8", pow(LongInt(-100), LongInt(4)), LongInt(100000000));
+	verify("pow #9", pow(LongInt(0), LongInt(123456789)), LongInt(0));
+	verify("pow #10", pow(LongInt(1), LongInt(123456789)), LongInt(1));
+	verify("pow #11", pow(LongInt(-1), LongInt(123456789)), LongInt(-1));
+	verify("pow #12", pow(LongInt(-2), LongInt(0)), LongInt(1));
+	verify("pow #13", pow(LongInt(-2), LongInt(1)), LongInt(-2));
+	verify("pow #14", pow(LongInt(-2), LongInt(2)), LongInt(4));
+	verify("pow #15", pow(LongInt(-2), LongInt(7)), LongInt(-128));
+	verify("pow #16", pow(LongInt(-2), LongInt(10)), LongInt(1024));
+	verify("pow #17", pow(LongInt(123), LongInt(10)), LongInt("792594609605189126649"));
+	verify("pow #18", pow(LongInt(123), LongInt(32)), LongInt("7532923656948158115977791009617077340797226775839122176340459265921"));
+	verify("pow #19", pow(LongInt(-123), LongInt(47)), LongInt("-168089365432861366649544350793392541075881428948402902169684248440774393337801463143123536109842547"));
 }
 
 // Test mod() function
 void Test::test_mod() {
-	verify("mod #1", LongInt::mod(LongInt(5), LongInt(16)), LongInt(5));
-	verify("mod #2", LongInt::mod(LongInt(5), LongInt(-16)), LongInt(-11));
-	verify("mod #3", LongInt::mod(LongInt(-5), LongInt(16)), LongInt(11));
-	verify("mod #4", LongInt::mod(LongInt(-5), LongInt(-16)), LongInt(-5));
-	verify("mod #5", LongInt::mod(LongInt(0), LongInt(16)), LongInt(0));
-	verify("mod #6", LongInt::mod(LongInt(0), LongInt(-16)), LongInt(0));
-	verify("mod #7", LongInt::mod(LongInt(16), LongInt(0)), LongInt(0));
-	verify("mod #8", LongInt::mod(LongInt(-16), LongInt(0)), LongInt(0));
-	verify("mod #9", LongInt::mod(LongInt(15), LongInt(27)), LongInt(15));
-	verify("mod #10", LongInt::mod(LongInt(15), LongInt(-27)), LongInt(-12));
-	verify("mod #11", LongInt::mod(LongInt(-15), LongInt(27)), LongInt(12));
-	verify("mod #12", LongInt::mod(LongInt(-15), LongInt(-27)), LongInt(-15));
-	verify("mod #13", LongInt::mod(LongInt(123), LongInt(17)), LongInt(4));
-	verify("mod #14", LongInt::mod(LongInt(123), LongInt(-17)), LongInt(-13));
-	verify("mod #15", LongInt::mod(LongInt(-123), LongInt(17)), LongInt(13));
-	verify("mod #16", LongInt::mod(LongInt(-123), LongInt(-17)), LongInt(-4));
-	verify("mod #17", LongInt::mod(LongInt(123456789), LongInt(987)), LongInt(855));
-	verify("mod #18", LongInt::mod(LongInt(123456789), LongInt(-987)), LongInt(-132));
-	verify("mod #19", LongInt::mod(LongInt(-123456789), LongInt(987)), LongInt(132));
-	verify("mod #20", LongInt::mod(LongInt(-123456789), LongInt(-987)), LongInt(-855));
+	verify("mod #1", mod(LongInt(5), LongInt(16)), LongInt(5));
+	verify("mod #2", mod(LongInt(5), LongInt(-16)), LongInt(-11));
+	verify("mod #3", mod(LongInt(-5), LongInt(16)), LongInt(11));
+	verify("mod #4", mod(LongInt(-5), LongInt(-16)), LongInt(-5));
+	verify("mod #5", mod(LongInt(0), LongInt(16)), LongInt(0));
+	verify("mod #6", mod(LongInt(0), LongInt(-16)), LongInt(0));
+	verify("mod #7", mod(LongInt(16), LongInt(0)), LongInt(0));
+	verify("mod #8", mod(LongInt(-16), LongInt(0)), LongInt(0));
+	verify("mod #9", mod(LongInt(15), LongInt(27)), LongInt(15));
+	verify("mod #10", mod(LongInt(15), LongInt(-27)), LongInt(-12));
+	verify("mod #11", mod(LongInt(-15), LongInt(27)), LongInt(12));
+	verify("mod #12", mod(LongInt(-15), LongInt(-27)), LongInt(-15));
+	verify("mod #13", mod(LongInt(123), LongInt(17)), LongInt(4));
+	verify("mod #14", mod(LongInt(123), LongInt(-17)), LongInt(-13));
+	verify("mod #15", mod(LongInt(-123), LongInt(17)), LongInt(13));
+	verify("mod #16", mod(LongInt(-123), LongInt(-17)), LongInt(-4));
+	verify("mod #17", mod(LongInt(123456789), LongInt(987)), LongInt(855));
+	verify("mod #18", mod(LongInt(123456789), LongInt(-987)), LongInt(-132));
+	verify("mod #19", mod(LongInt(-123456789), LongInt(987)), LongInt(132));
+	verify("mod #20", mod(LongInt(-123456789), LongInt(-987)), LongInt(-855));
 }
 
 // Test gcd() function
 void Test::test_gcd() {
-	verify("gcd #1", LongInt::gcd(LongInt(0), LongInt(0)), LongInt(0));
-	verify("gcd #2", LongInt::gcd(LongInt(0), LongInt(12345)), LongInt(12345));
-	verify("gcd #3", LongInt::gcd(LongInt(0), LongInt(-12345)), LongInt(12345));
-	verify("gcd #4", LongInt::gcd(LongInt(12345), LongInt(0)), LongInt(12345));
-	verify("gcd #5", LongInt::gcd(LongInt(-12345), LongInt(0)), LongInt(12345));
-	verify("gcd #6", LongInt::gcd(LongInt(12345), LongInt(6789)), LongInt(3));
-	verify("gcd #7", LongInt::gcd(LongInt(12345), LongInt(-6789)), LongInt(3));
-	verify("gcd #8", LongInt::gcd(LongInt(-12345), LongInt(6789)), LongInt(3));
-	verify("gcd #9", LongInt::gcd(LongInt(-12345), LongInt(-6789)), LongInt(3));
-	verify("gcd #10", LongInt::gcd(LongInt(1024), LongInt(128)), LongInt(128));
-	verify("gcd #11", LongInt::gcd(LongInt(461952), LongInt(116298)), LongInt(18));
-	verify("gcd #12", LongInt::gcd(LongInt(7966496), LongInt(314080416)), LongInt(32));
-	verify("gcd #13", LongInt::gcd(LongInt(24826148), LongInt(45296490)), LongInt(526));
-	verify("gcd #14", LongInt::gcd(LongInt(24826148), LongInt(-1)), LongInt(1));
+	verify("gcd #1", gcd(LongInt(0), LongInt(0)), LongInt(0));
+	verify("gcd #2", gcd(LongInt(0), LongInt(12345)), LongInt(12345));
+	verify("gcd #3", gcd(LongInt(0), LongInt(-12345)), LongInt(12345));
+	verify("gcd #4", gcd(LongInt(12345), LongInt(0)), LongInt(12345));
+	verify("gcd #5", gcd(LongInt(-12345), LongInt(0)), LongInt(12345));
+	verify("gcd #6", gcd(LongInt(12345), LongInt(6789)), LongInt(3));
+	verify("gcd #7", gcd(LongInt(12345), LongInt(-6789)), LongInt(3));
+	verify("gcd #8", gcd(LongInt(-12345), LongInt(6789)), LongInt(3));
+	verify("gcd #9", gcd(LongInt(-12345), LongInt(-6789)), LongInt(3));
+	verify("gcd #10", gcd(LongInt(1024), LongInt(128)), LongInt(128));
+	verify("gcd #11", gcd(LongInt(461952), LongInt(116298)), LongInt(18));
+	verify("gcd #12", gcd(LongInt(7966496), LongInt(314080416)), LongInt(32));
+	verify("gcd #13", gcd(LongInt(24826148), LongInt(45296490)), LongInt(526));
+	verify("gcd #14", gcd(LongInt(24826148), LongInt(-1)), LongInt(1));
 }
 
 // Test lcm() function
 void Test::test_lcm() {
-	verify("lcm #1", LongInt::lcm(LongInt(0), LongInt(0)), LongInt(0));
-	verify("lcm #2", LongInt::lcm(LongInt(0), LongInt(12345)), LongInt(0));
-	verify("lcm #3", LongInt::lcm(LongInt(0), LongInt(-12345)), LongInt(0));
-	verify("lcm #4", LongInt::lcm(LongInt(12345), LongInt(0)), LongInt(0));
-	verify("lcm #5", LongInt::lcm(LongInt(-12345), LongInt(0)), LongInt(0));
-	verify("lcm #6", LongInt::lcm(LongInt(123), LongInt(456)), LongInt(18696));
-	verify("lcm #7", LongInt::lcm(LongInt(123), LongInt(-456)), LongInt(18696));
-	verify("lcm #8", LongInt::lcm(LongInt(-123), LongInt(456)), LongInt(18696));
-	verify("lcm #9", LongInt::lcm(LongInt(-123), LongInt(-456)), LongInt(18696));
-	verify("lcm #10", LongInt::lcm(LongInt(456), LongInt(123)), LongInt(18696));
-	verify("lcm #11", LongInt::lcm(LongInt(456), LongInt(-123)), LongInt(18696));
-	verify("lcm #12", LongInt::lcm(LongInt(-456), LongInt(123)), LongInt(18696));
-	verify("lcm #13", LongInt::lcm(LongInt(-456), LongInt(-123)), LongInt(18696));
-	verify("lcm #14", LongInt::lcm(LongInt(32), LongInt(64)), LongInt(64));
-	verify("lcm #15", LongInt::lcm(LongInt(123456789), LongInt(987654321)), LongInt("13548070123626141"));
+	verify("lcm #1", lcm(LongInt(0), LongInt(0)), LongInt(0));
+	verify("lcm #2", lcm(LongInt(0), LongInt(12345)), LongInt(0));
+	verify("lcm #3", lcm(LongInt(0), LongInt(-12345)), LongInt(0));
+	verify("lcm #4", lcm(LongInt(12345), LongInt(0)), LongInt(0));
+	verify("lcm #5", lcm(LongInt(-12345), LongInt(0)), LongInt(0));
+	verify("lcm #6", lcm(LongInt(123), LongInt(456)), LongInt(18696));
+	verify("lcm #7", lcm(LongInt(123), LongInt(-456)), LongInt(18696));
+	verify("lcm #8", lcm(LongInt(-123), LongInt(456)), LongInt(18696));
+	verify("lcm #9", lcm(LongInt(-123), LongInt(-456)), LongInt(18696));
+	verify("lcm #10", lcm(LongInt(456), LongInt(123)), LongInt(18696));
+	verify("lcm #11", lcm(LongInt(456), LongInt(-123)), LongInt(18696));
+	verify("lcm #12", lcm(LongInt(-456), LongInt(123)), LongInt(18696));
+	verify("lcm #13", lcm(LongInt(-456), LongInt(-123)), LongInt(18696));
+	verify("lcm #14", lcm(LongInt(32), LongInt(64)), LongInt(64));
+	verify("lcm #15", lcm(LongInt(123456789), LongInt(987654321)), LongInt("13548070123626141"));
 }
 
 // Test factorial() function
 void Test::test_factorial() {
-	verify("factorial #1", LongInt::factorial(LongInt(0)), LongInt(1));
-	verify("factorial #2", LongInt::factorial(LongInt(1)), LongInt(1));
-	verify("factorial #3", LongInt::factorial(LongInt(2)), LongInt(2));
-	verify("factorial #4", LongInt::factorial(LongInt(3)), LongInt(6));
-	verify("factorial #5", LongInt::factorial(LongInt(4)), LongInt(24));
-	verify("factorial #6", LongInt::factorial(LongInt(5)), LongInt(120));
-	verify("factorial #7", LongInt::factorial(LongInt(6)), LongInt(720));
-	verify("factorial #8", LongInt::factorial(LongInt(7)), LongInt(5040));
-	verify("factorial #9", LongInt::factorial(LongInt(8)), LongInt(40320));
-	verify("factorial #10", LongInt::factorial(LongInt(9)), LongInt(362880));
-	verify("factorial #11", LongInt::factorial(LongInt(10)), LongInt(3628800));
-	verify("factorial #12", LongInt::factorial(LongInt(20)), LongInt("2432902008176640000"));
-	verify("factorial #13", LongInt::factorial(LongInt(30)), LongInt("265252859812191058636308480000000"));
+	verify("factorial #1", factorial(LongInt(0)), LongInt(1));
+	verify("factorial #2", factorial(LongInt(1)), LongInt(1));
+	verify("factorial #3", factorial(LongInt(2)), LongInt(2));
+	verify("factorial #4", factorial(LongInt(3)), LongInt(6));
+	verify("factorial #5", factorial(LongInt(4)), LongInt(24));
+	verify("factorial #6", factorial(LongInt(5)), LongInt(120));
+	verify("factorial #7", factorial(LongInt(6)), LongInt(720));
+	verify("factorial #8", factorial(LongInt(7)), LongInt(5040));
+	verify("factorial #9", factorial(LongInt(8)), LongInt(40320));
+	verify("factorial #10", factorial(LongInt(9)), LongInt(362880));
+	verify("factorial #11", factorial(LongInt(10)), LongInt(3628800));
+	verify("factorial #12", factorial(LongInt(20)), LongInt("2432902008176640000"));
+	verify("factorial #13", factorial(LongInt(30)), LongInt("265252859812191058636308480000000"));
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")

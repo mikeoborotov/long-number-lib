@@ -10,11 +10,8 @@
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
 
-// Structure for quotient and remainder for LongInt div() function
-struct lidiv_t;
-
-// Structure for _isPowerOfTen() function
-struct isPowerOfTen_t;
+struct lidiv_t; // Structure for quotient and remainder for LongInt div() function
+struct isPowerOfTen_t; // Structure for _isPowerOfTen() function
 
 // A class for arbitrary length integers
 class LongInt {
@@ -42,25 +39,25 @@ public:
 	LongInt(unsigned long long input); // Constructor for unsigned long long
 	LongInt(std::string input); // Constructor for string
 	std::string getString() const; // Get number value as a string
-	LongInt abs(); // Get absolute number value
-	long long size(); // Get number size
-	long long length(); // Get number size
-	bool isEven(); // Is number even?
-	bool isOdd(); // Is number odd?
-	bool isZero(); // Is number equal to 0?
-	bool isOne(); // Is number equal to 1?
+	LongInt abs() const; // Get absolute number value
+	long long size() const; // Get number size
+	long long length() const; // Get number size
+	bool isEven() const; // Is number even?
+	bool isOdd() const; // Is number odd?
+	bool isZero() const; // Is number equal to 0?
+	bool isOne() const; // Is number equal to 1?
 	bool isPositive() const; // Is number positive?
 	bool isNegative() const; // Is number negative?
-	static std::string getString(LongInt number); // Get number value as a string
-	static LongInt abs(LongInt number); // Get absolute number value
-	static long long size(LongInt number); // Get number size
-	static long long length(LongInt number); // Get number size
-	static bool isEven(LongInt number); // Is number even?
-	static bool isOdd(LongInt number); // Is number odd?
-	static bool isZero(LongInt number); // Is number equal to 0?
-	static bool isOne(LongInt number); // Is number equal to 1?
-	static bool isPositive(LongInt number); // Is number positive?
-	static bool isNegative(LongInt number); // Is number negative?
+	friend std::string getString(LongInt number); // Get number value as a string
+	friend LongInt abs(const LongInt& number); // Get absolute number value
+	friend long long size(LongInt number); // Get number size
+	friend long long length(LongInt number); // Get number size
+	friend bool isEven(LongInt number); // Is number even?
+	friend bool isOdd(LongInt number); // Is number odd?
+	friend bool isZero(LongInt number); // Is number equal to 0?
+	friend bool isOne(LongInt number); // Is number equal to 1?
+	friend bool isPositive(LongInt number); // Is number positive?
+	friend bool isNegative(LongInt number); // Is number negative?
 	friend std::istream& operator >>(std::istream& in, LongInt& number); // Input stream operator
 	friend std::ostream& operator <<(std::ostream& out, const LongInt& number); // Output stream operator
 	LongInt operator =(signed short input); // Set number value with short
@@ -79,8 +76,8 @@ public:
 	bool operator >=(LongInt secondNum); // Is this number greater or equal to 2nd?
 	bool operator <(LongInt secondNum); // Is this number less than 2nd?
 	bool operator <=(LongInt secondNum); // Is this number less or equal to 2nd?
-	static LongInt max(LongInt firstNum, LongInt secondNum); // Return max number
-	static LongInt min(LongInt firstNum, LongInt secondNum); // Return min number
+	friend LongInt max(LongInt firstNum, LongInt secondNum); // Return max number
+	friend LongInt min(LongInt firstNum, LongInt secondNum); // Return min number
 	LongInt operator +(LongInt secondNum); // Sum of 2 numbers
 	LongInt operator -(LongInt secondNum); // Difference of 2 numbers
 	LongInt operator *(LongInt secondNum); // Product of 2 numbers
@@ -97,12 +94,12 @@ public:
 	LongInt operator -(); // Return opposite sign number (unary minus)
 	LongInt operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
-	static LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
-	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
-	static LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
-	static LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
-	static LongInt lcm(LongInt firstNum, LongInt secondNum); // Least common multiple
-	static LongInt factorial(LongInt number); // Factorial of a number
+	friend LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
+	friend lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
+	friend LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
+	friend LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
+	friend LongInt lcm(LongInt firstNum, LongInt secondNum); // Least common multiple
+	friend LongInt factorial(LongInt number); // Factorial of a number
 };
 
 // Structure for quotient and remainder for LongInt div() function
@@ -347,7 +344,7 @@ std::string LongInt::getString() const {
 }
 
 // Get absolute number value
-LongInt LongInt::abs() {
+LongInt LongInt::abs() const {
 	LongInt result;
 	result = *this;
 	result._positive = true;
@@ -355,27 +352,27 @@ LongInt LongInt::abs() {
 }
 
 // Get number size
-long long LongInt::size() {
+long long LongInt::size() const {
 	return _digits.size();
 }
 
 // Get number size, synonym to size()
-long long LongInt::length() {
+long long LongInt::length() const {
 	return _digits.size();
 }
 
 // Is number even?
-bool LongInt::isEven() {
+bool LongInt::isEven() const {
 	return (_digits[0] % 2 == 0);
 }
 
 // Is number odd?
-bool LongInt::isOdd() {
+bool LongInt::isOdd() const {
 	return !isEven();
 }
 
 // Is number equal to 0?
-bool LongInt::isZero(){
+bool LongInt::isZero() const {
 	if ((size() == 1) and (_digits[0] == 0)) {
 		return true;
 	}
@@ -383,7 +380,7 @@ bool LongInt::isZero(){
 }
 
 // Is number equal to 1?
-bool LongInt::isOne() {
+bool LongInt::isOne() const {
 	if ((size() == 1) and (_digits[0] == 1) and _positive) {
 		return true;
 	}
@@ -401,52 +398,52 @@ bool LongInt::isNegative() const {
 }
 
 // Get number value as a string
-std::string LongInt::getString(LongInt number) {
+std::string getString(LongInt number) {
 	return number.getString();
 }
 
 // Get absolute number value
-LongInt LongInt::abs(LongInt number) {
+LongInt abs(const LongInt& number) {
 	return number.abs();
 }
 
 // Get number size
-long long LongInt::size(LongInt number) {
+long long size(LongInt number) {
 	return number.size();
 }
 
 // Get number size, synonym to size()
-long long LongInt::length(LongInt number) {
+long long length(LongInt number) {
 	return number.length();
 }
 
 // Is number even?
-bool LongInt::isEven(LongInt number) {
+bool isEven(LongInt number) {
 	return number.isEven();
 }
 
 // Is number odd?
-bool LongInt::isOdd(LongInt number) {
+bool isOdd(LongInt number) {
 	return number.isOdd();
 }
 
 // Is number equal to 0?
-bool LongInt::isZero(LongInt number){
+bool isZero(LongInt number){
 	return number.isZero();
 }
 
 // Is number equal to 1?
-bool LongInt::isOne(LongInt number) {
+bool isOne(LongInt number) {
 	return number.isOne();
 }
 
 // Is number positive?
-bool LongInt::isPositive(LongInt number) {
+bool isPositive(LongInt number) {
 	return number.isPositive();
 }
 
 // Is number negative?
-bool LongInt::isNegative(LongInt number) {
+bool isNegative(LongInt number) {
 	return number.isNegative();
 }
 
@@ -605,7 +602,7 @@ bool LongInt::operator <=(LongInt secondNum) {
 }
 
 // Return max number
-LongInt LongInt::max(LongInt firstNum, LongInt secondNum) {
+LongInt max(LongInt firstNum, LongInt secondNum) {
 	if (firstNum >= secondNum) {
 		return firstNum;
 	}
@@ -613,7 +610,7 @@ LongInt LongInt::max(LongInt firstNum, LongInt secondNum) {
 }
 
 // Return min number
-LongInt LongInt::min(LongInt firstNum, LongInt secondNum) {
+LongInt min(LongInt firstNum, LongInt secondNum) {
 	if (firstNum <= secondNum) {
 		return firstNum;
 	}
@@ -769,7 +766,7 @@ LongInt LongInt::operator --(int) {
 }
 
 // firstNum to the power of secondNum
-LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
+LongInt pow(LongInt firstNum, LongInt secondNum) {
 	// If in to the power of 0
 	if (secondNum.isZero()) {
 		return LongInt(1);
@@ -790,7 +787,7 @@ LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
 		return firstNum;
 	}
 	// Checking if firstNum is a 10 to some power
-	isPowerOfTen_t firstInfo = _isPowerOfTen(firstNum);
+	isPowerOfTen_t firstInfo = LongInt::_isPowerOfTen(firstNum);
 	// Algorithm
 	LongInt result;
 	result = firstNum;
@@ -820,7 +817,7 @@ LongInt LongInt::pow(LongInt firstNum, LongInt secondNum) {
 }
 
 // Division
-lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
+lidiv_t div(LongInt firstNum, LongInt secondNum) {
 	// Checking division by zero
 	if (secondNum == LongInt(0)) {
 		std::cout << "ERROR: Division by zero!\n";
@@ -848,7 +845,7 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 		}
 	}
 	// Checking if divisor is a 10 to some power
-	isPowerOfTen_t secondInfo = _isPowerOfTen(secondNum);
+	isPowerOfTen_t secondInfo = LongInt::_isPowerOfTen(secondNum);
 	// Algorithm
 	lidiv_t result;
 	result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
@@ -885,7 +882,7 @@ lidiv_t LongInt::div(LongInt firstNum, LongInt secondNum) {
 }
 
 // Modulo
-LongInt LongInt::mod(LongInt firstNum, LongInt secondNum) {
+LongInt mod(LongInt firstNum, LongInt secondNum) {
 	LongInt result;
 	// If modulo zero
 	if (secondNum.isZero()) {
@@ -915,7 +912,7 @@ LongInt LongInt::mod(LongInt firstNum, LongInt secondNum) {
 }
 
 // Greatest common divisor
-LongInt LongInt::gcd(LongInt firstNum, LongInt secondNum) {
+LongInt gcd(LongInt firstNum, LongInt secondNum) {
 	firstNum._positive = true;
 	secondNum._positive = true;
 	// If firstNum is zero
@@ -942,7 +939,7 @@ LongInt LongInt::gcd(LongInt firstNum, LongInt secondNum) {
 }
 
 // Least common multiple
-LongInt LongInt::lcm(LongInt firstNum, LongInt secondNum) {
+LongInt lcm(LongInt firstNum, LongInt secondNum) {
 	// If one of the numbers is zero
 	if (firstNum.isZero() or secondNum.isZero()) {
 		return LongInt(0);
@@ -953,7 +950,7 @@ LongInt LongInt::lcm(LongInt firstNum, LongInt secondNum) {
 }
 
 // Factorial of a number
-LongInt LongInt::factorial(LongInt number) {
+LongInt factorial(LongInt number) {
 	LongInt result(1);
 	for (LongInt i = 1; i <= number; i++) {
 		result *= i;
