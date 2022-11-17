@@ -38,7 +38,7 @@ public:
 	LongInt(signed long long input); // Constructor for long long
 	LongInt(unsigned long long input); // Constructor for unsigned long long
 	LongInt(const std::string& input); // Constructor for string
-	std::string getString() const; // Get number value as a string
+	std::string toString() const; // Get number value as a string
 	LongInt abs() const; // Get absolute number value
 	long long size() const; // Get number size
 	long long length() const; // Get number size
@@ -48,7 +48,7 @@ public:
 	bool isOne() const; // Is number equal to 1?
 	bool isPositive() const; // Is number positive?
 	bool isNegative() const; // Is number negative?
-	friend std::string getString(const LongInt& number); // Get number value as a string
+	friend std::string toString(const LongInt& number); // Get number value as a string
 	friend LongInt abs(const LongInt& number); // Get absolute number value
 	friend long long size(const LongInt& number); // Get number size
 	friend long long length(const LongInt& number); // Get number size
@@ -60,16 +60,16 @@ public:
 	friend bool isNegative(const LongInt& number); // Is number negative?
 	friend std::istream& operator >>(std::istream& in, LongInt& number); // Input stream operator
 	friend std::ostream& operator <<(std::ostream& out, const LongInt& number); // Output stream operator
-	LongInt operator =(signed short input); // Set number value with short
-	LongInt operator =(unsigned short input); // Set number value with unsigned short
-	LongInt operator =(signed int input); // Set number value with int
-	LongInt operator =(unsigned int input); // Set number value with unsigned int
-	LongInt operator =(signed long input); // Set number value with long
-	LongInt operator =(unsigned long input); // Set number value with unsigned long
-	LongInt operator =(signed long long input); // Set number value with long long
-	LongInt operator =(unsigned long long input); // Set number value with unsigned long long
-	LongInt operator =(const std::string& input); // Set number value with string
-	LongInt operator =(const LongInt& input); // Set number value with LongInt
+	LongInt& operator =(signed short input); // Set number value with short
+	LongInt& operator =(unsigned short input); // Set number value with unsigned short
+	LongInt& operator =(signed int input); // Set number value with int
+	LongInt& operator =(unsigned int input); // Set number value with unsigned int
+	LongInt& operator =(signed long input); // Set number value with long
+	LongInt& operator =(unsigned long input); // Set number value with unsigned long
+	LongInt& operator =(signed long long input); // Set number value with long long
+	LongInt& operator =(unsigned long long input); // Set number value with unsigned long long
+	LongInt& operator =(const std::string& input); // Set number value with string
+	LongInt& operator =(const LongInt& input); // Set number value with LongInt
 	bool operator ==(const LongInt& secondNum) const; // Is this number equal to 2nd?
 	bool operator !=(const LongInt& secondNum) const; // Is this number not equal to 2nd?
 	bool operator >(const LongInt& secondNum) const; // Is this number greater than 2nd?
@@ -83,16 +83,16 @@ public:
 	LongInt operator *(const LongInt& secondNum) const; // Product of 2 numbers
 	LongInt operator /(const LongInt& secondNum) const; // Quotient of 2 numbers division
 	LongInt operator %(const LongInt& secondNum) const; // Remainder of 2 numbers division
-	LongInt operator +=(const LongInt& secondNum); // Add another number
-	LongInt operator -=(const LongInt& secondNum); // Subtract another number
-	LongInt operator *=(const LongInt& secondNum); // Multiply by another number
-	LongInt operator /=(const LongInt& secondNum); // Divide by another number
-	LongInt operator %=(const LongInt& secondNum); // Remainder of division by another number
+	LongInt& operator +=(const LongInt& secondNum); // Add another number
+	LongInt& operator -=(const LongInt& secondNum); // Subtract another number
+	LongInt& operator *=(const LongInt& secondNum); // Multiply by another number
+	LongInt& operator /=(const LongInt& secondNum); // Divide by another number
+	LongInt& operator %=(const LongInt& secondNum); // Remainder of division by another number
 	LongInt operator +(); // Return this number (unary plus)
-	LongInt operator ++(); // Add 1 to the number (prefix)
+	LongInt& operator ++(); // Add 1 to the number (prefix)
 	LongInt operator ++(int); // Add 1 to the number (postfix)
 	LongInt operator -(); // Return opposite sign number (unary minus)
-	LongInt operator --(); // Subtract 1 from the number (prefix)
+	LongInt& operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
 	friend LongInt pow(const LongInt& firstNum, const LongInt& secondNum); // firstNum to the power of secondNum
 	friend lidiv_t div(const LongInt& firstNum, const LongInt& secondNum); // Division
@@ -328,7 +328,7 @@ LongInt::LongInt(const std::string& input) {
 }
 
 // Get number as a string
-std::string LongInt::getString() const {
+std::string LongInt::toString() const {
 	std::string output;
 	for (const auto &digit: _digits) {
 		output.push_back(digit + '0');
@@ -395,8 +395,8 @@ bool LongInt::isNegative() const {
 }
 
 // Get number value as a string
-std::string getString(const LongInt& number) {
-	return number.getString();
+std::string toString(const LongInt& number) {
+	return number.toString();
 }
 
 // Get absolute number value
@@ -454,60 +454,60 @@ std::istream& operator >>(std::istream& in, LongInt& number) {
 
 // Output stream operator
 std::ostream& operator <<(std::ostream& out, const LongInt& number) {
-	out << number.getString();
+	out << number.toString();
 	return out;
 }
 
 // Set number value with short
-LongInt LongInt::operator =(signed short input) {
+LongInt& LongInt::operator =(signed short input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with unsigned short
-LongInt LongInt::operator =(unsigned short input) {
+LongInt& LongInt::operator =(unsigned short input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with int
-LongInt LongInt::operator =(signed int input) {
+LongInt& LongInt::operator =(signed int input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with unsigned int
-LongInt LongInt::operator =(unsigned int input) {
+LongInt& LongInt::operator =(unsigned int input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with long
-LongInt LongInt::operator =(signed long input) {
+LongInt& LongInt::operator =(signed long input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with unsigned long
-LongInt LongInt::operator =(unsigned long input) {
+LongInt& LongInt::operator =(unsigned long input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with long long
-LongInt LongInt::operator =(signed long long input) {
+LongInt& LongInt::operator =(signed long long input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with unsigned long long
-LongInt LongInt::operator =(unsigned long long input) {
+LongInt& LongInt::operator =(unsigned long long input) {
 	*this = std::to_string(input);
 	return *this;
 }
 
 // Set number value with string
-LongInt LongInt::operator =(const std::string& input) {
+LongInt& LongInt::operator =(const std::string& input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	if (input.substr(0, 1) == "-") {
 		_positive = false;
@@ -535,7 +535,7 @@ LongInt LongInt::operator =(const std::string& input) {
 }
 
 // Set number value with LongInt
-LongInt LongInt::operator =(const LongInt& input) {
+LongInt& LongInt::operator =(const LongInt& input) {
 	_digits.erase(_digits.begin(), _digits.end());
 	_digits = input._digits;
 	_positive = input._positive;
@@ -707,27 +707,27 @@ LongInt LongInt::operator %(const LongInt& secondNum) const {
 }
 
 // Add another number
-LongInt LongInt::operator +=(const LongInt& secondNum) {
+LongInt& LongInt::operator +=(const LongInt& secondNum) {
 	return *this = *this + secondNum;
 }
 
 // Subtract another number
-LongInt LongInt::operator -=(const LongInt& secondNum) {
+LongInt& LongInt::operator -=(const LongInt& secondNum) {
 	return *this = *this - secondNum;
 }
 
 // Multiply by another number
-LongInt LongInt::operator *=(const LongInt& secondNum) {
+LongInt& LongInt::operator *=(const LongInt& secondNum) {
 	return *this = *this * secondNum;
 }
 
 // Divide by another number
-LongInt LongInt::operator /=(const LongInt& secondNum) {
+LongInt& LongInt::operator /=(const LongInt& secondNum) {
 	return *this = *this / secondNum;
 }
 
 // Remainder of division by another number
-LongInt LongInt::operator %=(const LongInt& secondNum) {
+LongInt& LongInt::operator %=(const LongInt& secondNum) {
 	return *this = *this % secondNum;
 }
 
@@ -737,7 +737,7 @@ LongInt LongInt::operator +() {
 }
 
 // Add 1 to the number (prefix)
-LongInt LongInt::operator ++() {
+LongInt& LongInt::operator ++() {
 	return *this = *this + LongInt("1");
 }
 
@@ -756,7 +756,7 @@ LongInt LongInt::operator -() {
 }
 
 // Subtract 1 from the number (prefix)
-LongInt LongInt::operator --() {
+LongInt& LongInt::operator --() {
 	return *this = *this - LongInt("1");
 }
 

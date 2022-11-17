@@ -125,74 +125,74 @@ void Test::test_constructor() {
 	verify("constructor #5", LongInt("1234someword56789"), LongInt("0")); // Testing error situation
 	verify("constructor #6", LongInt("-someword123456789"), LongInt("0")); // Testing error situation
 	verify("constructor #7", LongInt("-00000000000000000"), LongInt("0"));
-	verify("constructor #8", getString(LongInt(short(0))), "0");
-	verify("constructor #9", getString(LongInt(short(16))), "16");
-	verify("constructor #10", getString(LongInt(short(-16))), "-16");
-	verify("constructor #11", getString(LongInt(int(0))), "0");
-	verify("constructor #12", getString(LongInt(int(16))), "16");
-	verify("constructor #13", getString(LongInt(int(-16))), "-16");
-	verify("constructor #14", getString(LongInt(long(0))), "0");
-	verify("constructor #15", getString(LongInt(long(16))), "16");
-	verify("constructor #16", getString(LongInt(long(-16))), "-16");
-	verify("constructor #17", getString(LongInt((long long)int(0))), "0");
-	verify("constructor #18", getString(LongInt((long long)int(16))), "16");
-	verify("constructor #19", getString(LongInt((long long)int(-16))), "-16");
-	verify("constructor #20", getString(LongInt((unsigned short)int(0))), "0");
-	verify("constructor #21", getString(LongInt((unsigned short)int(16))), "16");
-	verify("constructor #22", getString(LongInt((unsigned int)int(0))), "0");
-	verify("constructor #23", getString(LongInt((unsigned int)int(16))), "16");
-	verify("constructor #24", getString(LongInt((unsigned long)int(0))), "0");
-	verify("constructor #25", getString(LongInt((unsigned long)int(16))), "16");
-	verify("constructor #26", getString(LongInt((unsigned long long)int(0))), "0");
-	verify("constructor #27", getString(LongInt((unsigned long long)int(16))), "16");
+	verify("constructor #8", toString(LongInt(short(0))), "0");
+	verify("constructor #9", toString(LongInt(short(16))), "16");
+	verify("constructor #10", toString(LongInt(short(-16))), "-16");
+	verify("constructor #11", toString(LongInt(int(0))), "0");
+	verify("constructor #12", toString(LongInt(int(16))), "16");
+	verify("constructor #13", toString(LongInt(int(-16))), "-16");
+	verify("constructor #14", toString(LongInt(long(0))), "0");
+	verify("constructor #15", toString(LongInt(long(16))), "16");
+	verify("constructor #16", toString(LongInt(long(-16))), "-16");
+	verify("constructor #17", toString(LongInt((long long)int(0))), "0");
+	verify("constructor #18", toString(LongInt((long long)int(16))), "16");
+	verify("constructor #19", toString(LongInt((long long)int(-16))), "-16");
+	verify("constructor #20", toString(LongInt((unsigned short)int(0))), "0");
+	verify("constructor #21", toString(LongInt((unsigned short)int(16))), "16");
+	verify("constructor #22", toString(LongInt((unsigned int)int(0))), "0");
+	verify("constructor #23", toString(LongInt((unsigned int)int(16))), "16");
+	verify("constructor #24", toString(LongInt((unsigned long)int(0))), "0");
+	verify("constructor #25", toString(LongInt((unsigned long)int(16))), "16");
+	verify("constructor #26", toString(LongInt((unsigned long long)int(0))), "0");
+	verify("constructor #27", toString(LongInt((unsigned long long)int(16))), "16");
 }
 
 // Test getString() function
 void Test::test_getString() {
-	verify("getString #1", LongInt("0").getString(), "0");
-	verify("getString #2", LongInt("-0").getString(), "0");
-	verify("getString #3", LongInt("123456789").getString(), "123456789");
-	verify("getString #4", LongInt("0123456789").getString(), "123456789");
-	verify("getString #5", LongInt("-123456789").getString(), "-123456789");
-	verify("getString #6", LongInt("000000000000123").getString(), "123");
-	verify("getString #7", LongInt("-000000000000123").getString(), "-123");
-	verify("getString #8", LongInt("00000000000010203").getString(), "10203");
-	verify("getString #9", LongInt("-00000000000010203").getString(), "-10203");
-	verify("getString #10", LongInt("-123000000000").getString(), "-123000000000");
+	verify("getString #1", LongInt("0").toString(), "0");
+	verify("getString #2", LongInt("-0").toString(), "0");
+	verify("getString #3", LongInt("123456789").toString(), "123456789");
+	verify("getString #4", LongInt("0123456789").toString(), "123456789");
+	verify("getString #5", LongInt("-123456789").toString(), "-123456789");
+	verify("getString #6", LongInt("000000000000123").toString(), "123");
+	verify("getString #7", LongInt("-000000000000123").toString(), "-123");
+	verify("getString #8", LongInt("00000000000010203").toString(), "10203");
+	verify("getString #9", LongInt("-00000000000010203").toString(), "-10203");
+	verify("getString #10", LongInt("-123000000000").toString(), "-123000000000");
 }
 
 // Test operator =
 void Test::test_assignment() {
-	verify("assignment #1", getString(LongInt() = short(0)), "0");
-	verify("assignment #2", getString(LongInt() = short(5)), "5");
-	verify("assignment #3", getString(LongInt() = short(-5)), "-5");
-	verify("assignment #4", getString(LongInt() = int(0)), "0");
-	verify("assignment #5", getString(LongInt() = int(5)), "5");
-	verify("assignment #6", getString(LongInt() = int(-5)), "-5");
-	verify("assignment #7", getString(LongInt() = long(0)), "0");
-	verify("assignment #8", getString(LongInt() = long(5)), "5");
-	verify("assignment #9", getString(LongInt() = long(-5)), "-5");
-	verify("assignment #10", getString(LongInt() = (long long)int(0)), "0");
-	verify("assignment #11", getString(LongInt() = (long long)int(5)), "5");
-	verify("assignment #12", getString(LongInt() = (long long)int(-5)), "-5");
-	verify("assignment #13", getString(LongInt() = (unsigned short)int(0)), "0");
-	verify("assignment #14", getString(LongInt() = (unsigned short)int(5)), "5");
-	verify("assignment #15", getString(LongInt() = (unsigned int)int(0)), "0");
-	verify("assignment #16", getString(LongInt() = (unsigned int)int(5)), "5");
-	verify("assignment #17", getString(LongInt() = (unsigned long)int(0)), "0");
-	verify("assignment #18", getString(LongInt() = (unsigned long)int(5)), "5");
-	verify("assignment #19", getString(LongInt() = (unsigned long long)int(0)), "0");
-	verify("assignment #20", getString(LongInt() = (unsigned long long)int(5)), "5");
-	verify("assignment #21", getString(LongInt() = "0"), "0");
-	verify("assignment #22", getString(LongInt() = "-0"), "0");
-	verify("assignment #23", getString(LongInt() = "12345678987654321"), "12345678987654321");
-	verify("assignment #24", getString(LongInt() = "-12345678987654321"), "-12345678987654321");
-	verify("assignment #25", getString(LongInt() = "-000000123456789"), "-123456789");
-	verify("assignment #26", getString(LongInt() = LongInt("0")), "0");
-	verify("assignment #27", getString(LongInt() = LongInt("-0")), "0");
-	verify("assignment #28", getString(LongInt() = LongInt("12345678987654321")), "12345678987654321");
-	verify("assignment #29", getString(LongInt() = LongInt("-12345678987654321")), "-12345678987654321");
-	verify("assignment #30", getString(LongInt() = LongInt("-000000123456789")), "-123456789");
+	verify("assignment #1", toString(LongInt() = short(0)), "0");
+	verify("assignment #2", toString(LongInt() = short(5)), "5");
+	verify("assignment #3", toString(LongInt() = short(-5)), "-5");
+	verify("assignment #4", toString(LongInt() = int(0)), "0");
+	verify("assignment #5", toString(LongInt() = int(5)), "5");
+	verify("assignment #6", toString(LongInt() = int(-5)), "-5");
+	verify("assignment #7", toString(LongInt() = long(0)), "0");
+	verify("assignment #8", toString(LongInt() = long(5)), "5");
+	verify("assignment #9", toString(LongInt() = long(-5)), "-5");
+	verify("assignment #10", toString(LongInt() = (long long)int(0)), "0");
+	verify("assignment #11", toString(LongInt() = (long long)int(5)), "5");
+	verify("assignment #12", toString(LongInt() = (long long)int(-5)), "-5");
+	verify("assignment #13", toString(LongInt() = (unsigned short)int(0)), "0");
+	verify("assignment #14", toString(LongInt() = (unsigned short)int(5)), "5");
+	verify("assignment #15", toString(LongInt() = (unsigned int)int(0)), "0");
+	verify("assignment #16", toString(LongInt() = (unsigned int)int(5)), "5");
+	verify("assignment #17", toString(LongInt() = (unsigned long)int(0)), "0");
+	verify("assignment #18", toString(LongInt() = (unsigned long)int(5)), "5");
+	verify("assignment #19", toString(LongInt() = (unsigned long long)int(0)), "0");
+	verify("assignment #20", toString(LongInt() = (unsigned long long)int(5)), "5");
+	verify("assignment #21", toString(LongInt() = "0"), "0");
+	verify("assignment #22", toString(LongInt() = "-0"), "0");
+	verify("assignment #23", toString(LongInt() = "12345678987654321"), "12345678987654321");
+	verify("assignment #24", toString(LongInt() = "-12345678987654321"), "-12345678987654321");
+	verify("assignment #25", toString(LongInt() = "-000000123456789"), "-123456789");
+	verify("assignment #26", toString(LongInt() = LongInt("0")), "0");
+	verify("assignment #27", toString(LongInt() = LongInt("-0")), "0");
+	verify("assignment #28", toString(LongInt() = LongInt("12345678987654321")), "12345678987654321");
+	verify("assignment #29", toString(LongInt() = LongInt("-12345678987654321")), "-12345678987654321");
+	verify("assignment #30", toString(LongInt() = LongInt("-000000123456789")), "-123456789");
 }
 
 // Test operator ==
