@@ -101,7 +101,6 @@ public:
 	static LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
 	static LongInt lcm(LongInt firstNum, LongInt secondNum); // Least common multiple
 	static LongInt factorial(LongInt number); // Factorial of a number
-	void print(); // Print number, its size and sign (mainly for debug)
 };
 
 // Structure for quotient and remainder for LongInt div() function
@@ -944,18 +943,6 @@ LongInt LongInt::factorial(LongInt number) {
 		result *= i;
 	}
 	return result;
-}
-
-// Print number, its size and sign (mostly for debug)
-void LongInt::print() {
-	std::cout << "Value: " << getString();
-	std::cout << "\nSize:  " << size();
-	std::cout << "\nSign:  ";
-	if (isPositive()) {
-		std::cout << "positive" << "\n\n";
-	} else {
-		std::cout << "negative" << "\n\n";
-	}
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
