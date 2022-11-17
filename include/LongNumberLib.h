@@ -98,6 +98,7 @@ public:
 	static LongInt pow(LongInt firstNum, LongInt secondNum); // firstNum to the power of secondNum
 	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
 	static LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
+	static LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
 	static LongInt factorial(LongInt number); // Factorial of a number
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -895,6 +896,33 @@ LongInt LongInt::mod(LongInt firstNum, LongInt secondNum) {
 		return divResults.rem;
 	}
 	return result;
+}
+
+// Greatest common divisor
+LongInt LongInt::gcd(LongInt firstNum, LongInt secondNum) {
+	firstNum._positive = true;
+	secondNum._positive = true;
+	// If firstNum is zero
+	if (firstNum.isZero()) {
+		if (secondNum.isZero()) {
+			std::cout << "ERROR: Unable to find the greatest common divisor as both numbers are zero!\n";
+			return LongInt(0);
+		}
+		return secondNum;
+	}
+	// If secondNum is zero
+	if (secondNum.isZero()) {
+		return firstNum;
+	}
+	// Algorithm
+	while (!firstNum.isZero() and !secondNum.isZero()) {
+		if (firstNum > secondNum) {
+			firstNum %= secondNum;
+		} else {
+			secondNum %= firstNum;
+		}
+	}
+	return firstNum + secondNum;
 }
 
 // Factorial of a number

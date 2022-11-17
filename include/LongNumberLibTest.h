@@ -39,6 +39,7 @@ public:
 	static void test_unaryOperators(); // Test unary operators +, -, ++, --
 	static void test_pow(); // Test pow() function
 	static void test_mod(); // Test mod() function
+	static void test_gcd(); // Test gcd() function
 	static void test_factorial(); // Test factorial() function
 };
 
@@ -95,6 +96,7 @@ void Test::runAllTests() {
 	test_unaryOperators();
 	test_pow();
 	test_mod();
+	test_gcd();
 	test_factorial();
 }
 
@@ -475,6 +477,24 @@ void Test::test_mod() {
 	verify("mod #18", LongInt::mod(LongInt(123456789), LongInt(-987)), LongInt(-132));
 	verify("mod #19", LongInt::mod(LongInt(-123456789), LongInt(987)), LongInt(132));
 	verify("mod #20", LongInt::mod(LongInt(-123456789), LongInt(-987)), LongInt(-855));
+}
+
+// Test gcd() function
+void Test::test_gcd() {
+	verify("gcd #1", LongInt::gcd(LongInt(0), LongInt(0)), LongInt(0));
+	verify("gcd #2", LongInt::gcd(LongInt(0), LongInt(12345)), LongInt(12345));
+	verify("gcd #3", LongInt::gcd(LongInt(0), LongInt(-12345)), LongInt(12345));
+	verify("gcd #4", LongInt::gcd(LongInt(12345), LongInt(0)), LongInt(12345));
+	verify("gcd #5", LongInt::gcd(LongInt(-12345), LongInt(0)), LongInt(12345));
+	verify("gcd #6", LongInt::gcd(LongInt(12345), LongInt(6789)), LongInt(3));
+	verify("gcd #7", LongInt::gcd(LongInt(12345), LongInt(-6789)), LongInt(3));
+	verify("gcd #8", LongInt::gcd(LongInt(-12345), LongInt(6789)), LongInt(3));
+	verify("gcd #9", LongInt::gcd(LongInt(-12345), LongInt(-6789)), LongInt(3));
+	verify("gcd #10", LongInt::gcd(LongInt(1024), LongInt(128)), LongInt(128));
+	verify("gcd #11", LongInt::gcd(LongInt(461952), LongInt(116298)), LongInt(18));
+	verify("gcd #12", LongInt::gcd(LongInt(7966496), LongInt(314080416)), LongInt(32));
+	verify("gcd #13", LongInt::gcd(LongInt(24826148), LongInt(45296490)), LongInt(526));
+	verify("gcd #14", LongInt::gcd(LongInt(24826148), LongInt(-1)), LongInt(1));
 }
 
 // Test factorial() function
