@@ -99,6 +99,7 @@ public:
 	static lidiv_t div(LongInt firstNum, LongInt secondNum); // Division
 	static LongInt mod(LongInt firstNum, LongInt secondNum); // Modulo
 	static LongInt gcd(LongInt firstNum, LongInt secondNum); // Greatest common divisor
+	static LongInt lcm(LongInt firstNum, LongInt secondNum); // Least common multiple
 	static LongInt factorial(LongInt number); // Factorial of a number
 	void print(); // Print number, its size and sign (mainly for debug)
 };
@@ -923,6 +924,17 @@ LongInt LongInt::gcd(LongInt firstNum, LongInt secondNum) {
 		}
 	}
 	return firstNum + secondNum;
+}
+
+// Least common multiple
+LongInt LongInt::lcm(LongInt firstNum, LongInt secondNum) {
+	// If one of the numbers is zero
+	if (firstNum.isZero() or secondNum.isZero()) {
+		return LongInt(0);
+	}
+	firstNum._positive = true;
+	secondNum._positive = true;
+	return firstNum * secondNum / gcd(firstNum, secondNum);
 }
 
 // Factorial of a number

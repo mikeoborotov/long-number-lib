@@ -40,6 +40,7 @@ public:
 	static void test_pow(); // Test pow() function
 	static void test_mod(); // Test mod() function
 	static void test_gcd(); // Test gcd() function
+	static void test_lcm(); // Test lcm() function
 	static void test_factorial(); // Test factorial() function
 };
 
@@ -97,6 +98,7 @@ void Test::runAllTests() {
 	test_pow();
 	test_mod();
 	test_gcd();
+	test_lcm();
 	test_factorial();
 }
 
@@ -495,6 +497,25 @@ void Test::test_gcd() {
 	verify("gcd #12", LongInt::gcd(LongInt(7966496), LongInt(314080416)), LongInt(32));
 	verify("gcd #13", LongInt::gcd(LongInt(24826148), LongInt(45296490)), LongInt(526));
 	verify("gcd #14", LongInt::gcd(LongInt(24826148), LongInt(-1)), LongInt(1));
+}
+
+// Test lcm() function
+void Test::test_lcm() {
+	verify("lcm #1", LongInt::lcm(LongInt(0), LongInt(0)), LongInt(0));
+	verify("lcm #2", LongInt::lcm(LongInt(0), LongInt(12345)), LongInt(0));
+	verify("lcm #3", LongInt::lcm(LongInt(0), LongInt(-12345)), LongInt(0));
+	verify("lcm #4", LongInt::lcm(LongInt(12345), LongInt(0)), LongInt(0));
+	verify("lcm #5", LongInt::lcm(LongInt(-12345), LongInt(0)), LongInt(0));
+	verify("lcm #6", LongInt::lcm(LongInt(123), LongInt(456)), LongInt(18696));
+	verify("lcm #7", LongInt::lcm(LongInt(123), LongInt(-456)), LongInt(18696));
+	verify("lcm #8", LongInt::lcm(LongInt(-123), LongInt(456)), LongInt(18696));
+	verify("lcm #9", LongInt::lcm(LongInt(-123), LongInt(-456)), LongInt(18696));
+	verify("lcm #10", LongInt::lcm(LongInt(456), LongInt(123)), LongInt(18696));
+	verify("lcm #11", LongInt::lcm(LongInt(456), LongInt(-123)), LongInt(18696));
+	verify("lcm #12", LongInt::lcm(LongInt(-456), LongInt(123)), LongInt(18696));
+	verify("lcm #13", LongInt::lcm(LongInt(-456), LongInt(-123)), LongInt(18696));
+	verify("lcm #14", LongInt::lcm(LongInt(32), LongInt(64)), LongInt(64));
+	verify("lcm #15", LongInt::lcm(LongInt(123456789), LongInt(987654321)), LongInt("13548070123626141"));
 }
 
 // Test factorial() function
