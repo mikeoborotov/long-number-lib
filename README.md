@@ -12,12 +12,15 @@ WARNING: The library is still under development, so be careful!
 + [How to use](#How-to-use)
     + [General info](#General-info)
     + [Creating an instance](#Creating-an-instance)
-    + [Arithmetics](#Arithmetics)
-    + [Relational operators](#Relational-operators)
+    + [Assigning a value](#Assigning-a-value)
+    + [Useful getters](#Useful-getters)
+    + [Relational operations](#Relational-operations)
+    + [Mathematical operations](#Mathematical-operations)
     + [More functions](#More-functions)
     + [Information security features](#Information-security-features)
 + [Running tests](#Running-tests)
 + [Benchmarks](#Benchmarks)
++ [Licence](#Licence)
 
 ## How to install
 
@@ -32,15 +35,41 @@ The whole library is located in the `LongNumberLib.h` header. You can find it in
 ## How to use
 
 ### General info
-COMING SOON
+This library introduces a new namespace `LNL` (short for LongNumberLib). Inside this namespace there is a `LongInt` class (arbitrary length integer class) and some functions for mathematical operations.
 
 ### Creating an instance
+It is possible to create a `LongInt` instance in different ways: with a `short`, `int`, `long`, `long long` or with unsigned equivalents of these types. It is also possible to create an instance with a `std::string`. If you do not pass a value to the constructor then an instance is initialized with 0 by default.
+
+Here are some examples:
+```c++
+LNL::LongInt x;                              // x = 0 (by default)
+LNL::LongInt y(-123456789);                  // y = -123456789
+LNL::LongInt z("1234567898765432123456789"); // z = 1234567898765432123456789
+```
+
+### Assigning a value
+Assignment operator `=` is overloaded for `short`, `int`, `long`, `long long` and unsigned equivalents of these types, as well as for `std::string` and `LNL::LongInt` itself.
+
+Here are some examples:
+```c++
+LNL::LongInt x, y(16); // x = 0,   y = 16
+y = 32;                // x = 0,   y = 32
+y = "-64";             // x = 0,   y = -64
+x = y;                 // x = -64, y = -64
+```
+
+### Useful getters
+Below there is a list of some useful getters featured in `LongInt` class. For convenience and versatility of use, these functions come in two variations: as a class method and as a outside-a-class function.
+
+List of useful getters:
++ Use `.toString()` or `LNL::toString(x)` to get number value as a std::string
++ Use `.abs()` or `LNL::abs(x)` to get absolute number value
 COMING SOON
 
-### Arithmetics
+### Relational operations
 COMING SOON
 
-### Relational operators
+### Mathematical operations
 COMING SOON
 
 ### More functions
@@ -78,3 +107,9 @@ Or compile with whatever compiler you prefer.
 COMING SOON
 
 [:arrow_up: Back to contents](#Contents)
+
+## Licence
+
+COMING SOON
+
+[:arrow_up: Back to contents](#Licence)
