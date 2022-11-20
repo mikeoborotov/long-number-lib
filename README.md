@@ -2,8 +2,6 @@
 
 LNL (short for LongNumberLib) is a C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in information security. Current version of LNL only supports arbitrary length integers.
 
-If you find any bugs or if you have improvement suggestions, please feel free to open an issue or a pull request.
-
 WARNING: The library is still under development, so be careful!
 
 ## Contents
@@ -18,9 +16,10 @@ WARNING: The library is still under development, so be careful!
     + [Relational operations](#Relational-operations)
     + [Mathematical operations](#Mathematical-operations)
     + [Random numbers](#Random-numbers)
-    + [Information security features](#Information-security-features)
++ [Information security features](#Information-security-features)
 + [Running tests](#Running-tests)
 + [Benchmarks](#Benchmarks)
++ [Contributing](#Contributing)
 + [Licence](#Licence)
 
 ## How to install
@@ -132,7 +131,7 @@ Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need 
 
 COMING SOON
 
-### Information security features
+## Information security features
 
 COMING SOON
 
@@ -166,8 +165,14 @@ COMING SOON
 
 [:arrow_up: Back to contents](#Contents)
 
+## Contributing
+
+If you find any bugs or if you have improvement suggestions, please feel free to open an issue or a pull request. If you open a pull request, please add some comments to your changes and make sure all tests from `LongNumberLibTest.h` header are running correctly.
+
+[:arrow_up: Back to contents](#Contents)
+
 ## Licence
 
 COMING SOON
 
-[:arrow_up: Back to contents](#Licence)
+[:arrow_up: Back to contents](#Contents)
