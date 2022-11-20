@@ -1,6 +1,6 @@
 # LongNumberLib
 
-LNL (short for LongNumberLib) is a C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in information security. Current version of LNL only supports arbitrary length integers.
+LNL (short for LongNumberLib) is a single-file open source C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in information security. Current version of LNL only supports arbitrary length integers.
 
 WARNING: The library is still under development, so be careful!
 
