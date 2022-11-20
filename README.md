@@ -13,7 +13,7 @@ WARNING: The library is still under development, so be careful!
     + [General info](#General-info)
     + [Creating an instance](#Creating-an-instance)
     + [Assigning a value](#Assigning-a-value)
-    + [I/O operators](#I/O-operators)
+    + [I/O operators](#IO-operators)
     + [Useful getters](#Useful-getters)
     + [Relational operations](#Relational-operations)
     + [Mathematical operations](#Mathematical-operations)
@@ -41,7 +41,7 @@ This library introduces a new namespace `LNL` (short for LongNumberLib). Inside 
 ### Creating an instance
 It is possible to create a `LNL::LongInt` instance in different ways: with a `short`, `int`, `long`, `long long` or with unsigned equivalents of these types. It is also possible to create an instance with a `std::string`. If you do not pass a value to the constructor then an instance is initialized with 0 by default.
 
-If you try to initialize with a `std::string` which contains non-digit characters (except "-") then an instance will be initialized with 0 and an error message will be printed.
+If you try to initialize with a `std::string` which contains non-digit characters (except front "-") then an instance will be initialized with 0 and an error message will be printed.
 
 Here are some examples:
 ```c++
@@ -53,7 +53,7 @@ LNL::LongInt z("1234567898765432123456789"); // z = 1234567898765432123456789
 ### Assigning a value
 Assignment operator `=` is overloaded for `short`, `int`, `long`, `long long` and unsigned equivalents of these types, as well as for `std::string` and `LNL::LongInt` itself.
 
-If you try to assign with a `std::string` which contains non-digit characters (except "-") then a 0 value will be assigned and an error message will be printed.
+If you try to assign with a `std::string` which contains non-digit characters (except front "-") then a 0 value will be assigned and an error message will be printed.
 
 Here are some examples:
 ```c++
@@ -65,20 +65,24 @@ x = y;                 // x = -64, y = -64
 
 ### I/O operators
 
-Input and output operators `>>` and `<<` are overloaded for the `LNL::LongInt` class.
+Input and output operators `>>` and `<<` are overloaded for the `LNL::LongInt` class and can be used to insert/extract `LNL::LongInt` instances as a stream of characters, just like with the standard version of these operators.
 
 Here is an example code:
 ```c++
 LNL::LongInt x;
-std::cout << "Enter some number: ";
+std::cout << "Enter a number: ";
 std::cin >> x;
-std::cout << "Your number is: " << x << "\n";
+std::cout << "The number is: " << x << "\n";
 ```
 
-COMING SOON
+And if you run this code:
+```
+Enter a number: -123456789
+The number is: -123456789
+```
 
 ### Useful getters
-Below there is a list of some useful getters featured in `LNL::LongInt` class. For convenience and versatility of use, these functions come in two variations: as a class method and as a outside-a-class function.
+Below there is a list of some useful getters featured in `LNL::LongInt` class. For convenience and versatility of use, these functions come in two variations: as a class method and as an outside-a-class function.
 
 List of useful getters:
 + `x.toString()` and `LNL::toString(x)` return number value as a `std::string`.
@@ -96,8 +100,8 @@ Here `x` is an instance of `LNL::LongInt`.
 
 ### Relational operations
 Relational operators `==`, `!=`, `>`, `>=`, `<`, `<=` are overloaded for the `LNL::LongInt` class. There are also relational functions like:
-+ `LNL::min(x,y)` returns the least of two numbers.
-+ `LNL::max(x,y)` returns the greatest of two numbers.
++ `LNL::min(x,y)` returns the least of two numbers (as a `LNL::LongInt`).
++ `LNL::max(x,y)` returns the greatest of two numbers (as a `LNL::LongInt`).
 
 Here `x` and `y` are instances of `LNL::LongInt`.
 
