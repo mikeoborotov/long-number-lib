@@ -22,7 +22,7 @@ public:
 	static void runAllTests(); // Run all tests
 	static void printTestReport(); // Print out tests report
 	static void test_constructor(); // Test constructor
-	static void test_getString(); // Test getString() function
+	static void test_toString(); // Test toString() function
 	static void test_assignment(); // Test operator =
 	static void test_isEqual(); // Test operator ==
 	static void test_isNotEqual(); // Test operator !=
@@ -147,8 +147,8 @@ void Test::test_constructor() {
 	verify("constructor #27", toString(LongInt((unsigned long long)int(16))), "16");
 }
 
-// Test getString() function
-void Test::test_getString() {
+// Test toString() function
+void Test::test_toString() {
 	verify("getString #1", LongInt("0").toString(), "0");
 	verify("getString #2", LongInt("-0").toString(), "0");
 	verify("getString #3", LongInt("123456789").toString(), "123456789");
