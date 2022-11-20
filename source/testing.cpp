@@ -1,5 +1,3 @@
-// Testing the LongNumberLib.h
-
 #include "../include/LongNumberLib.h"
 #include "../include/LongNumberLibTest.h"
 
