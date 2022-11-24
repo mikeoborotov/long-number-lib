@@ -386,6 +386,10 @@ void Test::test_quotient() {
 	verify("quotient #22", LongInt(123456789) / LongInt(12345), LongInt(10000));
 	verify("quotient #23", LongInt(-12345678987654321) / LongInt(123456789), LongInt(-100000000));
 	verify("quotient #24", LongInt(123456789) / LongInt(-987), LongInt(-125082));
+	verify("quotient #25", LongInt(1000012) / LongInt(1000), LongInt(1000));
+	verify("quotient #26", LongInt(-1000012) / LongInt(1000), LongInt(-1000));
+	verify("quotient #27", LongInt(1000000) / LongInt(100), LongInt(10000));
+	verify("quotient #28", LongInt(-1000000) / LongInt(100), LongInt(-10000));
 }
 
 // Test operators %, %=
@@ -404,16 +408,20 @@ void Test::test_remainder() {
 	verify("remainder #12", LongInt(12345) % LongInt(-123456789), LongInt(12345));
 	verify("remainder #13", LongInt(-12345) % LongInt(123456789), LongInt(-12345));
 	verify("remainder #14", LongInt(-12345) % LongInt(-123456789), LongInt(-12345));
-	verify("quotient #15", LongInt(123) % LongInt(5), LongInt(3));
-	verify("quotient #16", LongInt(123) % LongInt(-5), LongInt(3));
-	verify("quotient #17", LongInt(-123) % LongInt(-5), LongInt(-3));
-	verify("quotient #18", LongInt(-123) % LongInt(5), LongInt(-3));
-	verify("quotient #19", LongInt(10) % LongInt(3), LongInt(1));
-	verify("quotient #20", LongInt(-10) % LongInt(4), LongInt(-2));
-	verify("quotient #21", LongInt(123456789) % LongInt(123), LongInt(90));
-	verify("quotient #22", LongInt(123456789) % LongInt(12345), LongInt(6789));
-	verify("quotient #23", LongInt(-12345678987654321) % LongInt(123456789), LongInt(-87654321));
-	verify("quotient #24", LongInt(123456789) % LongInt(-987), LongInt(855));
+	verify("remainder #15", LongInt(123) % LongInt(5), LongInt(3));
+	verify("remainder #16", LongInt(123) % LongInt(-5), LongInt(3));
+	verify("remainder #17", LongInt(-123) % LongInt(-5), LongInt(-3));
+	verify("remainder #18", LongInt(-123) % LongInt(5), LongInt(-3));
+	verify("remainder #19", LongInt(10) % LongInt(3), LongInt(1));
+	verify("remainder #20", LongInt(-10) % LongInt(4), LongInt(-2));
+	verify("remainder #21", LongInt(123456789) % LongInt(123), LongInt(90));
+	verify("remainder #22", LongInt(123456789) % LongInt(12345), LongInt(6789));
+	verify("remainder #23", LongInt(-12345678987654321) % LongInt(123456789), LongInt(-87654321));
+	verify("remainder #24", LongInt(123456789) % LongInt(-987), LongInt(855));
+	verify("remainder #25", LongInt(1000012) % LongInt(1000), LongInt(12));
+	verify("remainder #26", LongInt(-1000012) % LongInt(1000), LongInt(-12));
+	verify("remainder #27", LongInt(1000000) % LongInt(100), LongInt(0));
+	verify("remainder #28", LongInt(-1000000) % LongInt(100), LongInt(0));
 }
 
 // Test unary operators +, -, ++, --
@@ -467,6 +475,7 @@ void Test::test_pow() {
 	verify("pow #17", pow(LongInt(123), LongInt(10)), LongInt("792594609605189126649"));
 	verify("pow #18", pow(LongInt(123), LongInt(32)), LongInt("7532923656948158115977791009617077340797226775839122176340459265921"));
 	verify("pow #19", pow(LongInt(-123), LongInt(47)), LongInt("-168089365432861366649544350793392541075881428948402902169684248440774393337801463143123536109842547"));
+	verify("pow #20", pow(LongInt(1525469906), LongInt(2)), LongInt("2327058434111648836"));
 }
 
 // Test mod() function

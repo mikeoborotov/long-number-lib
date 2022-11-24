@@ -867,10 +867,10 @@ lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
 	// Checking if divisor is a 10 to some power
 	isPowerOfTen_t secondInfo = LongInt::_isPowerOfTen(secondNum);
 	// Algorithm
-	result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
-	result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
 	if (secondInfo.isPowerOfTen) {
 		// Division if secondNum is a 10 in some power
+		result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
+		result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
 		for (long long i = 0; i < secondInfo.power; i++) {
 			result.rem._digits.push_back(firstNum._digits[i]);
 		}
@@ -880,6 +880,8 @@ lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
 		// Checking signs
 		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
 		result.rem._positive = firstNum.isPositive();
+		result.rem._checkLeadingZeroes();
+		result.rem._checkNegativeZero();
 	} else {
 		// General division
 		result.rem = firstNum.abs();
@@ -893,10 +895,8 @@ lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
 			}
 			sizeDiff--;
 		}
-		//result.rem = firstNumAbs;
 		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
 		result.rem._positive = firstNum.isPositive();
-		return result;
 	}
 	return result;
 }
