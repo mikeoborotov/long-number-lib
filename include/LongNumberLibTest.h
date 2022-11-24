@@ -92,7 +92,7 @@ void Test::resetTestNum() {
 // Run all tests
 void Test::runAllTests() {
 	test_constructor();
-	test_getString();
+	test_toString();
 	test_assignment();
 	test_isEqual();
 	test_isNotEqual();

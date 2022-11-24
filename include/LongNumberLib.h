@@ -18,6 +18,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
 
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
@@ -112,7 +113,9 @@ public:
 	friend LongInt gcd(const LongInt& firstNum, const LongInt& secondNum); // Greatest common divisor
 	friend LongInt lcm(const LongInt& firstNum, const LongInt& secondNum); // Least common multiple
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
+	friend LongInt Random(); // Generates random LongInt number
 };
+
 
 // Structure for quotient and remainder for LongInt div() function
 struct lidiv_t {
@@ -977,6 +980,29 @@ LongInt factorial(const LongInt& number) {
 		result *= i;
 	}
 	return result;
+}
+
+LongInt Random()
+{
+	LongInt randomNumber;
+
+	srand((unsigned) time(NULL));
+	int random = rand();
+	std::cout << random << std::endl;
+	for (int i = 0; i < random; i++)
+	{
+		srand((unsigned) time(NULL));
+		int random = rand();
+		LongInt mid(random);
+		randomNumber += mid;
+	}
+
+	if (rand() % 2 == 1)
+	{
+		randomNumber *= -1;
+	}
+	std::cout << randomNumber << std::endl;
+	return randomNumber;
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
