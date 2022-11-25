@@ -37,7 +37,7 @@ private:
 	static int _compare(const LongInt& firstNum, const LongInt& secondNum); // Compare numbers
 	static LongInt _sumAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
 	static LongInt _diffAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
-	static LongInt _multAux(const LongInt& biggerNum, const LongInt& smallerNum); // Auxiliary function
+	static LongInt _multAux(const LongInt& firstNum, const LongInt& secondNum); // Auxiliary function
 	static LongInt _karatsubaAlg(const LongInt& firstNum, const LongInt& secondNum); // Karatsuba algorithm
 	static isPowerOfTen_t _isPowerOfTen(const LongInt& number); // Is number a power of 10?
 public:
@@ -238,11 +238,14 @@ LongInt LongInt::_diffAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 	return result;
 }
 
-// Auxiliary function (smallerNum length = 1)
-LongInt LongInt::_multAux(const LongInt& biggerNum, const LongInt& smallerNum) {
-	LongInt result = biggerNum;
-	for (long long i = 0; i < result.size(); i++) {
-		result._digits[i] *= smallerNum._digits.front();
+// Auxiliary function (default multiplication)
+LongInt LongInt::_multAux(const LongInt& firstNum, const LongInt& secondNum) {
+	LongInt result;
+	result._digits.resize(firstNum.size() + secondNum.size());
+	for (long long i = 0; i < secondNum.size(); i++) {
+		for (long long j = 0; j < firstNum.size(); j++) {
+			result._digits[i + j] += secondNum._digits[i] * firstNum._digits[j];
+		}
 	}
 	result._checkDigitOverflow();
 	result._checkLeadingZeroes();
@@ -251,11 +254,8 @@ LongInt LongInt::_multAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 
 // Karatsuba algorithm (firstNum and secondNum are absolute values)
 LongInt LongInt::_karatsubaAlg(const LongInt& firstNum, const LongInt& secondNum) {
-	// If one of the numbers is 1 digit long
-	if (firstNum.size() == 1) {
-		return _multAux(secondNum, firstNum);
-	}
-	if (secondNum.size() == 1) {
+	// If it is faster to multiply as usual
+	if ((firstNum.size() < 100) or (secondNum.size() < 100)) {
 		return _multAux(firstNum, secondNum);
 	}
 	// Algorithm
@@ -682,22 +682,14 @@ LongInt LongInt::operator *(const LongInt& secondNum) const {
 	LongInt result;
 	if (thisInfo.isPowerOfTen) {
 		// Multiplication if firstNum is a 10 in some power
-		result = secondNum;
-		std::reverse(result._digits.begin(), result._digits.end());
-		for (long long i = 0; i < thisInfo.power; i++) {
-			result._digits.push_back(0);
-		}
-		std::reverse(result._digits.begin(), result._digits.end());
+		result._digits.resize(thisInfo.power);
+		result._digits.insert(result._digits.end(), secondNum._digits.begin(), secondNum._digits.end());
 		result._positive = (this->isPositive() == secondNum.isPositive());
 		return result;
 	} else if (secondInfo.isPowerOfTen) {
 		// Multiplication if secondNum is a 10 in some power
-		result = *this;
-		std::reverse(result._digits.begin(), result._digits.end());
-		for (long long i = 0; i < secondInfo.power; i++) {
-			result._digits.push_back(0);
-		}
-		std::reverse(result._digits.begin(), result._digits.end());
+		result._digits.resize(secondInfo.power);
+		result._digits.insert(result._digits.end(), this->_digits.begin(), this->_digits.end());
 		result._positive = (this->isPositive() == secondNum.isPositive());
 		return result;
 	} else {
@@ -782,52 +774,49 @@ LongInt LongInt::operator --(int) {
 
 // firstNum to the power of secondNum
 LongInt pow(const LongInt& firstNum, const LongInt& secondNum) {
+	// If to the power of negative number
+	if (secondNum.isNegative()) {
+		std::cout << "ERROR: Unable to raise LongInt to the power of negative number!\n";
+		return LongInt(0);
+	}
 	LongInt result;
-	LongInt first = firstNum;
-	LongInt second = secondNum;
 	// If in to the power of 0
-	if (second.isZero()) {
+	if (secondNum.isZero()) {
 		return LongInt(1);
 	}
 	// If in to the power of 1
-	if (second.isOne()) {
-		return first;
+	if (secondNum.isOne()) {
+		return firstNum;
 	}
 	// If 0 in some power
-	if (first.isZero()) {
+	if (firstNum.isZero()) {
 		return LongInt(0);
 	}
 	// If 1 or -1 in some power
-	if (isOne(abs(first))) {
-		if (second.isEven()) {
-			first._positive = true;
-		}
-		return first;
-	}
-	// Checking if firstNum is a 10 to some power
-	isPowerOfTen_t firstInfo = LongInt::_isPowerOfTen(first);
-	// Algorithm
-	result = first;
-	if (firstInfo.isPowerOfTen) {
-		// Checking result sign
-		if (first.isNegative() and second.isEven()) {
+	if (isOne(abs(firstNum))) {
+		result = firstNum;
+		if (secondNum.isEven()) {
 			result._positive = true;
 		}
-		second--;
+		return result;
+	}
+	// Checking if firstNum is a 10 to some power
+	isPowerOfTen_t firstInfo = LongInt::_isPowerOfTen(firstNum);
+	// Algorithm
+	LongInt power = secondNum;
+	if (firstInfo.isPowerOfTen) {
 		// If firstNum is a 10 in some power
-		std::reverse(result._digits.begin(), result._digits.end());
-		while (second > LongInt(0)) {
-			for (long long i = 0; i < firstInfo.power; i++) {
-				result._digits.push_back(0);
-			}
-			second--;
+		result._digits.resize(firstInfo.power * std::stoi(toString(secondNum)));
+		result._digits.push_back(1);
+		result._positive = firstNum.isPositive();
+		if (firstNum.isNegative() and power.isEven()) {
+			result._positive = true;
 		}
-		std::reverse(result._digits.begin(), result._digits.end());
 	} else {
 		// General case pow()
-		while (second > LongInt(1)) {
-			result *= first;
-			second--;
+		result = pow(firstNum * firstNum, power / 2);
+		if (power.isOdd()) {
+			result *= firstNum;
 		}
 	}
 	return result;
@@ -869,14 +858,8 @@ lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
 	// Algorithm
 	if (secondInfo.isPowerOfTen) {
 		// Division if secondNum is a 10 in some power
-		result.quot._digits.erase(result.quot._digits.begin(), result.quot._digits.end());
-		result.rem._digits.erase(result.rem._digits.begin(), result.rem._digits.end());
-		for (long long i = 0; i < secondInfo.power; i++) {
-			result.rem._digits.push_back(firstNum._digits[i]);
-		}
-		for (long long i = secondInfo.power; i < firstNum.size(); i++) {
-			result.quot._digits.push_back(firstNum._digits[i]);
-		}
+		result.rem._digits = std::vector<int>(firstNum._digits.begin(), firstNum._digits.begin() + secondInfo.power);
+		result.quot._digits = std::vector<int>(firstNum._digits.begin() + secondInfo.power, firstNum._digits.end());
 		// Checking signs
 		result.quot._positive = (firstNum.isPositive() == secondNum.isPositive());
 		result.rem._positive = firstNum.isPositive();
