@@ -107,6 +107,8 @@ public:
 	LongInt operator -(); // Return opposite sign number (unary minus)
 	LongInt& operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
+	LongInt operator >> (LongInt num); // Logical right-shift operator 
+	LongInt operator << (LongInt num); // Logical left-shift operator 
 	friend LongInt pow(const LongInt& firstNum, const LongInt& secondNum); // firstNum to the power of secondNum
 	friend lidiv_t div(const LongInt& firstNum, const LongInt& secondNum); // Division
 	friend LongInt mod(const LongInt& firstNum, const LongInt& secondNum); // Modulo
@@ -772,6 +774,16 @@ LongInt LongInt::operator --(int) {
 	return *this = *this - LongInt("1");
 }
 
+// Logical right-shift operator 
+LongInt LongInt::operator >>(LongInt num) {
+	return *this = *this / pow(2, num);
+}
+
+// Logical left-shift operator 
+LongInt LongInt::operator <<(LongInt num) {
+	return *this = *this * pow(2, num);
+}
+
 // firstNum to the power of secondNum
 LongInt pow(const LongInt& firstNum, const LongInt& secondNum) {
 	// If to the power of negative number
@@ -969,10 +981,7 @@ LongInt Random()
 {
 	LongInt randomNumber;
 
-	srand((unsigned) time(NULL));
-	int random = rand();
-	std::cout << random << std::endl;
-	for (int i = 0; i < random; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		srand((unsigned) time(NULL));
 		int random = rand();
@@ -980,10 +989,19 @@ LongInt Random()
 		randomNumber += mid;
 	}
 
+	std::cout << randomNumber << std::endl;
+
+	randomNumber = randomNumber << 2;
+
+	std::cout << randomNumber << std::endl;
+
+	randomNumber = pow(randomNumber, 3);
+
 	if (rand() % 2 == 1)
 	{
 		randomNumber *= -1;
 	}
+
 	std::cout << randomNumber << std::endl;
 	return randomNumber;
 }
