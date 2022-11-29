@@ -24,10 +24,32 @@
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
 
-struct lidiv_t; // Structure for quotient and remainder for LongInt div() function
-struct isPowerOfTen_t; // Structure for _isPowerOfTen() function
+/**
+ * Structure for quotient and remainder for LongInt div() function
+ * 
+ * Stores quotient and remainder after division of two numbers.
+ * 
+ * @see div
+ */
+struct lidiv_t;
 
-// A class for arbitrary length integers
+/**
+ * Structure for _isPowerOfTen() function
+ * 
+ * Stores whether the number is a power of ten
+ * and if it is? then the power itself.
+ * 
+ * @see _isPowerOfTen
+ */
+struct isPowerOfTen_t;
+
+/**
+ * Implementation of arithmetic for big numbers.
+ *
+ * Stores a large number and allows you to construct big number, 
+ * perform any arithmetic operations with it and output it to console.
+ *
+ */
 class LongInt {
 private:
 	std::vector<int> _digits; // Number as a vector of digits
@@ -132,7 +154,7 @@ struct isPowerOfTen_t {
 	long long power;
 };
 
-// Remove leading zeroes
+// Chesks if LongInt number have leading zeroes and remove them.
 void LongInt::_checkLeadingZeroes() {
 	for (long long i = size() - 1; i > 0; i--) {
 		if (_digits[i] == 0) {
@@ -143,7 +165,7 @@ void LongInt::_checkLeadingZeroes() {
 	}
 }
 
-// Correct digits if they are beyond 9 or below 0
+// Correct LongInt number's digits if they are beyond 9 or below 0
 void LongInt::_checkDigitOverflow() {
 	for (long long i = 0; i < size() - 1; i++) {
 		while (_digits[i] > 9) {
@@ -165,15 +187,22 @@ void LongInt::_checkDigitOverflow() {
 	}
 }
 
-// Correct -0 to 0
+// Correct LongInt number if it is equal to -0 to 0
 void LongInt::_checkNegativeZero() {
 	if (isZero()) {
 		_positive = true;
 	}
 }
 
-// Compare 2 LongInt numbers (1st relative to 2nd)
-// Returns: 1 -> greater, 0 -> equal, -1 -> less
+/**
+ * Compare two LongInt numbers (1st relative to 2nd).
+ *
+ * @param firstNum First number to be compared.
+ * @param secondNum Second number to be compared.
+ * @return 1 if 1st number is grater than 2nd.
+ * 		   2 if numbers are equal.
+ * 		  -1 if 1st number is less than 2nd.
+ */
 int LongInt::_compare(const LongInt& firstNum, const LongInt& secondNum) {
 	// Signs: + -
 	if (firstNum.isPositive() and secondNum.isNegative()) {
@@ -218,8 +247,15 @@ int LongInt::_compare(const LongInt& firstNum, const LongInt& secondNum) {
 	return 0; // If numbers are equal
 }
 
-// Auxiliary function for sum()
-// Sums 2 positive numbers (biggerNum >= smallerNum)
+/**
+ * Auxiliary function for sum()
+ *
+ * Sums 2 positive numbers (biggerNum >= smallerNum)
+ * 
+ * @param biggerNum First number for summation.
+ * @param smallerNum Second number for summation.
+ * @see sum
+ */
 LongInt LongInt::_sumAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 	LongInt result = biggerNum;
 	for (long long i = 0; i < smallerNum.size(); i++) {
@@ -229,8 +265,15 @@ LongInt LongInt::_sumAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 	return result;
 }
 
-// Auxiliary function for sum()
-// Finds the difference of 2 positive numbers (biggerNum >= smallerNum)
+/**
+ * Auxiliary function for sum()
+ *
+ * Finds the difference of 2 positive numbers (biggerNum >= smallerNum)
+ * 
+ * @param biggerNum First number for subtraction.
+ * @param smallerNum Second number for subtraction.
+ * @see sum
+ */
 LongInt LongInt::_diffAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 	LongInt result = biggerNum;
 	for (long long i = 0; i < smallerNum.size(); i++) {
@@ -841,7 +884,15 @@ LongInt pow(const LongInt& firstNum, const LongInt& secondNum) {
 	return result;
 }
 
-// Division
+/**
+ * Calculate result of division of two LongInt numbers.
+ *
+ * @see lidiv_t
+ * 
+ * @param firstNum Number to be devided.
+ * @param secondNum Number by which we divide.
+ * @return Member of lidiv_t structure as a result of division.
+ */
 lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
 	lidiv_t result;
 	// Checking division by zero
