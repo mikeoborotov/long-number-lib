@@ -19,6 +19,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstdlib>
+#include <random>
 
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
@@ -977,27 +978,19 @@ LongInt factorial(const LongInt& number) {
 	return result;
 }
 
-LongInt Random()
-{
-	LongInt randomNumber;
+LongInt Random() {
+	std::random_device rd;  
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(100, 10000);
 
-	for (int i = 0; i < 2; i++)
-	{
-		srand((unsigned) time(NULL));
-		int random = rand();
-		LongInt mid(random);
-		randomNumber += mid;
-	}
+	LongInt randomNumber(distrib(gen));
 
-	std::cout << randomNumber << std::endl;
-
+	randomNumber = pow(randomNumber, 10);
 	randomNumber = randomNumber << 2;
+	randomNumber = pow(randomNumber, 20);
+	randomNumber = randomNumber >> 1;
 
-	std::cout << randomNumber << std::endl;
-
-	randomNumber = pow(randomNumber, 3);
-
-	if (rand() % 2 == 1)
+	if (distrib(gen) % 2 == 1)
 	{
 		randomNumber *= -1;
 	}
