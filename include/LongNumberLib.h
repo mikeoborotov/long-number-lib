@@ -25,7 +25,7 @@
 namespace LNL {
 
 /**
- * Structure for quotient and remainder for LongInt div() function
+ * Structure for quotient and remainder for LongInt div() function.
  * 
  * Stores quotient and remainder after division of two numbers.
  * 
@@ -34,10 +34,10 @@ namespace LNL {
 struct lidiv_t;
 
 /**
- * Structure for _isPowerOfTen() function
+ * Structure for _isPowerOfTen() function.
  * 
  * Stores whether the number is a power of ten
- * and if it is? then the power itself.
+ * and if it is then the power itself.
  * 
  * @see _isPowerOfTen
  */
@@ -130,8 +130,8 @@ public:
 	LongInt operator -(); // Return opposite sign number (unary minus)
 	LongInt& operator --(); // Subtract 1 from the number (prefix)
 	LongInt operator --(int); // Subtract 1 to the number (postfix)
-	LongInt operator >> (LongInt num); // Logical right-shift operator 
-	LongInt operator << (LongInt num); // Logical left-shift operator 
+	LongInt operator >> (LongInt number); // Logical right-shift operator 
+	LongInt operator << (LongInt number); // Logical left-shift operator 
 	friend LongInt pow(const LongInt& firstNum, const LongInt& secondNum); // firstNum to the power of secondNum
 	friend lidiv_t div(const LongInt& firstNum, const LongInt& secondNum); // Division
 	friend LongInt mod(const LongInt& firstNum, const LongInt& secondNum); // Modulo
@@ -154,7 +154,7 @@ struct isPowerOfTen_t {
 	long long power;
 };
 
-// Chesks if LongInt number have leading zeroes and remove them.
+// Chesks if LongInt number have leading zeroes and remove them
 void LongInt::_checkLeadingZeroes() {
 	for (long long i = size() - 1; i > 0; i--) {
 		if (_digits[i] == 0) {
@@ -248,9 +248,9 @@ int LongInt::_compare(const LongInt& firstNum, const LongInt& secondNum) {
 }
 
 /**
- * Auxiliary function for sum()
+ * Auxiliary function for sum().
  *
- * Sums 2 positive numbers (biggerNum >= smallerNum)
+ * Sums 2 positive numbers (biggerNum >= smallerNum).
  * 
  * @param biggerNum First number for summation.
  * @param smallerNum Second number for summation.
@@ -266,9 +266,9 @@ LongInt LongInt::_sumAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 }
 
 /**
- * Auxiliary function for sum()
+ * Auxiliary function for sum().
  *
- * Finds the difference of 2 positive numbers (biggerNum >= smallerNum)
+ * Finds the difference of 2 positive numbers (biggerNum >= smallerNum).
  * 
  * @param biggerNum First number for subtraction.
  * @param smallerNum Second number for subtraction.
@@ -284,7 +284,15 @@ LongInt LongInt::_diffAux(const LongInt& biggerNum, const LongInt& smallerNum) {
 	return result;
 }
 
-// Auxiliary function (default multiplication)
+/**
+ * Auxiliary function (default multiplication).
+ *
+ * Multiply two LontInt numbers.
+ * 
+ * @param firstNum First number for multiplication.
+ * @param secondNum Second number for multiplication.
+ * @return Member of LongInt class as a result of multiplication.
+ */
 LongInt LongInt::_multAux(const LongInt& firstNum, const LongInt& secondNum) {
 	LongInt result;
 	result._digits.resize(firstNum.size() + secondNum.size());
@@ -298,7 +306,16 @@ LongInt LongInt::_multAux(const LongInt& firstNum, const LongInt& secondNum) {
 	return result;
 }
 
-// Karatsuba algorithm (firstNum and secondNum are absolute values)
+/**
+ * Implementation of Karatsuba algorithm for fast multiplication. 
+ *
+ * Implements Karatsuba algorithm for fast multiplication. 
+ * Both params are absolute numbers.
+ * 
+ * @param firstNum First number for multiplication.
+ * @param secondNum Second number for multiplication.
+ * @return Member of LongInt class as a result of multiplication.
+ */
 LongInt LongInt::_karatsubaAlg(const LongInt& firstNum, const LongInt& secondNum) {
 	// If it is faster to multiply as usual
 	if ((firstNum.size() < 100) or (secondNum.size() < 100)) {
@@ -319,7 +336,14 @@ LongInt LongInt::_karatsubaAlg(const LongInt& firstNum, const LongInt& secondNum
 	return result;
 }
 
-// Is number a power of 10?
+/**
+ * Checks if number is power of 10.
+ * 
+ * @see isPowerOfTen_t
+ * 
+ * @param number Numbet to be checked.
+ * @return Member of isPowerOfTen_t structure.
+ */
 isPowerOfTen_t LongInt::_isPowerOfTen(const LongInt& number) {
 	bool isPowerOfTen = true;
 	long long power = 0;
@@ -819,13 +843,13 @@ LongInt LongInt::operator --(int) {
 }
 
 // Logical right-shift operator 
-LongInt LongInt::operator >>(LongInt num) {
-	return *this = *this / pow(2, num);
+LongInt LongInt::operator >>(LongInt number) {
+	return *this = *this / pow(2, number);
 }
 
 // Logical left-shift operator 
-LongInt LongInt::operator <<(LongInt num) {
-	return *this = *this * pow(2, num);
+LongInt LongInt::operator <<(LongInt number) {
+	return *this = *this * pow(2, number);
 }
 
 /**
