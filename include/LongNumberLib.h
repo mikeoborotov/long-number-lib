@@ -785,7 +785,13 @@ LongInt LongInt::operator <<(LongInt num) {
 	return *this = *this * pow(2, num);
 }
 
-// firstNum to the power of secondNum
+/**
+ * Calculate power of two LongInt numbers.
+ *
+ * @param firstNum Number to be raised.
+ * @param secondNum The power to which we raise.
+ * @return 'firstNum' to the power of 'secondNum'.
+ */
 LongInt pow(const LongInt& firstNum, const LongInt& secondNum) {
 	// If to the power of negative number
 	if (secondNum.isNegative()) {
@@ -897,7 +903,13 @@ lidiv_t div(const LongInt& firstNum, const LongInt& secondNum) {
 	return result;
 }
 
-// Modulo
+/**
+ * Calculate remainder of division of two LongInt numbers.
+ *
+ * @param firstNum Number to be devided.
+ * @param secondNum Number by which we divide.
+ * @return Remainder of dividing 'firstNum' by 'secondNum'.
+ */
 LongInt mod(const LongInt& firstNum, const LongInt& secondNum) {
 	LongInt result;
 	// If modulo zero
@@ -927,7 +939,13 @@ LongInt mod(const LongInt& firstNum, const LongInt& secondNum) {
 	return result;
 }
 
-// Greatest common divisor
+/**
+ * Calculate greatest common divisor of two LongInt numbers.
+ *
+ * @param firstNum First number to calculate gcd of.
+ * @param secondNum Second number to calculate gcd of.
+ * @return Greatest common divisor of 'firstNum' and 'secondNum'.
+ */
 LongInt gcd(const LongInt& firstNum, const LongInt& secondNum) {
 	LongInt first = firstNum;
 	LongInt second = secondNum;
@@ -956,7 +974,13 @@ LongInt gcd(const LongInt& firstNum, const LongInt& secondNum) {
 	return first + second;
 }
 
-// Least common multiple
+/**
+ * Calculate least common multiple of two LongInt numbers.
+ *
+ * @param firstNum First number to calculate lcm of.
+ * @param secondNum Second number to calculate lcm of.
+ * @return Least common multiple of 'firstNum' and 'secondNum'.
+ */
 LongInt lcm(const LongInt& firstNum, const LongInt& secondNum) {
 	LongInt first = firstNum;
 	LongInt second = secondNum;
@@ -969,7 +993,12 @@ LongInt lcm(const LongInt& firstNum, const LongInt& secondNum) {
 	return first * second / gcd(first, second);
 }
 
-// Factorial of a number
+/**
+ * Calculate factoirial of LongInt number.
+ *
+ * @param number Number to generates its factorial.
+ * @return factorial of 'number'.
+ */
 LongInt factorial(const LongInt& number) {
 	LongInt result(1);
 	for (LongInt i = 1; i <= number; i++) {
@@ -978,6 +1007,11 @@ LongInt factorial(const LongInt& number) {
 	return result;
 }
 
+/**
+ * Generates random LongInt number.
+ *
+ * @return random generated member of LongInt class.
+ */
 LongInt Random() {
 	std::random_device rd;  
     std::mt19937 gen(rd());
