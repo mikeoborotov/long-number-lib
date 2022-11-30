@@ -1,13 +1,13 @@
 #include "../include/LongNumberLib.h"
 #include "../include/LongNumberLibTest.h"
-#include <ctime>
+#include <chrono>
 
-	LNL::pow(3, 5);
-	time_t start, end;
-	time(&start);
-	LNL::pow(3, 5);
-	time(&end);
-	double seconds = difftime(end, start);
-	printf("The time: %f seconds\n", seconds)
+int main(int argc, char *argv[]) {
+	auto begin = std::chrono::steady_clock::now();
+	LNL::pow(LNL::LongInt(1100000000000000000000), LNL::LongInt(10));
+	auto end = std::chrono::steady_clock::now();
+	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
+	std::cout << elapsedTime.count();
+	// std::cout << "Time: " << elapsedTime.count() << "ms\n";
     return 0;
 }
