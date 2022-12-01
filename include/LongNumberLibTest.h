@@ -54,6 +54,7 @@ public:
 	static void test_gcd(); // Test gcd() function
 	static void test_lcm(); // Test lcm() function
 	static void test_factorial(); // Test factorial() function
+	static void test_shiftEncryption();
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -112,6 +113,7 @@ void Test::runAllTests() {
 	test_gcd();
 	test_lcm();
 	test_factorial();
+	test_shiftEncryption();
 }
 
 // Print out test report
@@ -556,6 +558,18 @@ void Test::test_factorial() {
 	verify("factorial #13", factorial(LongInt(30)), LongInt("265252859812191058636308480000000"));
 }
 
+void Test::test_shiftEncryption() {
+	LongInt initial = Random();
+	LongInt msg = initial;
+	int key = std::rand() % 10;
+
+	shiftEncrypt(msg, key);
+	shiftDecrypt(msg, key);
+	verify("123", initial, msg);
+}
+
 } // Closing namespace "LNL" (short for "LongNumberLib")
+
+
 
 #endif // LONGNUMBERLIBTEST_H

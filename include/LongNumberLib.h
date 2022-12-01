@@ -174,23 +174,6 @@ struct isPowerOfTen_t {
 	long long power;
 };
 
-bool LongInt::isPrime() {
-
-}
-
-factor_t LongInt::factor() const {
-
-}
-
-void shiftEncrypt(LongInt& li, int key) {
-
-}
-
-void shiftDecrypt(LongInt& li, int key) {
-
-}
-
-
 // Chesks if LongInt number have leading zeroes and remove them
 void LongInt::_checkLeadingZeroes() {
 	for (long long i = size() - 1; i > 0; i--) {
@@ -1143,6 +1126,26 @@ LongInt Random() {
 
 	std::cout << randomNumber << std::endl;
 	return randomNumber;
+}
+
+bool LongInt::isPrime() {
+	return true;
+}
+
+factor_t LongInt::factor() const {
+	return {LongInt(1), LongInt(2)};
+}
+
+void shiftEncrypt(LongInt& li, int key) {
+	for (long long i = 0; i < li.size(); i++) {
+		li._digits[i] = (li._digits[i] + key) % 10;
+	}
+}
+
+void shiftDecrypt(LongInt& li, int key) {
+	for (long long i = 0; i < li.size(); i++) {
+		li._digits[i] = (li._digits[i] - key + 10) % 10;
+	}
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
