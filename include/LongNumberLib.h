@@ -24,6 +24,14 @@
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
 
+
+/**
+ * Structure for restoring fuctors of a LongInt
+ * 
+ * 
+*/
+struct factor_t;
+
 /**
  * Structure for quotient and remainder for LongInt div() function.
  * 
@@ -139,8 +147,20 @@ public:
 	friend LongInt lcm(const LongInt& firstNum, const LongInt& secondNum); // Least common multiple
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
 	friend LongInt Random(); // Generates random LongInt number
+
+	//Encryption functions
+	bool isPrime();
+	factor_t factor() const;	//return 2 factors of number
+	friend LongInt generateRandomPrime(int size);	// generate random prime for encryption algorithms
+	friend void shiftEncrypt(LongInt& li, int key);
+	friend void shiftDecrypt(LongInt& li, int key);
 };
 
+// Structure for restoring factors
+struct factor_t {
+	LongInt first;
+	LongInt second;
+};
 
 // Structure for quotient and remainder for LongInt div() function
 struct lidiv_t {
@@ -153,6 +173,23 @@ struct isPowerOfTen_t {
 	bool isPowerOfTen;
 	long long power;
 };
+
+bool LongInt::isPrime() {
+
+}
+
+factor_t LongInt::factor() const {
+
+}
+
+void shiftEncrypt(LongInt& li, int key) {
+
+}
+
+void shiftDecrypt(LongInt& li, int key) {
+
+}
+
 
 // Chesks if LongInt number have leading zeroes and remove them
 void LongInt::_checkLeadingZeroes() {
