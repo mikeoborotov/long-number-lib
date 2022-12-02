@@ -6,21 +6,23 @@
 
 ## Contents
 
-+ [How to install](#How-to-install)
-+ [How to use](#How-to-use)
-    + [General info](#General-info)
-    + [Creating an instance](#Creating-an-instance)
-    + [Assigning a value](#Assigning-a-value)
-    + [I/O operators](#IO-operators)
-    + [Useful getters](#Useful-getters)
-    + [Relational operations](#Relational-operations)
-    + [Mathematical operations](#Mathematical-operations)
-    + [Random numbers](#Random-numbers)
-+ [Information security features](#Information-security-features)
-+ [Running tests](#Running-tests)
-+ [Benchmarks](#Benchmarks)
-+ [Contributing](#Contributing)
-+ [Licence](#Licence)
+- [LongNumberLib](#longnumberlib)
+  - [Contents](#contents)
+  - [How to install](#how-to-install)
+  - [How to use](#how-to-use)
+    - [General info](#general-info)
+    - [Creating an instance](#creating-an-instance)
+    - [Assigning a value](#assigning-a-value)
+    - [I/O operators](#io-operators)
+    - [Useful getters](#useful-getters)
+    - [Relational operations](#relational-operations)
+    - [Mathematical operations](#mathematical-operations)
+    - [Random numbers](#random-numbers)
+  - [Information security features](#information-security-features)
+  - [Running tests](#running-tests)
+  - [Benchmarks](#benchmarks)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 ## How to install
 
@@ -105,7 +107,7 @@ Relational operators `==`, `!=`, `>`, `>=`, `<`, `<=` are overloaded for the `LN
 Here `x` and `y` are instances of `LNL::LongInt`.
 
 ### Mathematical operations
-Operators `+`, `-`, `*`, `/`, `%` as well as operators `+=`, `-=`, `*=`, `/=`, `%=` are overloaded for the `LNL::LongInt` class and function just like you would expect them to. The same goes for unary operators `+`, `-` and `++`, `--` (both prefix and postfix).
+Operators `+`, `-`, `*`, `/`, `%`, `<<`, `>>` as well as operators `+=`, `-=`, `*=`, `/=`, `%=` are overloaded for the `LNL::LongInt` class and function just like you would expect them to. The same goes for unary operators `+`, `-` and `++`, `--` (both prefix and postfix).
 
 Some other mathematical functions:
 + `LNL::pow(x,y)` calculates `x` to the power of `y` (as a `LNL::LongInt`).
@@ -129,7 +131,7 @@ Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need 
 
 ### Random numbers
 
-COMING SOON
+The Random() function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
 
 ## Information security features
 
@@ -155,13 +157,21 @@ g++ source/testing.cpp -o testing.out
 ./testing.out
 ```
 
-Or compile with whatever compiler you prefer.
-
 [:arrow_up: Back to contents](#Contents)
 
 ## Benchmarks
 
-COMING SOON
+If you are using Linux OS, you can run a benchmark for some functions to measure their execution time. To do this, run the code below in the terminal:
+
+```
+python3 source/testing.py source/testing.cpp -path source/test_func.cpp --pow
+```
+
+This code will run unit tests and benchmark for function `LNL::pow()`. For a more detailed understanding of how to run this script, use this code:
+
+```
+python3 source/testing.py -h
+```
 
 [:arrow_up: Back to contents](#Contents)
 

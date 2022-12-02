@@ -122,10 +122,12 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "path_unit", metavar='PATH TO UNIT TESTS', type=str,
-        help="Path to the cpp file with unit tests.")
+        help="Path to the cpp file with unit tests. " \
+             "Basically it is source/testing.cpp.")
     parser.add_argument(
         "-path", metavar='PATH TO FILE FOR FUNC BENCHMARK', type=str,
-        help="Path to the cpp file with function.")
+        help="Path to the cpp file with function. " \
+             "Basically it is source/test_func.cpp.")
     parser.add_argument(
         "--pow", action="store_true",
         help="Test LNL::pow function")
@@ -152,7 +154,7 @@ def parse_args():
         help="Test LNL::operator /")
     parser.add_argument(
         "--modop", action="store_true",
-        help="Test LNL::operator %")
+        help="Test LNL::operator %%")
     
     return parser.parse_known_args()
 
