@@ -6,23 +6,23 @@
 
 ## Contents
 
-- [LongNumberLib](#longnumberlib)
-  - [Contents](#contents)
-  - [How to install](#how-to-install)
-  - [How to use](#how-to-use)
-    - [General info](#general-info)
-    - [Creating an instance](#creating-an-instance)
-    - [Assigning a value](#assigning-a-value)
-    - [I/O operators](#io-operators)
-    - [Useful getters](#useful-getters)
-    - [Relational operations](#relational-operations)
-    - [Mathematical operations](#mathematical-operations)
-    - [Random numbers](#random-numbers)
-  - [Information security features](#information-security-features)
-  - [Running tests](#running-tests)
-  - [Benchmarks](#benchmarks)
-  - [Contributing](#contributing)
-  - [Licence](#licence)
+- [How to install](#how-to-install)
+- [How to use](#how-to-use)
+  - [General info](#general-info)
+  - [Creating an instance](#creating-an-instance)
+  - [Assigning a value](#assigning-a-value)
+  - [I/O operators](#io-operators)
+  - [Useful getters](#useful-getters)
+  - [Relational operations](#relational-operations)
+  - [Mathematical operations](#mathematical-operations)
+  - [Random numbers](#random-numbers)
+- [Information security features](#information-security-features)
+- [Benchmarks](#benchmarks)
+- [Testing the library](#testing-the-library)
+  - [Run unit tests](#run-unit-tests)
+  - [Run benchmarks](#run-benchmarks)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## How to install
 
@@ -32,7 +32,7 @@ The whole library is located in the `LongNumberLib.h` header. You can find it in
 #include "<YourPath>/LongNumberLib.h"
 ```
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
 
 ## How to use
 
@@ -137,11 +137,19 @@ The `LNL::Random()` function is defined for the LongInt class. It generates a ra
 
 COMING SOON
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
 
-## Running tests
+## Benchmarks
 
-In the `include` folder in this repository you can find a second header called `LongNumberLibTest.h`. You can install this header just like the library itself. It is important to note that both headers should be located in the same directory. Inside this file there is a class `LNL::Test` which contains tests for the `LNL::LongInt` class.
+COMING SOON
+
+[:arrow_up: Back to contents](#contents)
+
+## Testing the library
+
+### Run unit tests
+
+In the `include` folder in this repository you can find a second header called `LongNumberLibTest.h`. You can install this header just like the library itself. It is important to note that both headers should be located in the same directory. Inside this file there is a class `LNL::Test` which contains unit tests for the `LNL::LongInt` class.
 
 To run all tests at once you can use code below:
 
@@ -157,9 +165,7 @@ g++ source/testing.cpp -o testing.out
 ./testing.out
 ```
 
-[:arrow_up: Back to contents](#Contents)
-
-## Benchmarks
+### Run benchmarks
 
 If you are using Linux OS, you can run a benchmark for some functions to measure their execution time. To do this, run the code below in the terminal:
 
@@ -173,13 +179,13 @@ This code will run unit tests and benchmark for function `LNL::pow()`. For a mor
 python3 source/testing.py -h
 ```
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
 
 ## Contributing
 
 If you find any bugs or if you have improvement suggestions, please feel free to open an issue or a pull request. If you open a pull request, please add some comments to your changes and make sure all tests from `LongNumberLibTest.h` header are running correctly.
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
 
 ## Licence
 
