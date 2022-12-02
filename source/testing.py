@@ -96,10 +96,10 @@ def plot_time_evolution(
     
     fig = plt.figure(figsize=(8, 8))
     fig.subplots_adjust(bottom=0.25)
-    fig.canvas.manager.set_window_title(f'Function {func_name} benchmark')
+    fig.canvas.manager.set_window_title(f'Benchmark for function: {func_name}')
     
     ax = fig.add_subplot()
-    ax.set_title(f'Function {func_name} benchmark')
+    ax.set_title(f'Benchmark for function: {func_name}')
 
     xticks = np.arange(0, len(times))
     ax.set_xticks(xticks)
@@ -107,16 +107,16 @@ def plot_time_evolution(
     if (numbers.shape[1] == 1):
         ax.set_xticklabels([f'{func_name}({get_exp(int(n))})'.replace('[', '').replace(']', '') for n in numbers], fontsize=8)
     elif (numbers.shape[1] == 2):
-        ax.set_xticklabels([f'{get_exp(int(n[0]))}{func_name}{get_exp(int(n[1]))}' for n in numbers], fontsize=8, rotation=45)
+        ax.set_xticklabels([f'{get_exp(int(n[0]))[0:1]}$\cdot$10{"$^{%s}$" % get_exp(int(n[0]))[3:]} {func_name} {get_exp(int(n[1]))[0:1]}$\cdot$10{"$^{%s}$" % get_exp(int(n[1]))[3:]}' for n in numbers], fontsize=8, rotation=45)
     else:
         print(f'Invalid shape of numbers for function {func_name}')
         return
     
     ax.grid(linestyle='--', linewidth=0.5)
-    ax.set_xlabel('Numbers', labelpad=14.0)
-    ax.set_ylabel('Time, ms')
+    ax.set_xlabel('Numbers (rounded up to orders of magnitude)', labelpad=14.0)
+    ax.set_ylabel('Calculation time, ms')
                   
-    ax.plot(times, color='tab:blue')
+    ax.plot(times, linestyle='dashed', marker='o', color='tab:blue')
     plt.show()
     
 def parse_args():
@@ -176,17 +176,17 @@ if __name__ == "__main__":
     if ARGS.path is not None:
         filepath = ARGS.path
         
-        num = np.asarray([['14'*100, '27'*50], 
-                          ['14'*300, '27'*50], 
-                          ['14'*500, '27'*50], 
-                          ['14'*700, '27'*50], 
-                          ['14'*900, '27'*50],
-                          ['14'*1100, '27'*50],  
-                          ['14'*1300, '27'*50]], 
+        num = np.asarray([['9876543210'*30, '1234567890'*20], 
+                          ['9876543210'*50, '1234567890'*20], 
+                          ['9876543210'*70, '1234567890'*20], 
+                          ['9876543210'*90, '1234567890'*20], 
+                          ['9876543210'*110, '1234567890'*20],
+                          ['9876543210'*130, '1234567890'*20],  
+                          ['9876543210'*150, '1234567890'*20]], 
                         dtype=str)
         
         if ARGS.pow:
-            num = np.asarray([[11e5, 10000], [11e10, 10000], [11e15, 10000]], dtype=int)
+            num = np.asarray([[2, 1e3], [2, 2e3], [2, 3e3], [2, 4e3], [2, 5e3]], dtype=int)
             run_func_evolution_test('pow', num)
             
         if ARGS.div:
