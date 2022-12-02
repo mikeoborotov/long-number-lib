@@ -95,6 +95,7 @@ def plot_time_evolution(
     ):
     
     fig = plt.figure(figsize=(8, 8))
+    fig.subplots_adjust(bottom=0.25)
     fig.canvas.manager.set_window_title(f'Function {func_name} benchmark')
     
     ax = fig.add_subplot()
@@ -104,9 +105,9 @@ def plot_time_evolution(
     ax.set_xticks(xticks)
     
     if (numbers.shape[1] == 1):
-        ax.set_xticklabels([f'{func_name}({float(n):.1e})'.replace('[', '').replace(']', '') for n in numbers], fontsize=8)
+        ax.set_xticklabels([f'{func_name}({get_exp(int(n))})'.replace('[', '').replace(']', '') for n in numbers], fontsize=8)
     elif (numbers.shape[1] == 2):
-        ax.set_xticklabels([f'{get_exp(int(n[0]))}{func_name}{get_exp(int(n[1]))}' for n in numbers], fontsize=8)
+        ax.set_xticklabels([f'{get_exp(int(n[0]))}{func_name}{get_exp(int(n[1]))}' for n in numbers], fontsize=8, rotation=45)
     else:
         print(f'Invalid shape of numbers for function {func_name}')
         return
@@ -175,34 +176,29 @@ if __name__ == "__main__":
     if ARGS.path is not None:
         filepath = ARGS.path
         
+        num = np.asarray([['14'*100, '27'*50], 
+                          ['14'*300, '27'*50], 
+                          ['14'*500, '27'*50], 
+                          ['14'*700, '27'*50], 
+                          ['14'*900, '27'*50],
+                          ['14'*1100, '27'*50],  
+                          ['14'*1300, '27'*50]], 
+                        dtype=str)
+        
         if ARGS.pow:
             num = np.asarray([[11e5, 10000], [11e10, 10000], [11e15, 10000]], dtype=int)
             run_func_evolution_test('pow', num)
             
         if ARGS.div:
-            num = np.asarray([['11'*100, '21'*60], 
-                              ['11'*150, '21'*60], 
-                              ['11'*200, '21'*60], 
-                              ['11'*250, '21'*60], 
-                              ['11'*300, '21'*60]],
-                             dtype=str)
             run_func_evolution_test('div', num)
             
         if ARGS.mod:
-            num = np.asarray([[11e5, 200], [11e10, 200], [11e15, 200]], dtype=int)
             run_func_evolution_test('mod', num)
 
         if ARGS.gcd:
-            num = np.asarray([[11e5, 200], [11e10, 200], [11e15, 200]], dtype=int)
             run_func_evolution_test('gcd', num)
             
         if ARGS.lcm:
-            num = np.asarray([['14'*100, '27'*50], 
-                              ['14'*300, '27'*50], 
-                              ['14'*500, '27'*50], 
-                              ['14'*700, '27'*50], 
-                              ['14'*900, '27'*50]], 
-                            dtype=str)
             run_func_evolution_test('lcm', num)
         
         if ARGS.factorial:
@@ -210,30 +206,12 @@ if __name__ == "__main__":
             run_func_evolution_test('factorial', num)
             
         if ARGS.multi:
-            num = np.asarray([['11'*100, '11'*50], 
-                              ['11'*300, '11'*50], 
-                              ['11'*500, '11'*50], 
-                              ['11'*700, '11'*50], 
-                              ['11'*900, '11'*50]], 
-                             dtype=str)
             run_func_evolution_test('*', num)
             
         if ARGS.divop:
-            num = np.asarray([['99'*50, '99'*50], 
-                              ['99'*100, '99'*50], 
-                              ['99'*150, '99'*50], 
-                              ['99'*200, '99'*50], 
-                              ['99'*250, '99'*50]], 
-                             dtype=str)
             run_func_evolution_test('/', num)
             
         if ARGS.modop:
-            num = np.asarray([['99'*50, '99'*50], 
-                              ['99'*100, '99'*50], 
-                              ['99'*150, '99'*50], 
-                              ['99'*200, '99'*50], 
-                              ['99'*250, '99'*50]], 
-                             dtype=str)
             run_func_evolution_test('%', num)
             
 
