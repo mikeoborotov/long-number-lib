@@ -131,7 +131,7 @@ Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need 
 
 ### Random numbers
 
-The Random() function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
+The `LNL::Random()` function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
 
 ## Information security features
 
