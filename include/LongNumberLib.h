@@ -149,12 +149,38 @@ public:
 	friend LongInt Random(); // Generates random LongInt number
 
 	//Encryption functions
-	bool isPrime();
+
+	bool isProbablyPrime();	// uses Miller-Rabin primaly test
 	factor_t factor() const;	//return 2 factors of number
 	friend LongInt generateRandomPrime(int size);	// generate random prime for encryption algorithms
 	friend void shiftEncrypt(LongInt& li, int key);
 	friend void shiftDecrypt(LongInt& li, int key);
 };
+
+std::vector<int> primes;
+
+bool isSmallPrime(int num) {
+	bool isPrime = true;
+	for (const int& prime : primes) {
+		if (num % prime != 0 || num == prime) {
+			isPrime = false;
+		}
+	}
+
+	if (isPrime) {
+		primes.push_back(num);
+	}
+}
+
+void fillPrimes() {
+	primes.push_back(2);
+	primes.push_back(3);
+
+	for (int i = 5; i < 256; i+= 6) {
+		isSmallPrime(i);
+		isSmallPrime(i + 2);
+	}
+}
 
 // Structure for restoring factors
 struct factor_t {
@@ -1124,16 +1150,67 @@ LongInt Random() {
 		randomNumber *= -1;
 	}
 
-	std::cout << randomNumber << std::endl;
+	//std::cout << randomNumber << std::endl;
 	return randomNumber;
 }
 
-bool LongInt::isPrime() {
+bool LongInt::isProbablyPrime() {
 	return true;
 }
 
 factor_t LongInt::factor() const {
+	if (!_positive) {
+		std::cout << "Error: Factoring required positive number. return {1, *this}" << std::endl;
+		return {-1, *this};
+	}
+
+	if (*this == 2 || *this == 3) {
+		return {1, *this};
+	}
+
+	if 
+
+	LongInt first(5);
+
+	for (LongInt first(5); first * first <= *this; first += 6) {
+		if (*this % first == 0 || *this % (first + 2) == 0) {
+			return false;
+		}
+	}
+
 	return {LongInt(1), LongInt(2)};
+}
+
+LongInt generateRandomPrime(int size) {
+	// generate random number with size
+	LongInt li = Random();
+	li._positive = true;
+	while(li.size() < size) {
+		li = pow(li, 2);
+		li << 1;
+	}
+
+	li._digits.resize(size - 1);
+	if (li._digits[li.size() - 1] == 0) {
+		li._digits[li.size() - 1] = 1;
+	}
+
+	//make it prime
+	while (!li.isProbablyPrime()) {
+		if (li % 2 == 0) {
+			li++;	// if even make odd
+			continue;
+		}
+		// check numbers 6k +- 1
+		if (li % 6 == 1) {
+			li += 4;
+			continue;
+		}
+
+		li += 2;
+	}
+
+	return li;
 }
 
 void shiftEncrypt(LongInt& li, int key) {
