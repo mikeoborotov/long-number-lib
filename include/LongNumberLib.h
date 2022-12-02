@@ -150,9 +150,10 @@ public:
 
 	//Encryption functions
 
-	bool isProbablyPrime();	// uses Miller-Rabin primaly test
+	bool isProbablyPrime(int primeCheckAttempts) const;	// uses Miller-Rabin primaly test
 	factor_t factor() const;	//return 2 factors of number
-	friend LongInt generateRandomPrime(int size);	// generate random prime for encryption algorithms
+	friend LongInt generateRandomPrime(int size, int primeCheckAttempts);	// generate random prime for encryption algorithms
+	friend LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt modular);
 	friend void shiftEncrypt(LongInt& li, int key);
 	friend void shiftDecrypt(LongInt& li, int key);
 };
@@ -1154,7 +1155,48 @@ LongInt Random() {
 	return randomNumber;
 }
 
-bool LongInt::isProbablyPrime() {
+bool LongInt::isProbablyPrime(int primeCheckAttempts) const{
+	//check small primes
+	for (const int& prime : primes) {
+		if (*this % prime == 0) {
+			return false;
+		}
+	}
+
+	//Miller-Rabin test
+	//1st n-1 = 2^s * t
+	LongInt li = *this - 1;
+	LongInt s = 0;
+	LongInt t = 0;
+	lidiv_t divRes;
+
+	do {
+		divRes = div(li, 2);
+		s++;
+	} while (divRes.rem != 1);
+	t = divRes.quot;
+
+	for (int i = 0; i < primeCheckAttempts; i++) {
+		//random
+		LongInt a;
+		LongInt x = modPow(a, t, li);
+		if (x == 1 || x == *this - 1) {
+			continue;
+		}
+
+		for (int j = 0; s > j; j++) {
+			x = modPow(x, 2, *this);
+			if (x == 1) {
+				return false;
+			}
+			if (x == *this - 1) {
+				continue;
+			}
+		}
+
+		return false;
+	}
+
 	return true;
 }
 
@@ -1181,7 +1223,7 @@ factor_t LongInt::factor() const {
 	return {LongInt(1), LongInt(2)};
 }
 
-LongInt generateRandomPrime(int size) {
+LongInt generateRandomPrime(int size, int primeCheckAttempts) {
 	// generate random number with size
 	LongInt li = Random();
 	li._positive = true;
@@ -1196,7 +1238,7 @@ LongInt generateRandomPrime(int size) {
 	}
 
 	//make it prime
-	while (!li.isProbablyPrime()) {
+	while (!li.isProbablyPrime(primeCheckAttempts)) {
 		if (li % 2 == 0) {
 			li++;	// if even make odd
 			continue;
@@ -1211,6 +1253,10 @@ LongInt generateRandomPrime(int size) {
 	}
 
 	return li;
+}
+
+LongInt modPow(LongInt& li, LongInt& pow, LongInt& modular) {
+	return 0;
 }
 
 void shiftEncrypt(LongInt& li, int key) {
