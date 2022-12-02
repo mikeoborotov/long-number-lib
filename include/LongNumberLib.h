@@ -147,7 +147,7 @@ public:
 	friend LongInt lcm(const LongInt& firstNum, const LongInt& secondNum); // Least common multiple
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
 	friend LongInt Random(); // Generates random LongInt number
-
+	friend LongInt Random(const LongInt& left, const LongInt& right);	// Generates random LongInt from left to right
 	//Encryption functions
 
 	bool isProbablyPrime(int primeCheckAttempts) const;	// uses Miller-Rabin primaly test
@@ -1141,6 +1141,7 @@ LongInt Random() {
     std::uniform_int_distribution<> distrib(100, 10000);
 
 	LongInt randomNumber(distrib(gen));
+	std::cout << "Random Number gen: " << randomNumber << std::endl;
 
 	randomNumber = pow(randomNumber, 10);
 	randomNumber = randomNumber << 2;
@@ -1152,8 +1153,33 @@ LongInt Random() {
 		randomNumber *= -1;
 	}
 
-	//std::cout << randomNumber << std::endl;
+	std::cout << randomNumber << std::endl;
 	return randomNumber;
+}
+
+/**
+ * Considered that difference between sizes of left and right more than 2 digits
+*/
+LongInt Random(const LongInt& left, const LongInt& right) {
+	std::random_device rd;  
+    std::mt19937 gen(rd());
+	std::uniform_int_distribution<> sizeDistrib(left.size() + 1, right.size() - 1);
+    std::uniform_int_distribution<> digitsDistrib(0, 1000);
+	
+	int size = sizeDistrib(gen);
+	LongInt result;
+	result._digits.resize(size);
+	for (int i = 0; i < result.size(); i++) {
+		result._digits[i] = digitsDistrib(gen) % 10;
+	}
+
+	while (result._digits[size - 1] == 0) {
+		result._digits[size - 1] = digitsDistrib(gen) % 10;
+	}
+	result._checkDigitOverflow();
+	result._checkLeadingZeroes();
+	
+	return result;
 }
 
 bool LongInt::isProbablyPrime(int primeCheckAttempts) const{
@@ -1179,7 +1205,7 @@ bool LongInt::isProbablyPrime(int primeCheckAttempts) const{
 
 	for (int i = 0; i < primeCheckAttempts; i++) {
 		//random
-		LongInt a;
+		LongInt a = Random(2, *this - 2);
 		LongInt x = modPow(a, t, li);
 		if (x == 1 || x == *this - 1) {
 			continue;
@@ -1201,23 +1227,9 @@ bool LongInt::isProbablyPrime(int primeCheckAttempts) const{
 	return true;
 }
 
+//TODO implement
 factor_t LongInt::factor() const {
-	if (!_positive) {
-		std::cout << "Error: Factoring required positive number. return {1, *this}" << std::endl;
-		return {-1, *this};
-	}
-
-	if (*this == 2 || *this == 3) {
-		return {1, *this};
-	}
-
-	for (LongInt first(5); first * first <= *this; first += 6) {
-		if (*this % first == 0 || *this % (first + 2) == 0) {
-			return {0, 0};
-		}
-	}
-
-	return {LongInt(1), LongInt(2)};
+	return {1, *this};
 }
 
 LongInt generateRandomPrime(int size, int primeCheckAttempts) {
