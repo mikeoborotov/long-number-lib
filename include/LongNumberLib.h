@@ -1267,11 +1267,20 @@ LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular)
 LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt& modular) {
 	//li ^ pow % modular
 	// pow = a1*1 + a2*2 + a3*4 + 8 => use modPowTwo, then multiply and again modPowTwo
-	//std::vector<int> powDecomposition;
-	//pow / 2;
+	std::vector<int> powDecomposition;	// decomposition of pow into bits
+	LongInt two(2);
+	lidiv_t divResult;
+	do {
+		divResult = div(pow, two);
+		powDecomposition.push_back(divResult.rem == 1);
+	} while(divResult.quot != 0);
 
+	LongInt result = modPowTwo(li, powDecomposition[0], modular);
+	for (int i = 1; i < powDecomposition.size(); i++) {
+		result = (result * (modPow(result, powDecomposition[i], modular))) % modular;
+	}
 
-	return 0;
+	return result;
 }
 
 void shiftEncrypt(LongInt& li, int key) {
