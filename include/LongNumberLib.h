@@ -153,14 +153,15 @@ public:
 	bool isProbablyPrime(int primeCheckAttempts) const;	// uses Miller-Rabin primaly test
 	factor_t factor() const;	//return 2 factors of number
 	friend LongInt generateRandomPrime(int size, int primeCheckAttempts);	// generate random prime for encryption algorithms
-	friend LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt modular);
+	friend LongInt modPowTwo(const LongInt& li, const LongInt& pow, const LongInt& modular);
+	friend LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt& modular);
 	friend void shiftEncrypt(LongInt& li, int key);
 	friend void shiftDecrypt(LongInt& li, int key);
 };
 
 std::vector<int> primes;
 
-bool isSmallPrime(int num) {
+void addSmallPrime(int num) {
 	bool isPrime = true;
 	for (const int& prime : primes) {
 		if (num % prime != 0 || num == prime) {
@@ -178,8 +179,8 @@ void fillPrimes() {
 	primes.push_back(3);
 
 	for (int i = 5; i < 256; i+= 6) {
-		isSmallPrime(i);
-		isSmallPrime(i + 2);
+		addSmallPrime(i);
+		addSmallPrime(i + 2);
 	}
 }
 
@@ -1210,13 +1211,9 @@ factor_t LongInt::factor() const {
 		return {1, *this};
 	}
 
-	if 
-
-	LongInt first(5);
-
 	for (LongInt first(5); first * first <= *this; first += 6) {
 		if (*this % first == 0 || *this % (first + 2) == 0) {
-			return false;
+			return {0, 0};
 		}
 	}
 
@@ -1255,7 +1252,25 @@ LongInt generateRandomPrime(int size, int primeCheckAttempts) {
 	return li;
 }
 
-LongInt modPow(LongInt& li, LongInt& pow, LongInt& modular) {
+LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular) {
+	//li^(2^powOfTwo) % modular
+	//A ^ 2 mod B = (A mod B * A mod B) mod B
+	LongInt result = li % modular;
+
+	for (int i = 0; i < powOfTwo; i++) {
+		result = (result * result) % modular;
+	}
+
+	return result;
+}
+
+LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt& modular) {
+	//li ^ pow % modular
+	// pow = a1*1 + a2*2 + a3*4 + 8 => use modPowTwo, then multiply and again modPowTwo
+	//std::vector<int> powDecomposition;
+	//pow / 2;
+
+
 	return 0;
 }
 
