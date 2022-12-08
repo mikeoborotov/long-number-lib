@@ -20,6 +20,8 @@
 #include <algorithm>
 #include <cstdlib>
 #include <random>
+#include <climits>
+#include <string>
 
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
@@ -153,8 +155,8 @@ public:
 	bool isProbablyPrime(int primeCheckAttempts) const;	// uses Miller-Rabin primaly test
 	factor_t factor() const;	//return 2 factors of number
 	friend LongInt generateRandomPrime(int size, int primeCheckAttempts);	// generate random prime for encryption algorithms
-	friend LongInt modPowTwo(const LongInt& li, const LongInt& pow, const LongInt& modular);
-	friend LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt& modular);
+	friend LongInt modPowTwo(const LongInt& li, const int pow, const LongInt& modular);
+	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular);
 	friend void shiftEncrypt(LongInt& li, int key);
 	friend void shiftDecrypt(LongInt& li, int key);
 };
@@ -1157,29 +1159,37 @@ LongInt Random() {
 	return randomNumber;
 }
 
-/**
- * Considered that difference between sizes of left and right more than 2 digits
-*/
 LongInt Random(const LongInt& left, const LongInt& right) {
-	std::random_device rd;  
+	std::random_device rd;
     std::mt19937 gen(rd());
-	std::uniform_int_distribution<> sizeDistrib(left.size() + 1, right.size() - 1);
-    std::uniform_int_distribution<> digitsDistrib(0, 1000);
-	
-	int size = sizeDistrib(gen);
-	LongInt result;
-	result._digits.resize(size);
-	for (int i = 0; i < result.size(); i++) {
-		result._digits[i] = digitsDistrib(gen) % 10;
-	}
 
-	while (result._digits[size - 1] == 0) {
-		result._digits[size - 1] = digitsDistrib(gen) % 10;
+	LongInt diff = right - left;
+
+	if (diff < INT_MAX) {
+		std::uniform_int_distribution<> distrib(0, std::stoi(diff.toString()));
+		return left + distrib(gen);
+	} else {
+		std::uniform_int_distribution<> distrib(0, INT_MAX);
+		int size = distrib(gen) % (diff.size() + 1);	//random size from 0 to diff.size()
+		LongInt displacement;
+		displacement._digits.resize(size);
+		for (int i = 0; i < size; i++) {
+			int randNum = distrib(gen);
+			while (randNum > 0) {
+				displacement._digits[i++] = randNum % 10;
+				randNum /= 10;
+			}
+		}
+		if (displacement > diff) {
+			int delDigits = distrib(gen) % (diff.size()) + 1;	//random size from 1 to diff.size() for deletion
+			displacement._digits.resize(delDigits);
+		}
+
+		displacement._checkLeadingZeroes();
+		displacement._checkDigitOverflow();
+
+		return left + displacement;
 	}
-	result._checkDigitOverflow();
-	result._checkLeadingZeroes();
-	
-	return result;
 }
 
 bool LongInt::isProbablyPrime(int primeCheckAttempts) const{
@@ -1232,6 +1242,9 @@ factor_t LongInt::factor() const {
 	return {1, *this};
 }
 
+/**
+ * 
+*/
 LongInt generateRandomPrime(int size, int primeCheckAttempts) {
 	// generate random number with size
 	LongInt li = Random();
@@ -1265,8 +1278,6 @@ LongInt generateRandomPrime(int size, int primeCheckAttempts) {
 }
 
 LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular) {
-	//li^(2^powOfTwo) % modular
-	//A ^ 2 mod B = (A mod B * A mod B) mod B
 	LongInt result = li % modular;
 
 	for (int i = 0; i < powOfTwo; i++) {
@@ -1276,20 +1287,25 @@ LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular)
 	return result;
 }
 
-LongInt modPow(const LongInt& li, const LongInt& pow, const LongInt& modular) {
-	//li ^ pow % modular
-	// pow = a1*1 + a2*2 + a3*4 + 8 => use modPowTwo, then multiply and again modPowTwo
-	std::vector<int> powDecomposition;	// decomposition of pow into bits
-	LongInt two(2);
-	lidiv_t divResult;
-	do {
-		divResult = div(pow, two);
-		powDecomposition.push_back(divResult.rem == 1);
-	} while(divResult.quot != 0);
+LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
+	if (li == 0 || modular == 0) {
+		return 0;	//TODO
+	}
 
-	LongInt result = modPowTwo(li, powDecomposition[0], modular);
-	for (int i = 1; i < powDecomposition.size(); i++) {
-		result = (result * (modPow(result, powDecomposition[i], modular))) % modular;
+	LongInt two(2);
+
+	lidiv_t powDecomposition = div(pow, two);
+	pow = powDecomposition.quot;
+	LongInt modPowTwo = li % modular;
+	LongInt result = powDecomposition.rem == 1 ? modPowTwo : 1;
+	while (pow != 0) {
+		powDecomposition = div(pow, two);
+		pow = powDecomposition.quot;
+		modPowTwo = (modPowTwo * modPowTwo) % modular;
+
+		if (powDecomposition.rem == 1) {
+			result = (result * modPowTwo) % modular;
+		}
 	}
 
 	return result;

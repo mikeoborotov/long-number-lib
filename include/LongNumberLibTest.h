@@ -55,6 +55,9 @@ public:
 	static void test_lcm(); // Test lcm() function
 	static void test_factorial(); // Test factorial() function
 	static void test_shiftEncryption();
+	static void test_modPowOfTwo();
+	static void test_modPow();
+	static void test_boundRandom();
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -559,13 +562,45 @@ void Test::test_factorial() {
 }
 
 void Test::test_shiftEncryption() {
-	LongInt initial = Random();
-	LongInt msg = initial;
-	int key = std::rand() % 10;
+	int tests = 10;
+	for (int i = 1; i <= tests; i++) {
+		LongInt initial = Random();
+		LongInt msg = initial;
+		int key = std::rand() % 10;
 
-	shiftEncrypt(msg, key);
-	shiftDecrypt(msg, key);
-	verify("123", initial, msg);
+		shiftEncrypt(msg, key);
+		shiftDecrypt(msg, key);
+		verify("shift ecnryption #" + i, initial, msg);
+	}
+}
+
+void Test::test_boundRandom() {
+	int i;
+	LNL::LongInt left;
+	LNL::LongInt right;
+	do {
+		std::cin >> i >> left >> right;
+
+		for (int j = 1; j <= i; j++) {
+			std::cout << "Random number #" + std::to_string(j) << ' ' << LNL::Random(left, right) << std::endl;
+		}
+
+	} while (i != 0);
+}
+
+void Test::test_modPowOfTwo() {
+	//A ^ (2^p) % B
+	verify("mod of power of two #1", modPowTwo(1, 100, 15), 1);
+	verify("mod of power of two #2", modPowTwo(17, 20, 185), 86);
+	verify("mod of power of two #3", modPowTwo(756382912846, 10, 8234823), 4085431);
+}
+
+void Test::test_modPow() {
+	verify("mod of power #1", modPow(2, 10, 15), 4);
+	verify("mod of power #2", modPow(2, 32, 2), 0);
+	verify("mod of power #3", modPow(123456, 1, 123456), 0);
+	verify("mod of power #4", modPow(17, 13, 14), 3);
+	verify("mod of pow #5", modPow(32, 47, 85), 8);
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
