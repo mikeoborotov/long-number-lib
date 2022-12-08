@@ -111,12 +111,16 @@ def plot_time_evolution(
     else:
         print(f'Invalid shape of numbers for function {func_name}')
         return
+
+    ax.set_xticks(ax.get_xticks()[::int(ax.get_xticks().size / 10)])
     
-    ax.grid(linestyle='--', linewidth=0.5)
+    ax.grid(which='major', linestyle='-', linewidth=0.8)
+    ax.grid(which='minor', linestyle='--', linewidth=0.5)
+    ax.minorticks_on()
     ax.set_xlabel('Numbers (rounded up to orders of magnitude)', labelpad=14.0)
     ax.set_ylabel('Calculation time, ms')
                   
-    ax.plot(times, linestyle='dashed', marker='o', color='tab:blue')
+    ax.plot(times, linestyle='-', marker='.', linewidth=0.8, color='tab:blue')
     plt.show()
     
 def parse_args():
@@ -175,15 +179,8 @@ if __name__ == "__main__":
     
     if ARGS.path is not None:
         filepath = ARGS.path
-        
-        num = np.asarray([['9876543210'*30, '1234567890'*20], 
-                          ['9876543210'*50, '1234567890'*20], 
-                          ['9876543210'*70, '1234567890'*20], 
-                          ['9876543210'*90, '1234567890'*20], 
-                          ['9876543210'*110, '1234567890'*20],
-                          ['9876543210'*130, '1234567890'*20],  
-                          ['9876543210'*150, '1234567890'*20]], 
-                        dtype=str)
+
+        num = np.asarray([['9876543210'*i*10, '1234567890'*i*10] for i in range(1, 102)], dtype=str)
         
         if ARGS.pow:
             num = np.asarray([[2, 1e3], [2, 2e3], [2, 3e3], [2, 4e3], [2, 5e3]], dtype=int)
