@@ -1,6 +1,6 @@
 # LongNumberLib
 
-**LNL** (short for **LongNumberLib**) is a single-file open source C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in information security. Current version of LNL only supports arbitrary length integers.
+**LNL** (short for **LongNumberLib**) is a single-file open source C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in cryptography and information security. Current version of LNL only supports arbitrary length integers.
 
 **WARNING:** The library is still under development, so be careful!
 
@@ -16,7 +16,7 @@
   - [Relational operations](#relational-operations)
   - [Mathematical operations](#mathematical-operations)
   - [Random numbers](#random-numbers)
-- [Information security features](#information-security-features)
+- [Cryptography features](#cryptography-features)
 - [Benchmarks](#benchmarks)
   - [Multiplication](#multiplication)
   - [Division](#division)
@@ -137,7 +137,7 @@ Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need 
 
 The `LNL::Random()` function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
 
-## Information security features
+## Cryptography features
 
 COMING SOON
 
@@ -145,31 +145,51 @@ COMING SOON
 
 ## Benchmarks
 
+In this section you can find some benchmarks for the library.
+
 ### Multiplication
 
-COMING SOON
+LNL uses karatsuba divide-and-conquer algorithm for multiplication. It allows to reduce the number single-digit multiplications from $n^2$ (traditional multiplication) to at most $n^{log_23} \approx 1.585$ when multiplying two $n$-digit numbers.
+
+Benchmark plot for multiplication of two $n$-digit numbers:
 
 ![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark.png? "Multiplication benchmark")
 
+Closeup of the benchmark plot:
+
 ![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark-zoomed.png? "Multiplication benchmark closeup")
+
+Calculation time $time^{log_32}$ on the last plot is linear which indicates the correctness of the karatsuba algorithm. You can also see that this algorithm outperforms traditional multiplication as the $\sqrt{time}$ plot has logarithmic properties.
 
 ### Division
 
-COMING SOON
+LNL uses traditional long division algorithm which has $n^2$ complexity at worst when dividing two $n$-digit numbers. The algorithm for division may be reworked in the future.
+
+Benchmark plot for division of a $n$-digit number by some constant much smaller number:
 
 ![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark.png? "Division benchmark")
 
+Closeup of the benchmark plot:
+
 ![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-zoomed.png? "Division benchmark closeup")
+
+Calculation time $\sqrt{time}$ is linear on this plot which points to a $n^2$ complexity as expected. However division is faster the closer the numbers are.
+
+Here is a benchmark plot for division of two $n$-digit numbers:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-fast.png? "Division benchmark for same length numbers")
 
 ### Exponentiation
 
-COMING SOON
+LNL uses exponentiation by squaring which uses $log_2a$ multiplications when calculating $x^a$. However time complexity is also affected by the complexity of the multiplication algorithm itself (see the [multiplication](#multiplication) section above).
+
+Benchmark plot for exponentiation:
 
 ![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/pow-benchmark.png? "Exponentiation benchmark")
 
 ### General benchmark info
 
-COMING SOON
+You can run benchmarks for other functions and operators of LNL and with more specific benchmark parameters. For more information see the [run benchmarks](#run-benchmarks) section.
 
 [:arrow_up: Back to contents](#contents)
 
