@@ -149,13 +149,23 @@ COMING SOON
 
 COMING SOON
 
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark.png? "Multiplication benchmark")
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark-zoomed.png? "Multiplication benchmark closeup")
+
 ### Division
 
 COMING SOON
 
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark.png? "Division benchmark")
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-zoomed.png? "Division benchmark closeup")
+
 ### Exponentiation
 
 COMING SOON
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/pow-benchmark.png? "Exponentiation benchmark")
 
 ### General benchmark info
 
