@@ -18,6 +18,10 @@
   - [Random numbers](#random-numbers)
 - [Information security features](#information-security-features)
 - [Benchmarks](#benchmarks)
+  - [Multiplication](#multiplication)
+  - [Division](#division)
+  - [Exponentiation](#exponentiation)
+  - [General benchmark info](#general-benchmark-info)
 - [Testing the library](#testing-the-library)
   - [Run unit tests](#run-unit-tests)
   - [Run benchmarks](#run-benchmarks)
@@ -141,6 +145,20 @@ COMING SOON
 
 ## Benchmarks
 
+### Multiplication
+
+COMING SOON
+
+### Division
+
+COMING SOON
+
+### Exponentiation
+
+COMING SOON
+
+### General benchmark info
+
 COMING SOON
 
 [:arrow_up: Back to contents](#contents)
@@ -195,4 +213,4 @@ See the [NOTICE](NOTICE) file for copyright information.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an **"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND**, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
