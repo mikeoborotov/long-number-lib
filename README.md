@@ -149,7 +149,7 @@ In this section you can find some benchmarks for the library.
 
 ### Multiplication
 
-LNL uses karatsuba divide-and-conquer algorithm for multiplication. It allows to reduce the number single-digit multiplications from $n^2$ (traditional multiplication) to at most $n^{log_23} \approx 1.585$ when multiplying two $n$-digit numbers.
+LNL uses karatsuba divide-and-conquer algorithm for multiplication. It allows to reduce the number single-digit multiplications from $n^2$ (traditional multiplication) to at most $n^{log_23} \approx n^{1.585}$ when multiplying two $n$-digit numbers.
 
 Benchmark plot for multiplication of two $n$-digit numbers:
 
@@ -159,7 +159,7 @@ Closeup of the benchmark plot:
 
 ![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark-zoomed.png? "Multiplication benchmark closeup")
 
-Calculation time $time^{log_32}$ on the last plot is linear which indicates the correctness of the karatsuba algorithm. You can also see that this algorithm outperforms traditional multiplication as the $\sqrt{time}$ plot has logarithmic properties.
+Calculation time $time^{log_32}$ on the last plot is linear which indicates the correctness of the karatsuba algorithm. You can also see that this algorithm outperforms traditional multiplication because the $\sqrt{time}$ plot has logarithmic properties.
 
 ### Division
 
@@ -189,7 +189,7 @@ Benchmark plot for exponentiation:
 
 ### General benchmark info
 
-You can run benchmarks for other functions and operators of LNL and with more specific benchmark parameters. For more information see the [run benchmarks](#run-benchmarks) section.
+You can also run benchmarks for other functions and operators of LNL with more specific benchmark parameters. For more information see the [run benchmarks](#run-benchmarks) section.
 
 [:arrow_up: Back to contents](#contents)
 
