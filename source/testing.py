@@ -74,7 +74,7 @@ def run_func_test(
         
     
     print(f'Testing function: {func_name}'.replace(';', ''))
-    write_to_file(filepath, func_name, line=7)
+    write_to_file(filepath, func_name, line=21)
     os.system(f'g++ {filepath} -o test_func.out')
     
     result = int(sp.check_output('./test_func.out', stderr=sp.STDOUT, shell=True))
@@ -126,15 +126,33 @@ def plot_time_evolution(
         print(f'Invalid shape of numbers for function {func_name}')
         return
 
-    ax.set_xticks(ax.get_xticks()[::int(ax.get_xticks().size / 10)])
+    # Plotting labels only for 10 xticks (so there is no mess)
+    tick_step = int(ax.get_xticks().size / 10)
+    if (tick_step == 0):
+        tick_step = 1
+    ax.set_xticks(ax.get_xticks()[::tick_step])
     
+    # Grid settings
     ax.grid(which='major', linestyle='-', linewidth=0.8)
     ax.grid(which='minor', linestyle='--', linewidth=0.5)
     ax.minorticks_on()
+
     ax.set_xlabel('Numbers (rounded up to orders of magnitude)', labelpad=14.0)
     ax.set_ylabel('Calculation time, ms')
                   
-    ax.plot(times, linestyle='-', marker='.', linewidth=0.8, color='tab:blue')
+    ax.plot(times, linestyle='-', marker='.', linewidth=0.8, label='$time$')
+
+    # Extra plots for comparing algorithm complexity
+    if (func_name == '*'):
+        karatsuba_complexity = np.power(times, 0.631)
+        sqrt_of_times = np.sqrt(times)
+        ax.plot(karatsuba_complexity, linestyle='--', marker='.', linewidth=0.8, label='$time^{log_32}$')
+        ax.plot(sqrt_of_times, linestyle='--', marker='.', linewidth=0.8, label='$\sqrt{time}$')
+
+    # Plot limits
+    # ax.set_ylim(0, 50)
+
+    ax.legend(loc='best')
     plt.show()
     
 def parse_args():
@@ -194,10 +212,12 @@ if __name__ == "__main__":
     if ARGS.path is not None:
         filepath = ARGS.path
 
-        num = np.asarray([['9876543210'*i*10, '1234567890'*i*10] for i in range(1, 102)], dtype=str)
+        # Generating an array for benchmarks
+        num = np.asarray([['9876543210'*i*10, '1234567890'*10] for i in range(1, 102)], dtype=str)
         
         if ARGS.pow:
-            num = np.asarray([[2, 1e3], [2, 2e3], [2, 3e3], [2, 4e3], [2, 5e3]], dtype=int)
+            # Custom array for benchmarks
+            num = np.asarray([[2, 1000*i] for i in range(1, 102)], dtype=int)
             run_func_evolution_test('pow', num)
             
         if ARGS.div:
@@ -213,10 +233,13 @@ if __name__ == "__main__":
             run_func_evolution_test('lcm', num)
         
         if ARGS.factorial:
-            num = np.asarray([[111], [1111], [11111]], dtype=int)
+            # Custom array for benchmarks
+            num = np.asarray([[1000*i] for i in range(1, 12)], dtype=int)
             run_func_evolution_test('factorial', num)
             
         if ARGS.multi:
+            # Custom array for benchmarks
+            num = np.asarray([['9876543210'*i*10, '1234567890'*i*10] for i in range(1, 102)], dtype=str)
             run_func_evolution_test('*', num)
             
         if ARGS.divop:
