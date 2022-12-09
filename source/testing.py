@@ -145,9 +145,9 @@ def plot_time_evolution(
     # Extra plots for comparing algorithm complexity
     if (func_name == '*'):
         karatsuba_complexity = np.power(times, 0.631)
-        sqrt_of_times = np.sqrt(times)
         ax.plot(karatsuba_complexity, linestyle='--', marker='.', linewidth=0.8, label='$time^{log_32}$')
-        ax.plot(sqrt_of_times, linestyle='--', marker='.', linewidth=0.8, label='$\sqrt{time}$')
+    sqrt_of_times = np.sqrt(times)
+    ax.plot(sqrt_of_times, linestyle='--', marker='.', linewidth=0.8, label='$\sqrt{time}$')
 
     # Plot limits
     # ax.set_ylim(0, 50)
@@ -248,5 +248,3 @@ if __name__ == "__main__":
         if ARGS.modop:
             run_func_evolution_test('%', num)
             
-
-
