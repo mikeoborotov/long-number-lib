@@ -150,11 +150,11 @@ public:
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
 	friend LongInt Random(); // Generates random LongInt number
 	friend LongInt Random(const LongInt& left, const LongInt& right);	// Generates random LongInt from left to right
+	
 	//Encryption functions
-
-	bool isProbablyPrime(int primeCheckAttempts) const;	// uses Miller-Rabin primaly test
+	bool isMillerRabinPrime() const;	// uses Miller-Rabin primaly test
 	factor_t factor() const;	//return 2 factors of number
-	friend LongInt generateRandomPrime(int size, int primeCheckAttempts);	// generate random prime for encryption algorithms
+	friend LongInt randomPrime(int size);	// generate random prime for encryption algorithms
 	friend LongInt modPowTwo(const LongInt& li, const int pow, const LongInt& modular);
 	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular);
 	friend void shiftEncrypt(LongInt& li, int key);
@@ -162,11 +162,13 @@ public:
 };
 
 std::vector<int> primes;
+const int PRIMES_MAX = 100000;
+const int PRIMES_STEP = 6;
 
 void addSmallPrime(int num) {
 	bool isPrime = true;
 	for (const int& prime : primes) {
-		if (num % prime != 0 || num == prime) {
+		if (num % prime == 0 || num == prime) {
 			isPrime = false;
 		}
 	}
@@ -177,10 +179,14 @@ void addSmallPrime(int num) {
 }
 
 void fillPrimes() {
+	if (primes.size() != 0) {
+		return;
+	}
+
 	primes.push_back(2);
 	primes.push_back(3);
-
-	for (int i = 5; i < 256; i+= 6) {
+	//(6k+i) mod 6
+	for (int i = 5; i < PRIMES_MAX; i+= PRIMES_STEP) {
 		addSmallPrime(i);
 		addSmallPrime(i + 2);
 	}
@@ -1192,48 +1198,79 @@ LongInt Random(const LongInt& left, const LongInt& right) {
 	}
 }
 
-bool LongInt::isProbablyPrime(int primeCheckAttempts) const{
-	//check small primes
+bool LongInt::isMillerRabinPrime() const {
+	std::cout << "============Miller Rabin test started================" << std::endl;
+	fillPrimes();
+
+	//Check small primes
 	for (const int& prime : primes) {
-		if (*this % prime == 0) {
+		if (*this % prime == 0 && *this != prime) {
+			std::cout << "Miller Rabin test finished" << std::endl;
 			return false;
+		} else if (*this == prime) {
+			std::cout << "Miller Rabin test finished" << std::endl;
+			return true;
 		}
 	}
 
+	std::cout << "Small primes was checked" << std::endl;
+
 	//Miller-Rabin test
-	//1st n-1 = 2^s * t
-	LongInt li = *this - 1;
-	LongInt s = 0;
-	LongInt t = 0;
-	lidiv_t divRes;
+	// n-1 = 2^s * t => s and t
+	LongInt n_1 = *this - 1;
+	int s = -1;
+	LongInt t;
+	lidiv_t divRes = {n_1, 0};
 
-	do {
-		divRes = div(li, 2);
+	LongInt two(2);
+	while (divRes.rem != 1) {
+		t = divRes.quot;
+		divRes = div(t, two);
 		s++;
-	} while (divRes.rem != 1);
-	t = divRes.quot;
+	}
+	std::cout << "Calculated s and t; n - 1 = 2^s*t where n = " 
+				<< *this << "; s = " << s << "; t = " << t << std::endl;
+	
+	//find out recommended attempts (according to wiki) ~ log2(n) ~ log2(n - 1) if n >> 1
+	int primeCheckAttempts = s; 
+	LongInt tmp = t;
+	do {
+		divRes = div(tmp, two);
+		tmp = divRes.quot;
+		primeCheckAttempts++;
+	} while(tmp != 0);
+	std::cout << "Calculated check attempts " << primeCheckAttempts << std::endl;
 
+	//primeCheckAttemts tests
 	for (int i = 0; i < primeCheckAttempts; i++) {
 		//random
 		LongInt a = Random(2, *this - 2);
-		LongInt x = modPow(a, t, li);
+		std::cout << "Check iteration #" << i << " random a is " << a << std::endl;
+		LongInt x = modPow(a, t, *this);	//a^t mod n
+		std::cout << "a^t mod n = " << x << std::endl;
 		if (x == 1 || x == *this - 1) {
 			continue;
 		}
 
-		for (int j = 0; s > j; j++) {
-			x = modPow(x, 2, *this);
+		for (int j = 0; j < s; j++) {
+			x = (x * x) % *this;
+			std::cout << "Check iteration of x^2 mod n #" << j << "Where x = " << x << std::endl;
 			if (x == 1) {
+				std::cout << "Miller Rabin test finished" << std::endl;
 				return false;
 			}
 			if (x == *this - 1) {
-				continue;
+				break;
 			}
 		}
+		if (x == *this - 1) {
+			continue;
+		}
 
+		std::cout << "Miller Rabin test finished" << std::endl;
 		return false;
 	}
-
+	std::cout << "Miller Rabin test finished" << std::endl;
 	return true;
 }
 
@@ -1245,7 +1282,7 @@ factor_t LongInt::factor() const {
 /**
  * 
 */
-LongInt generateRandomPrime(int size, int primeCheckAttempts) {
+LongInt randomPrime(int size) {
 	// generate random number with size
 	LongInt li = Random();
 	li._positive = true;
@@ -1260,7 +1297,7 @@ LongInt generateRandomPrime(int size, int primeCheckAttempts) {
 	}
 
 	//make it prime
-	while (!li.isProbablyPrime(primeCheckAttempts)) {
+	while (!li.isMillerRabinPrime()) {
 		if (li % 2 == 0) {
 			li++;	// if even make odd
 			continue;
@@ -1293,16 +1330,20 @@ LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
 	}
 
 	LongInt two(2);
-
+	std::cout << "Before 1 div i modPow " << pow << std::endl;
 	lidiv_t powDecomposition = div(pow, two);
+	std::cout << "After 1 div i modPow" << std::endl;
 	pow = powDecomposition.quot;
 	LongInt modPowTwo = li % modular;
 	LongInt result = powDecomposition.rem == 1 ? modPowTwo : 1;
 	while (pow != 0) {
+		std::cout << "Before 2 div i modPow " << pow << std::endl;
 		powDecomposition = div(pow, two);
+		std::cout << "After 2 div i modPow" << std::endl;
 		pow = powDecomposition.quot;
+		std::cout << "Before % i modPow" << std::endl;
 		modPowTwo = (modPowTwo * modPowTwo) % modular;
-
+		std::cout << "After div i modPow" << std::endl;
 		if (powDecomposition.rem == 1) {
 			result = (result * modPowTwo) % modular;
 		}

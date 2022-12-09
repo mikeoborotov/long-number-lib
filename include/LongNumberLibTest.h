@@ -58,6 +58,7 @@ public:
 	static void test_modPowOfTwo();
 	static void test_modPow();
 	static void test_boundRandom();
+	static void test_isMillerRabinPrime();
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -601,6 +602,24 @@ void Test::test_modPow() {
 	verify("mod of power #3", modPow(123456, 1, 123456), 0);
 	verify("mod of power #4", modPow(17, 13, 14), 3);
 	verify("mod of pow #5", modPow(32, 47, 85), 8);
+}
+
+void Test::test_isMillerRabinPrime() {
+	//int tests = 10;
+
+	// for (int i = 0; i < 10; i++) {
+	// 	LNL::LongInt number = LNL::Random(2, 1000000000000000);
+	// 	std::cout << "Number " << number << " is prime? -> " << number.isMillerRabinPrime() << std::endl;
+	// }
+	verify("prime check #1", LongInt(2).isMillerRabinPrime(), true);
+	verify("prime check #2", LongInt(15).isMillerRabinPrime(), false);
+	verify("prime check #3", LongInt(997).isMillerRabinPrime(), true);
+	verify("prime check #4", LongInt(9721).isMillerRabinPrime(), true);
+	verify("prime check #5", LongInt("258838267").isMillerRabinPrime(), false);
+	verify("prime check #6", LongInt(997 * 9721).isMillerRabinPrime(), false);
+	verify("prime check #7", LongInt("19134702400093278081449423917").isMillerRabinPrime(), true);
+	verify("prime check #8", LongInt("1066340417491710595814572169").isMillerRabinPrime(), true);
+	verify("prime check #9", (LongInt("1066340417491710595814572169") * LongInt("19134702400093278081449423917")).isMillerRabinPrime(), false);
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
