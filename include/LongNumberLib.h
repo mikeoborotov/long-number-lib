@@ -20,9 +20,19 @@
 #include <algorithm>
 #include <cstdlib>
 #include <random>
+#include <climits>
+#include <string>
 
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
+
+
+/**
+ * Structure for restoring fuctors of a LongInt
+ * 
+ * 
+*/
+struct factor_t;
 
 /**
  * Structure for quotient and remainder for LongInt div() function.
@@ -52,6 +62,13 @@ struct isPowerOfTen_t;
  */
 class LongInt {
 private:
+	static std::vector<int> primes;
+	static void addPrime(int num);
+	static void fillPrimes();
+
+	static const int PRIMES_MAX = 100000;
+	static const int PRIMES_STEP = 6;
+
 	std::vector<int> _digits; // Number as a vector of digits
 	bool _positive; // Is number positive?
 	void _checkLeadingZeroes(); // Remove leading zeroes
@@ -139,8 +156,53 @@ public:
 	friend LongInt lcm(const LongInt& firstNum, const LongInt& secondNum); // Least common multiple
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
 	friend LongInt Random(); // Generates random LongInt number
+	friend LongInt Random(const LongInt& left, const LongInt& right);	// Generates random LongInt from left to right
+	friend LongInt Random(const int size);
+	
+	//Encryption functions
+	bool isMillerRabinPrime() const;	// uses Miller-Rabin primaly test
+	factor_t factor() const;	//return 2 factors of number
+	friend LongInt randomPrime(int size);	// generate random prime for encryption algorithms
+	friend LongInt modPowTwo(const LongInt& li, const int pow, const LongInt& modular);
+	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular);
+	friend void shiftEncrypt(LongInt& li, int key);
+	friend void shiftDecrypt(LongInt& li, int key);
 };
 
+std::vector<int> LongInt::primes;
+
+void LongInt::addPrime(int num) {
+	bool isPrime = true;
+	for (const int& prime : primes) {
+		if (num % prime == 0 || num == prime) {
+			isPrime = false;
+		}
+	}
+
+	if (isPrime) {
+		primes.push_back(num);
+	}
+}
+
+void LongInt::fillPrimes() {
+	if (primes.size() != 0) {
+		return;
+	}
+
+	primes.push_back(2);
+	primes.push_back(3);
+	//(6k+i) mod 6
+	for (int i = 5; i < PRIMES_MAX; i+= PRIMES_STEP) {
+		addPrime(i);
+		addPrime(i + 2);
+	}
+}
+
+// Structure for restoring factors
+struct factor_t {
+	LongInt first;
+	LongInt second;
+};
 
 // Structure for quotient and remainder for LongInt div() function
 struct lidiv_t {
@@ -1093,6 +1155,7 @@ LongInt Random() {
     std::uniform_int_distribution<> distrib(10000, 100000);
 
 	LongInt randomNumber(distrib(gen));
+	std::cout << "Random Number gen: " << randomNumber << std::endl;
 
 	randomNumber = pow(randomNumber, 10);
 	randomNumber = randomNumber << 2;
@@ -1106,6 +1169,232 @@ LongInt Random() {
 
 	std::cout << randomNumber << std::endl;
 	return randomNumber;
+}
+
+LongInt Random(const LongInt& left, const LongInt& right) {
+	std::random_device rd;
+    std::mt19937 gen(rd());
+
+	LongInt diff = right - left;
+
+	if (diff < INT_MAX) {
+		std::uniform_int_distribution<> distrib(0, std::stoi(diff.toString()));
+		return left + distrib(gen);
+	} else {
+		std::uniform_int_distribution<> distrib(0, INT_MAX);
+		int size = distrib(gen) % (diff.size() + 1);	//random size from 0 to diff.size()
+		if (size == 0) {
+			return left;
+		}
+		LongInt displacement;
+		displacement._digits.resize(size);
+		for (int i = 0; i < size; i++) {
+			int randNum = distrib(gen);
+			while (randNum > 0 && i < size) {
+				displacement._digits[i++] = randNum % 10;
+				randNum /= 10;
+			}
+		}
+		if (displacement > diff) {
+			int delDigits = distrib(gen) % (diff.size()) + 1;	//random size from 1 to diff.size() for deletion
+			displacement._digits.resize(delDigits);
+		}
+		if (displacement.size() == 0) {
+			return left;
+		}
+
+		displacement._checkLeadingZeroes();
+		displacement._checkDigitOverflow();
+
+		return left + displacement;
+	}
+}
+
+LongInt Random(const int size) {
+	std::random_device rd;
+    std::mt19937 gen(rd());
+	std::uniform_int_distribution<> distrib(0, 1000);
+
+	LongInt result;
+	result._digits.resize(size);
+	
+	for (int i = 0; i < size; i++) {
+		result._digits[i] = distrib(gen) % 10;
+	}
+
+	while (result._digits[size - 1] == 0) {
+		result._digits[size - 1] = distrib(gen) % 10;
+	}
+
+	return result;
+}
+
+bool LongInt::isMillerRabinPrime() const {
+	fillPrimes();
+
+	//Check small primes
+	for (const int& prime : primes) {
+		if (*this % prime == 0 && *this != prime) {
+			return false;
+		} else if (*this == prime) {
+			return true;
+		}
+	}
+
+	//Miller-Rabin test
+	// n-1 = 2^s * t => s and t
+	LongInt n_1 = *this - 1;
+	int s = -1;
+	LongInt t;
+	lidiv_t divRes = {n_1, 0};
+
+	LongInt two(2);
+	while (divRes.rem != 1) {
+		t = divRes.quot;
+		divRes = div(t, two);
+		s++;
+	}
+	
+	//find out recommended attempts (according to wiki) ~ log2(n) ~ log2(n - 1) if n >> 1
+	int primeCheckAttempts = s; 
+	LongInt tmp = t;
+	do {
+		divRes = div(tmp, two);
+		tmp = divRes.quot;
+		primeCheckAttempts++;
+	} while(tmp != 0);
+
+	//primeCheckAttemts tests
+	for (int i = 0; i < primeCheckAttempts; i++) {
+		//random
+		LongInt a = Random(2, *this - 2);
+		LongInt x = modPow(a, t, *this);	//a^t mod n
+
+		if (x == 1 || x == *this - 1) {
+			continue;
+		}
+
+		for (int j = 0; j < s; j++) {
+			x = (x * x) % *this;
+			if (x == 1) {
+				return false;
+			}
+			if (x == *this - 1) {
+				break;
+			}
+		}
+		if (x == *this - 1) {
+			continue;
+		}
+
+		return false;
+	}
+
+	return true;
+}
+
+//TODO implement
+factor_t LongInt::factor() const {
+	fillPrimes();
+
+	for (const int& prime : primes) {
+		if (*this % prime == 0) {
+			return {prime, *this / prime};
+		} else if (*this < (prime * prime)) {
+			return {1, *this};
+		}
+	}
+
+	LongInt delimeter(PRIMES_MAX);
+	while ((delimeter * delimeter) <= *this) {
+		if (*this % delimeter == 0) {
+			return {delimeter, *this / delimeter};
+		}
+
+		if (delimeter % 2 == 0) {
+			delimeter += 1;
+			continue;
+		}
+
+		//delimeter % 6 = +-1
+		if (delimeter % PRIMES_STEP == 1) {
+			delimeter += 4;
+			continue;
+		}
+
+		delimeter += 2;
+	}
+
+	return {1, *this};
+}
+
+/**
+ * 
+*/
+LongInt randomPrime(int size) {
+	// generate random number with size
+	LongInt li = Random(size);
+
+	//make it prime
+	while (!li.isMillerRabinPrime()) {
+		if (li % 2 == 0) {
+			li++;	// if even make odd
+			continue;
+		}
+		// check numbers 6k +- 1
+		if (li % 6 == 1) {	//make li % 6 =  5;
+			li += 4;
+			continue;
+		}
+
+		li += 2;	// was li % 6 = 5 -> li % 6 = 1
+	}
+
+	return li;
+}
+
+LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular) {
+	LongInt result = li % modular;
+
+	for (int i = 0; i < powOfTwo; i++) {
+		result = (result * result) % modular;
+	}
+
+	return result;
+}
+
+LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
+	if (li == 0 || modular == 0) {
+		return 0;	//TODO
+	}
+
+	LongInt two(2);
+	lidiv_t powDecomposition = div(pow, two);
+	pow = powDecomposition.quot;
+	LongInt modPowTwo = li % modular;
+	LongInt result = powDecomposition.rem == 1 ? modPowTwo : 1;
+	while (pow != 0) {
+		powDecomposition = div(pow, two);
+		pow = powDecomposition.quot;
+		modPowTwo = (modPowTwo * modPowTwo) % modular;
+		if (powDecomposition.rem == 1) {
+			result = (result * modPowTwo) % modular;
+		}
+	}
+
+	return result;
+}
+
+void shiftEncrypt(LongInt& li, int key) {
+	for (long long i = 0; i < li.size(); i++) {
+		li._digits[i] = (li._digits[i] + key) % 10;
+	}
+}
+
+void shiftDecrypt(LongInt& li, int key) {
+	for (long long i = 0; i < li.size(); i++) {
+		li._digits[i] = (li._digits[i] - key + 10) % 10;
+	}
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
