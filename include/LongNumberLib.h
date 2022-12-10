@@ -150,6 +150,7 @@ public:
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
 	friend LongInt Random(); // Generates random LongInt number
 	friend LongInt Random(const LongInt& left, const LongInt& right);	// Generates random LongInt from left to right
+	friend LongInt Random(const int size);
 	
 	//Encryption functions
 	bool isMillerRabinPrime() const;	// uses Miller-Rabin primaly test
@@ -1204,6 +1205,25 @@ LongInt Random(const LongInt& left, const LongInt& right) {
 	}
 }
 
+LongInt Random(const int size) {
+	std::random_device rd;
+    std::mt19937 gen(rd());
+	std::uniform_int_distribution<> distrib(0, 1000);
+
+	LongInt result;
+	result._digits.resize(size);
+	
+	for (int i = 0; i < size; i++) {
+		result._digits[i] = distrib(gen) % 10;
+	}
+
+	while (result._digits[size - 1] == 0) {
+		result._digits[size - 1] = distrib(gen) % 10;
+	}
+
+	return result;
+}
+
 bool LongInt::isMillerRabinPrime() const {
 	fillPrimes();
 
@@ -1278,17 +1298,7 @@ factor_t LongInt::factor() const {
 */
 LongInt randomPrime(int size) {
 	// generate random number with size
-	LongInt li = Random();
-	li._positive = true;
-	while(li.size() < size) {
-		li = pow(li, 2);
-		li << 1;
-	}
-
-	li._digits.resize(size - 1);
-	if (li._digits[li.size() - 1] == 0) {
-		li._digits[li.size() - 1] = 1;
-	}
+	LongInt li = Random(size);
 
 	//make it prime
 	while (!li.isMillerRabinPrime()) {
@@ -1297,12 +1307,12 @@ LongInt randomPrime(int size) {
 			continue;
 		}
 		// check numbers 6k +- 1
-		if (li % 6 == 1) {
+		if (li % 6 == 1) {	//make li % 6 =  5;
 			li += 4;
 			continue;
 		}
 
-		li += 2;
+		li += 2;	// was li % 6 = 5 -> li % 6 = 1
 	}
 
 	return li;

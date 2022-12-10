@@ -59,6 +59,7 @@ public:
 	static void test_modPow();
 	static void test_boundRandom();
 	static void test_isMillerRabinPrime();
+	static void test_randomPrime(int size);
 };
 
 int Test::totalTestNum = 0; // Total number of tests
@@ -118,6 +119,7 @@ void Test::runAllTests() {
 	test_lcm();
 	test_factorial();
 	test_shiftEncryption();
+	test_isMillerRabinPrime();
 }
 
 // Print out test report
@@ -614,6 +616,12 @@ void Test::test_isMillerRabinPrime() {
 	verify("prime check #7", LongInt("19134702400093278081449423917").isMillerRabinPrime(), true);
 	verify("prime check #8", LongInt("1066340417491710595814572169").isMillerRabinPrime(), true);
 	verify("prime check #9", (LongInt("1066340417491710595814572169") * LongInt("19134702400093278081449423917")).isMillerRabinPrime(), false);
+}
+
+void Test::test_randomPrime(int size) {
+	for (int i = 0; i < 10; i++) {
+		std::cout << randomPrime(size) << std::endl;
+	}
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
