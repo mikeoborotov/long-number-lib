@@ -1,26 +1,32 @@
-# LongNumberLib
+# About LNL
 
-**LNL** (short for **LongNumberLib**) is a single-file open source C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in information security. Current version of LNL only supports arbitrary length integers.
+**LNL** (short for **long number library**) is a single-file open source C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in cryptography and information security. Current version of LNL only supports arbitrary length integers.
 
 **WARNING:** The library is still under development, so be careful!
 
 ## Contents
 
-+ [How to install](#How-to-install)
-+ [How to use](#How-to-use)
-    + [General info](#General-info)
-    + [Creating an instance](#Creating-an-instance)
-    + [Assigning a value](#Assigning-a-value)
-    + [I/O operators](#IO-operators)
-    + [Useful getters](#Useful-getters)
-    + [Relational operations](#Relational-operations)
-    + [Mathematical operations](#Mathematical-operations)
-    + [Random numbers](#Random-numbers)
-+ [Information security features](#Information-security-features)
-+ [Running tests](#Running-tests)
-+ [Benchmarks](#Benchmarks)
-+ [Contributing](#Contributing)
-+ [Licence](#Licence)
+- [How to install](#how-to-install)
+- [How to use](#how-to-use)
+  - [General info](#general-info)
+  - [Creating an instance](#creating-an-instance)
+  - [Assigning a value](#assigning-a-value)
+  - [I/O operators](#io-operators)
+  - [Useful getters](#useful-getters)
+  - [Relational operations](#relational-operations)
+  - [Mathematical operations](#mathematical-operations)
+  - [Random numbers](#random-numbers)
+- [Cryptography features](#cryptography-features)
+- [Benchmarks](#benchmarks)
+  - [Multiplication](#multiplication)
+  - [Division](#division)
+  - [Exponentiation](#exponentiation)
+  - [General benchmark info](#general-benchmark-info)
+- [Testing the library](#testing-the-library)
+  - [Run unit tests](#run-unit-tests)
+  - [Run benchmarks](#run-benchmarks)
+- [Contributing](#contributing)
+- [Licence](#licence)
 
 ## How to install
 
@@ -30,7 +36,7 @@ The whole library is located in the `LongNumberLib.h` header. You can find it in
 #include "<YourPath>/LongNumberLib.h"
 ```
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
 
 ## How to use
 
@@ -105,7 +111,7 @@ Relational operators `==`, `!=`, `>`, `>=`, `<`, `<=` are overloaded for the `LN
 Here `x` and `y` are instances of `LNL::LongInt`.
 
 ### Mathematical operations
-Operators `+`, `-`, `*`, `/`, `%` as well as operators `+=`, `-=`, `*=`, `/=`, `%=` are overloaded for the `LNL::LongInt` class and function just like you would expect them to. The same goes for unary operators `+`, `-` and `++`, `--` (both prefix and postfix).
+Operators `+`, `-`, `*`, `/`, `%`, `<<`, `>>` as well as operators `+=`, `-=`, `*=`, `/=`, `%=` are overloaded for the `LNL::LongInt` class and function just like you would expect them to. The same goes for unary operators `+`, `-` and `++`, `--` (both prefix and postfix).
 
 Some other mathematical functions:
 + `LNL::pow(x,y)` calculates `x` to the power of `y` (as a `LNL::LongInt`).
@@ -129,17 +135,69 @@ Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need 
 
 ### Random numbers
 
+The `LNL::Random()` function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
+
+## Cryptography features
+
 COMING SOON
 
-## Information security features
+[:arrow_up: Back to contents](#contents)
 
-COMING SOON
+## Benchmarks
 
-[:arrow_up: Back to contents](#Contents)
+In this section you can find some benchmarks for the library.
 
-## Running tests
+### Multiplication
 
-In the `include` folder in this repository you can find a second header called `LongNumberLibTest.h`. You can install this header just like the library itself. It is important to note that both headers should be located in the same directory. Inside this file there is a class `LNL::Test` which contains tests for the `LNL::LongInt` class.
+LNL uses karatsuba divide-and-conquer algorithm for multiplication. It allows to reduce the number single-digit multiplications from $n^2$ (traditional multiplication) to at most $n^{log_23} \approx n^{1.585}$ when multiplying two $n$-digit numbers.
+
+Benchmark plot for multiplication of two $n$-digit numbers:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark.png? "Multiplication benchmark")
+
+Closeup of the benchmark plot:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark-zoomed.png? "Multiplication benchmark closeup")
+
+Calculation time $time^{log_32}$ on the last plot is linear which indicates the correctness of the karatsuba algorithm. You can also see that this algorithm outperforms traditional multiplication because the $\sqrt{time}$ plot has logarithmic properties.
+
+### Division
+
+LNL uses traditional long division algorithm which has $n^2$ complexity at worst when dividing two $n$-digit numbers. The algorithm for division may be reworked in the future.
+
+Benchmark plot for division of a $n$-digit number by some constant much smaller number:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark.png? "Division benchmark")
+
+Closeup of the benchmark plot:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-zoomed.png? "Division benchmark closeup")
+
+Calculation time $\sqrt{time}$ is linear on this plot which points to a $n^2$ complexity as expected. However division is faster the closer the numbers are.
+
+Here is a benchmark plot for division of two $n$-digit numbers:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-fast.png? "Division benchmark for same length numbers")
+
+### Exponentiation
+
+LNL uses exponentiation by squaring which uses $log_2a$ multiplications when calculating $x^a$. However time complexity is also affected by the complexity of the multiplication algorithm itself (see the [multiplication](#multiplication) section above).
+
+Benchmark plot for exponentiation:
+
+![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/pow-benchmark.png? "Exponentiation benchmark")
+
+### General benchmark info
+
+You can also run benchmarks for other functions and operators of LNL with more specific benchmark parameters. For more information see the [run benchmarks](#run-benchmarks) section.
+
+[:arrow_up: Back to contents](#contents)
+
+## Testing the library
+
+### Run unit tests
+
+In the `include` folder in this repository you can find a second header called `LongNumberLibTest.h`. You can install this header just like the library itself. It is important to note that both headers should be located in the same directory. Inside this file there is a class `LNL::Test` which contains unit tests for the `LNL::LongInt` class.
 
 To run all tests at once you can use code below:
 
@@ -155,21 +213,27 @@ g++ source/testing.cpp -o testing.out
 ./testing.out
 ```
 
-Or compile with whatever compiler you prefer.
+### Run benchmarks
 
-[:arrow_up: Back to contents](#Contents)
+If you are using Linux OS, you can run a benchmark for some functions to measure their execution time. To do this, run the code below in the terminal:
 
-## Benchmarks
+```
+python3 source/testing.py source/testing.cpp -path source/test_func.cpp --pow
+```
 
-COMING SOON
+This code will run unit tests and benchmark for function `LNL::pow()`. For a more detailed understanding of how to run this script, use this code:
 
-[:arrow_up: Back to contents](#Contents)
+```
+python3 source/testing.py -h
+```
+
+[:arrow_up: Back to contents](#contents)
 
 ## Contributing
 
 If you find any bugs or if you have improvement suggestions, please feel free to open an issue or a pull request. If you open a pull request, please add some comments to your changes and make sure all tests from `LongNumberLibTest.h` header are running correctly.
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
 
 ## Licence
 
@@ -179,4 +243,4 @@ See the [NOTICE](NOTICE) file for copyright information.
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an **"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND**, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-[:arrow_up: Back to contents](#Contents)
+[:arrow_up: Back to contents](#contents)
