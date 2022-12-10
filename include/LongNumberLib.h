@@ -1295,6 +1295,36 @@ bool LongInt::isMillerRabinPrime() const {
 
 //TODO implement
 factor_t LongInt::factor() const {
+	fillPrimes();
+
+	for (const int& prime : primes) {
+		if (*this % prime == 0) {
+			return {prime, *this / prime};
+		} else if (*this < (prime * prime)) {
+			return {1, *this};
+		}
+	}
+
+	LongInt delimeter(PRIMES_MAX);
+	while ((delimeter * delimeter) <= *this) {
+		if (*this % delimeter == 0) {
+			return {delimeter, *this / delimeter};
+		}
+
+		if (delimeter % 2 == 0) {
+			delimeter += 1;
+			continue;
+		}
+
+		//delimeter % 6 = +-1
+		if (delimeter % PRIMES_STEP == 1) {
+			delimeter += 4;
+			continue;
+		}
+
+		delimeter += 2;
+	}
+
 	return {1, *this};
 }
 
