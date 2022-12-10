@@ -163,7 +163,7 @@ public:
 };
 
 std::vector<int> primes;
-const int PRIMES_MAX = 1000;
+const int PRIMES_MAX = 100000;
 const int PRIMES_STEP = 6;
 
 void addSmallPrime(int num) {
