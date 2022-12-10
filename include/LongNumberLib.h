@@ -1090,7 +1090,7 @@ LongInt factorial(const LongInt& number) {
 LongInt Random() {
 	std::random_device rd;  
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> distrib(100, 10000);
+    std::uniform_int_distribution<> distrib(10000, 100000);
 
 	LongInt randomNumber(distrib(gen));
 
