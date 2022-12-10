@@ -605,12 +605,6 @@ void Test::test_modPow() {
 }
 
 void Test::test_isMillerRabinPrime() {
-	//int tests = 10;
-
-	// for (int i = 0; i < 10; i++) {
-	// 	LNL::LongInt number = LNL::Random(2, 1000000000000000);
-	// 	std::cout << "Number " << number << " is prime? -> " << number.isMillerRabinPrime() << std::endl;
-	// }
 	verify("prime check #1", LongInt(2).isMillerRabinPrime(), true);
 	verify("prime check #2", LongInt(15).isMillerRabinPrime(), false);
 	verify("prime check #3", LongInt(997).isMillerRabinPrime(), true);

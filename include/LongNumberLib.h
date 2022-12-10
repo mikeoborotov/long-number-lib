@@ -162,7 +162,7 @@ public:
 };
 
 std::vector<int> primes;
-const int PRIMES_MAX = 100000;
+const int PRIMES_MAX = 1000;
 const int PRIMES_STEP = 6;
 
 void addSmallPrime(int num) {
@@ -1177,11 +1177,14 @@ LongInt Random(const LongInt& left, const LongInt& right) {
 	} else {
 		std::uniform_int_distribution<> distrib(0, INT_MAX);
 		int size = distrib(gen) % (diff.size() + 1);	//random size from 0 to diff.size()
+		if (size == 0) {
+			return left;
+		}
 		LongInt displacement;
 		displacement._digits.resize(size);
 		for (int i = 0; i < size; i++) {
 			int randNum = distrib(gen);
-			while (randNum > 0) {
+			while (randNum > 0 && i < size) {
 				displacement._digits[i++] = randNum % 10;
 				randNum /= 10;
 			}
@@ -1189,6 +1192,9 @@ LongInt Random(const LongInt& left, const LongInt& right) {
 		if (displacement > diff) {
 			int delDigits = distrib(gen) % (diff.size()) + 1;	//random size from 1 to diff.size() for deletion
 			displacement._digits.resize(delDigits);
+		}
+		if (displacement.size() == 0) {
+			return left;
 		}
 
 		displacement._checkLeadingZeroes();
@@ -1199,21 +1205,16 @@ LongInt Random(const LongInt& left, const LongInt& right) {
 }
 
 bool LongInt::isMillerRabinPrime() const {
-	std::cout << "============Miller Rabin test started================" << std::endl;
 	fillPrimes();
 
 	//Check small primes
 	for (const int& prime : primes) {
 		if (*this % prime == 0 && *this != prime) {
-			std::cout << "Miller Rabin test finished" << std::endl;
 			return false;
 		} else if (*this == prime) {
-			std::cout << "Miller Rabin test finished" << std::endl;
 			return true;
 		}
 	}
-
-	std::cout << "Small primes was checked" << std::endl;
 
 	//Miller-Rabin test
 	// n-1 = 2^s * t => s and t
@@ -1228,8 +1229,6 @@ bool LongInt::isMillerRabinPrime() const {
 		divRes = div(t, two);
 		s++;
 	}
-	std::cout << "Calculated s and t; n - 1 = 2^s*t where n = " 
-				<< *this << "; s = " << s << "; t = " << t << std::endl;
 	
 	//find out recommended attempts (according to wiki) ~ log2(n) ~ log2(n - 1) if n >> 1
 	int primeCheckAttempts = s; 
@@ -1239,24 +1238,20 @@ bool LongInt::isMillerRabinPrime() const {
 		tmp = divRes.quot;
 		primeCheckAttempts++;
 	} while(tmp != 0);
-	std::cout << "Calculated check attempts " << primeCheckAttempts << std::endl;
 
 	//primeCheckAttemts tests
 	for (int i = 0; i < primeCheckAttempts; i++) {
 		//random
 		LongInt a = Random(2, *this - 2);
-		std::cout << "Check iteration #" << i << " random a is " << a << std::endl;
 		LongInt x = modPow(a, t, *this);	//a^t mod n
-		std::cout << "a^t mod n = " << x << std::endl;
+
 		if (x == 1 || x == *this - 1) {
 			continue;
 		}
 
 		for (int j = 0; j < s; j++) {
 			x = (x * x) % *this;
-			std::cout << "Check iteration of x^2 mod n #" << j << "Where x = " << x << std::endl;
 			if (x == 1) {
-				std::cout << "Miller Rabin test finished" << std::endl;
 				return false;
 			}
 			if (x == *this - 1) {
@@ -1267,10 +1262,9 @@ bool LongInt::isMillerRabinPrime() const {
 			continue;
 		}
 
-		std::cout << "Miller Rabin test finished" << std::endl;
 		return false;
 	}
-	std::cout << "Miller Rabin test finished" << std::endl;
+
 	return true;
 }
 
@@ -1330,20 +1324,14 @@ LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
 	}
 
 	LongInt two(2);
-	std::cout << "Before 1 div i modPow " << pow << std::endl;
 	lidiv_t powDecomposition = div(pow, two);
-	std::cout << "After 1 div i modPow" << std::endl;
 	pow = powDecomposition.quot;
 	LongInt modPowTwo = li % modular;
 	LongInt result = powDecomposition.rem == 1 ? modPowTwo : 1;
 	while (pow != 0) {
-		std::cout << "Before 2 div i modPow " << pow << std::endl;
 		powDecomposition = div(pow, two);
-		std::cout << "After 2 div i modPow" << std::endl;
 		pow = powDecomposition.quot;
-		std::cout << "Before % i modPow" << std::endl;
 		modPowTwo = (modPowTwo * modPowTwo) % modular;
-		std::cout << "After div i modPow" << std::endl;
 		if (powDecomposition.rem == 1) {
 			result = (result * modPowTwo) % modular;
 		}
