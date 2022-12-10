@@ -120,6 +120,8 @@ void Test::runAllTests() {
 	test_factorial();
 	test_shiftEncryption();
 	test_isMillerRabinPrime();
+	test_modPowOfTwo();
+	test_modPow();
 }
 
 // Print out test report
