@@ -62,6 +62,13 @@ struct isPowerOfTen_t;
  */
 class LongInt {
 private:
+	static std::vector<int> primes;
+	static void addPrime(int num);
+	static void fillPrimes();
+
+	static const int PRIMES_MAX = 100000;
+	static const int PRIMES_STEP = 6;
+
 	std::vector<int> _digits; // Number as a vector of digits
 	bool _positive; // Is number positive?
 	void _checkLeadingZeroes(); // Remove leading zeroes
@@ -162,11 +169,9 @@ public:
 	friend void shiftDecrypt(LongInt& li, int key);
 };
 
-std::vector<int> primes;
-const int PRIMES_MAX = 100000;
-const int PRIMES_STEP = 6;
+std::vector<int> LongInt::primes;
 
-void addSmallPrime(int num) {
+void LongInt::addPrime(int num) {
 	bool isPrime = true;
 	for (const int& prime : primes) {
 		if (num % prime == 0 || num == prime) {
@@ -179,7 +184,7 @@ void addSmallPrime(int num) {
 	}
 }
 
-void fillPrimes() {
+void LongInt::fillPrimes() {
 	if (primes.size() != 0) {
 		return;
 	}
@@ -188,8 +193,8 @@ void fillPrimes() {
 	primes.push_back(3);
 	//(6k+i) mod 6
 	for (int i = 5; i < PRIMES_MAX; i+= PRIMES_STEP) {
-		addSmallPrime(i);
-		addSmallPrime(i + 2);
+		addPrime(i);
+		addPrime(i + 2);
 	}
 }
 
