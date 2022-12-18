@@ -1,8 +1,6 @@
-# About LNL
+## About LNL
 
 **LNL** (short for **long number library**) is a single-file open source C++ library for arithmetics with arbitrary length numbers. It is designed to be simple and easy to use, taking into account possible applications in cryptography and information security. Current version of LNL only supports arbitrary length integers.
-
-**WARNING:** The library is still under development, so be careful!
 
 ## Contents
 
@@ -41,12 +39,12 @@ The whole library is located in the `LNL.h` header. You can find it in the `incl
 ## How to use
 
 ### General info
-This library introduces a new namespace `LNL` (short for long number library). Inside this namespace there is a `LNL::LongInt` class (arbitrary length integer class) and some functions for mathematical operations.
+This library introduces a new namespace `LNL` (short for **long number library**). Inside this namespace there is a `LNL::LongInt` class (arbitrary length integer class) and some functions for mathematical operations.
 
 ### Creating an instance
 It is possible to create a `LNL::LongInt` instance in different ways: with a `short`, `int`, `long`, `long long` or with unsigned equivalents of these types. It is also possible to create an instance with a `std::string`. If you do not pass a value to the constructor then an instance is initialized with 0 by default.
 
-If you try to initialize with a `std::string` which contains non-digit characters (except front "-") then an instance will be initialized with 0 and an error message will be printed.
+If you try to initialize with a `std::string` which contains non-digit characters (except front `-`) then an instance will be initialized with 0 and an error message will be printed.
 
 Here are some examples:
 ```c++
@@ -134,8 +132,6 @@ struct lidiv_t {
 Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need both quotient and remainder.
 
 ### Random numbers
-
-The `LNL::Random()` function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
 
 There are multiple ways to generate random numbers in LNL:
 

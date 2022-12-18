@@ -161,10 +161,10 @@ public:
 	bool isMillerRabinPrime() const; // Miller-Rabin primality test
 	factor_t factor() const; // Returns 2 factors of number
 	friend LongInt randomPrime(long long size); // Generates random prime for encryption algorithms
-	friend LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular);
-	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular);
-	friend void shiftEncrypt(LongInt& li, long long key);
-	friend void shiftDecrypt(LongInt& li, long long key);
+	friend LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular); // Modular exponentiation by 2 to some power
+	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular); // Modular exponentiation
+	friend void shiftEncrypt(LongInt& li, long long key); // Caesar's cipher encryption
+	friend void shiftDecrypt(LongInt& li, long long key); // Caesar's cipher decryption
 };
 
 std::vector<int> LongInt::primes;
@@ -1167,6 +1167,7 @@ LongInt random() {
 	return randomNumber;
 }
 
+// Generates random LongInt in some range
 LongInt random(const LongInt& left, const LongInt& right) {
 	std::random_device rd;
     std::mt19937 gen(rd());
@@ -1206,6 +1207,7 @@ LongInt random(const LongInt& left, const LongInt& right) {
 	}
 }
 
+// Generates random LongInt number with specified size
 LongInt random(const long long size) {
 	std::random_device rd;
     std::mt19937 gen(rd());
@@ -1225,6 +1227,7 @@ LongInt random(const long long size) {
 	return result;
 }
 
+// Miller-Rabin primality test
 bool LongInt::isMillerRabinPrime() const {
 	fillPrimes();
 
@@ -1289,6 +1292,7 @@ bool LongInt::isMillerRabinPrime() const {
 	return true;
 }
 
+// Returns 2 factors of number
 factor_t LongInt::factor() const {
 	fillPrimes();
 
@@ -1323,9 +1327,7 @@ factor_t LongInt::factor() const {
 	return {1, *this};
 }
 
-/**
- * 
-*/
+// Generates random prime for encryption algorithms
 LongInt randomPrime(long long size) {
 	// generate random number with size
 	LongInt li = random(size);
@@ -1348,6 +1350,7 @@ LongInt randomPrime(long long size) {
 	return li;
 }
 
+// Modular exponentiation by 2 to some power
 LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular) {
 	LongInt result = li % modular;
 
@@ -1358,6 +1361,7 @@ LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular
 	return result;
 }
 
+// Modular exponentiation
 LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
 	if (li == 0 || modular == 0) {
 		return 0;
@@ -1380,15 +1384,25 @@ LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
 	return result;
 }
 
+// Caesar's cipher encryption
 void shiftEncrypt(LongInt& li, long long key) {
+	key %= 10;
 	for (long long i = 0; i < li.size(); i++) {
 		li._digits[i] = (li._digits[i] + key) % 10;
+		if (li._digits[i] < 0) {
+			li._digits[i] += 10;
+		}
 	}
 }
 
+// Caesar's cipher decryption
 void shiftDecrypt(LongInt& li, long long key) {
+	key %= 10;
 	for (long long i = 0; i < li.size(); i++) {
-		li._digits[i] = (li._digits[i] - key + 10) % 10;
+		li._digits[i] = (li._digits[i] - key) % 10;
+		if (li._digits[i] < 0) {
+			li._digits[i] += 10;
+		}
 	}
 }
 

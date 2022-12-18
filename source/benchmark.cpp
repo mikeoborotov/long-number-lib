@@ -18,7 +18,7 @@
 
 int main(int argc, char *argv[]) {
 	auto begin = std::chrono::steady_clock::now();
-	LNL::pow(LNL::LongInt(2), LNL::LongInt(5000));
+	LNL::pow(LNL::LongInt(2), LNL::LongInt(1000));
 	auto end = std::chrono::steady_clock::now();
 	auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin);
 	std::cout << elapsedTime.count();

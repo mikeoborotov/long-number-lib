@@ -572,11 +572,10 @@ void Test::test_shiftEncryption() {
 	for (long long i = 1; i <= tests; i++) {
 		LongInt initial = random();
 		LongInt msg = initial;
-		long long key = std::rand() % 10;
-
+		long long key = std::rand();
 		shiftEncrypt(msg, key);
 		shiftDecrypt(msg, key);
-		verify("shiftEncryption #" + i, initial, msg);
+		verify("shiftEncryption", initial, msg);
 	}
 }
 
