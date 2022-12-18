@@ -36,14 +36,6 @@ def write_to_file(
 
     with open(file_name, 'w') as file:
         file.writelines(data)
-        
-        
-def run_all_tests(
-    file_name : str,
-    ):
-    os.system(f'g++ {file_name} -o run-unit-tests.out')
-    os.system('./run-unit-tests.out')
-    print('\n\n')
     
  
 def run_func_test(
@@ -158,12 +150,8 @@ def plot_time_evolution(
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "path_unit", metavar='PATH TO UNIT TESTS', type=str,
-        help="Path to the cpp file with unit tests. " \
-             "Basically it is source/run-unit-tests.cpp.")
-    parser.add_argument(
-        "-path", metavar='PATH TO FILE FOR FUNC BENCHMARK', type=str,
-        help="Path to the cpp file with function. " \
+        "-path", metavar='PATH TO THE CPP BENCHMARK FILE', type=str,
+        help="Path to the cpp file with a benchmark for a single function/operator. " \
              "Basically it is source/benchmark.cpp.")
     parser.add_argument(
         "--pow", action="store_true",
@@ -184,7 +172,7 @@ def parse_args():
         "--factorial", action="store_true",
         help="Test LNL::factorial function")
     parser.add_argument(
-        "--multi", action="store_true",
+        "--mult", action="store_true",
         help="Test LNL::operator *")
     parser.add_argument(
         "--divop", action="store_true",
@@ -205,19 +193,15 @@ if __name__ == "__main__":
     
     ARGS, UNKNOWN = parse_args()
     
-    filepath_all = ARGS.path_unit
-    run_all_tests(filepath_all)
-    
-    
     if ARGS.path is not None:
         filepath = ARGS.path
 
         # Generating an array for benchmarks
-        num = np.asarray([['9876543210'*i*10, '1234567890'*10] for i in range(1, 102)], dtype=str)
+        num = np.asarray([['9876543210'*i*10, '1234567890'*10] for i in range(1, 52)], dtype=str)
         
         if ARGS.pow:
             # Custom array for benchmarks
-            num = np.asarray([[2, 1000*i] for i in range(1, 102)], dtype=int)
+            num = np.asarray([[2, 1000*i] for i in range(1, 52)], dtype=int)
             run_func_evolution_test('pow', num)
             
         if ARGS.div:
@@ -237,9 +221,9 @@ if __name__ == "__main__":
             num = np.asarray([[1000*i] for i in range(1, 12)], dtype=int)
             run_func_evolution_test('factorial', num)
             
-        if ARGS.multi:
+        if ARGS.mult:
             # Custom array for benchmarks
-            num = np.asarray([['9876543210'*i*10, '1234567890'*i*10] for i in range(1, 102)], dtype=str)
+            num = np.asarray([['9876543210'*i*10, '1234567890'*i*10] for i in range(1, 52)], dtype=str)
             run_func_evolution_test('*', num)
             
         if ARGS.divop:
