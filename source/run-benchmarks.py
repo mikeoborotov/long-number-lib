@@ -41,8 +41,8 @@ def write_to_file(
 def run_all_tests(
     file_name : str,
     ):
-    os.system(f'g++ {file_name} -o test.out')
-    os.system('./test.out')
+    os.system(f'g++ {file_name} -o run-unit-tests.out')
+    os.system('./run-unit-tests.out')
     print('\n\n')
     
  
@@ -75,9 +75,9 @@ def run_func_test(
     
     print(f'Testing function: {func_name}'.replace(';', ''))
     write_to_file(filepath, func_name, line=21)
-    os.system(f'g++ {filepath} -o test_func.out')
+    os.system(f'g++ {filepath} -o benchmark.out')
     
-    result = int(sp.check_output('./test_func.out', stderr=sp.STDOUT, shell=True))
+    result = int(sp.check_output('./benchmark.out', stderr=sp.STDOUT, shell=True))
     print(f'Time: {result} ms\n')
     return result
     
@@ -160,11 +160,11 @@ def parse_args():
     parser.add_argument(
         "path_unit", metavar='PATH TO UNIT TESTS', type=str,
         help="Path to the cpp file with unit tests. " \
-             "Basically it is source/testing.cpp.")
+             "Basically it is source/run-unit-tests.cpp.")
     parser.add_argument(
         "-path", metavar='PATH TO FILE FOR FUNC BENCHMARK', type=str,
         help="Path to the cpp file with function. " \
-             "Basically it is source/test_func.cpp.")
+             "Basically it is source/benchmark.cpp.")
     parser.add_argument(
         "--pow", action="store_true",
         help="Test LNL::pow function")

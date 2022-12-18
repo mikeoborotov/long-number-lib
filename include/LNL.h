@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef LONGNUMBERLIB_H
-#define LONGNUMBERLIB_H
+#ifndef LNL_H
+#define LNL_H
 
 #include <iostream>
 #include <vector>
@@ -1394,4 +1394,4 @@ void shiftDecrypt(LongInt& li, int key) {
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
 
-#endif // LONGNUMBERLIB_H
+#endif // LNL_H

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef LONGNUMBERLIBTEST_H
-#define LONGNUMBERLIBTEST_H
+#ifndef LNLUNITTESTS_H
+#define LNLUNITTESTS_H
 
-#include "LongNumberLib.h"
+#include "LNL.h"
 
 // Opening namespace "LNL" (short for "LongNumberLib")
 namespace LNL {
@@ -626,4 +626,4 @@ void Test::test_randomPrime(int size) {
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
 
-#endif // LONGNUMBERLIBTEST_H
+#endif // LNLUNITTESTS_H
