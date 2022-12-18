@@ -568,11 +568,11 @@ void Test::test_factorial() {
 }
 
 void Test::test_shiftEncryption() {
-	int tests = 10;
-	for (int i = 1; i <= tests; i++) {
+	long long tests = 10;
+	for (long long i = 1; i <= tests; i++) {
 		LongInt initial = random();
 		LongInt msg = initial;
-		int key = std::rand() % 10;
+		long long key = std::rand() % 10;
 
 		shiftEncrypt(msg, key);
 		shiftDecrypt(msg, key);

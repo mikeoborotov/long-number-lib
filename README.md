@@ -30,10 +30,10 @@
 
 ## How to install
 
-The whole library is located in the `LongNumberLib.h` header. You can find it in the `include` directory in this repository. Copy the this file to your project and include it just like any other header:
+The whole library is located in the `LNL.h` header. You can find it in the `include` directory in this repository. Copy the this file to your project and include it just like any other header:
 
 ```c++
-#include "<YourPath>/LongNumberLib.h"
+#include "<YourPath>/LNL.h"
 ```
 
 [:arrow_up: Back to contents](#contents)
@@ -41,7 +41,7 @@ The whole library is located in the `LongNumberLib.h` header. You can find it in
 ## How to use
 
 ### General info
-This library introduces a new namespace `LNL` (short for LongNumberLib). Inside this namespace there is a `LNL::LongInt` class (arbitrary length integer class) and some functions for mathematical operations.
+This library introduces a new namespace `LNL` (short for long number library). Inside this namespace there is a `LNL::LongInt` class (arbitrary length integer class) and some functions for mathematical operations.
 
 ### Creating an instance
 It is possible to create a `LNL::LongInt` instance in different ways: with a `short`, `int`, `long`, `long long` or with unsigned equivalents of these types. It is also possible to create an instance with a `std::string`. If you do not pass a value to the constructor then an instance is initialized with 0 by default.
@@ -91,22 +91,22 @@ Below there is a list of some useful getters featured in `LNL::LongInt` class. F
 
 List of useful getters:
 + `x.toString()` and `LNL::toString(x)` return number value as a `std::string`.
-+ `x.abs()` and `LNL::abs(x)` return absolute number value (as a `LNL::LongInt`).
-+ `x.size()` and `LNL::size(x)` return number of digits in a number (as a `long long`).
++ `x.abs()` and `LNL::abs(x)` return absolute number value (returns `LNL::LongInt`).
++ `x.size()` and `LNL::size(x)` return number of digits in a number (returns `long long`).
 + `x.length()` and `LNL::length(x)` are synonyms of `x.size()` and `LNL::length(x)`.
-+ `x.isEven()` and `LNL::isEven(x)` check if a number is even (as a `bool`).
-+ `x.isOdd()` and `LNL::isOdd(x)` check if a number is odd (as a `bool`).
-+ `x.isZero()` and `LNL::isZero(x)` check if a number is equal to 0 (as a `bool`).
-+ `x.isOne()` and `LNL::isOne(x)` check if a number is equal to 1 (as a `bool`).
-+ `x.isPositive()` and `LNL::isPositive(x)` check if a number is positive (as a `bool`).
-+ `x.isNegative()` and `LNL::isNegative(x)` check if a number is negative (as a `bool`).
++ `x.isEven()` and `LNL::isEven(x)` check if a number is even (returns `bool`).
++ `x.isOdd()` and `LNL::isOdd(x)` check if a number is odd (returns `bool`).
++ `x.isZero()` and `LNL::isZero(x)` check if a number is equal to 0 (returns `bool`).
++ `x.isOne()` and `LNL::isOne(x)` check if a number is equal to 1 (returns `bool`).
++ `x.isPositive()` and `LNL::isPositive(x)` check if a number is positive (returns `bool`).
++ `x.isNegative()` and `LNL::isNegative(x)` check if a number is negative (returns `bool`).
  
 Here `x` is an instance of `LNL::LongInt`.
 
 ### Relational operations
 Relational operators `==`, `!=`, `>`, `>=`, `<`, `<=` are overloaded for the `LNL::LongInt` class. There are also relational functions like:
-+ `LNL::min(x,y)` returns the least of two numbers (as a `LNL::LongInt`).
-+ `LNL::max(x,y)` returns the greatest of two numbers (as a `LNL::LongInt`).
++ `LNL::min(x,y)` returns the least of two numbers (returns `LNL::LongInt`).
++ `LNL::max(x,y)` returns the greatest of two numbers (returns `LNL::LongInt`).
 
 Here `x` and `y` are instances of `LNL::LongInt`.
 
@@ -114,12 +114,12 @@ Here `x` and `y` are instances of `LNL::LongInt`.
 Operators `+`, `-`, `*`, `/`, `%`, `<<`, `>>` as well as operators `+=`, `-=`, `*=`, `/=`, `%=` are overloaded for the `LNL::LongInt` class and function just like you would expect them to. The same goes for unary operators `+`, `-` and `++`, `--` (both prefix and postfix).
 
 Some other mathematical functions:
-+ `LNL::pow(x,y)` calculates `x` to the power of `y` (as a `LNL::LongInt`).
++ `LNL::pow(x,y)` calculates `x` to the power of `y` (returns `LNL::LongInt`).
 + `LNL::div(x,y)` performs a division of two numbers an returns a `lidiv_t` type structure (more about it below).
-+ `LNL::mod(x,y)` performs a modulo operation `x mod y` (as a `LNL::LongInt`). Consider the the difference between this modulo operation and the division remainder operator `%`!
-+ `LNL::gcd(x,y)` returns the greatest common divisor of two numbers (as a `LNL::LongInt`).
-+ `LNL::lcm(x,y)` returns the least common multiple of two numbers (as a `LNL::LongInt`).
-+ `LNL::factorial(x)` returns factorial of a number (as a `LNL::LongInt`).
++ `LNL::mod(x,y)` performs a modulo operation `x mod y` (returns `LNL::LongInt`). Consider the the difference between this modulo operation and the division remainder operator `%`!
++ `LNL::gcd(x,y)` returns the greatest common divisor of two numbers (returns `LNL::LongInt`).
++ `LNL::lcm(x,y)` returns the least common multiple of two numbers (returns `LNL::LongInt`).
++ `LNL::factorial(x)` returns factorial of a number (returns `LNL::LongInt`).
 
 Here `x` and `y` are instances of `LNL::LongInt`.
 
@@ -137,9 +137,26 @@ Using `LNL::div(x,y)` is faster than operators `/` and `%` if you know you need 
 
 The `LNL::Random()` function is defined for the LongInt class. It generates a random number of indeterminate size and type LongInt.
 
+There are multiple ways to generate random numbers in LNL:
+
++ `LNL::random()` generates a random number of random size (returns `LNL::LongInt`).
++ `LNL::random(x,y)` generates a random number in range from `x` to `y` (returns `LNL::LongInt`).
++ `LNL::random(s)` generates a random number of size `s` (returns `LNL::LongInt`).
+
+Here `x` and `y` are instances of `LNL::LongInt` and `s` is a `long long`.
+
 ## Cryptography features
 
-COMING SOON
+LNL features some functions useful for cryptography and information security, which could be used for further implementation of more complex cryptography algorithms. Below is a list of currently implemented functions:
+
++ `x.isMillerRabinPrime()` checks if a number is a prime using a probabilistic primality test (returns `bool`).
++ `LNL::randomPrime(s)` generates a random prime number of size `s` (returns `LNL::LongInt`).
++ `LNL::modPowTwo(x,s,y)` performs a modular exponentiation of `x` by 2 to the power of `s` with a modulus `z` (returns `LNL::LongInt`).
++ `LNL::modPow(x,y,z)` performs a modular exponentiation of `x` by `y` with a modulus `z` (returns `LNL::LongInt`).
++ `LNL::shiftEncrypt(x, s)` is a Caesar's cipher encryption which is performed on number `x` with a key `s` (returns `void`, encrypts the number `x`).
++ `LNL::shiftDecrypt(x, s)` is a Caesar's cipher decryption which is performed on number `x` with a key `s` (returns `void`, decrypts the number `x`).
+
+Here `x`, `y`, `z` are instances of `LNL::LongInt` and `s` is a `long long`.
 
 [:arrow_up: Back to contents](#contents)
 
@@ -153,11 +170,11 @@ LNL uses karatsuba divide-and-conquer algorithm for multiplication. It allows to
 
 Benchmark plot for multiplication of two $n$-digit numbers:
 
-![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark.png? "Multiplication benchmark")
+![alt text](https://github.com/mikeoborotov/long-number-lib/blob/master/readme-images/mult-benchmark.png? "Multiplication benchmark")
 
 Closeup of the benchmark plot:
 
-![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/mult-benchmark-zoomed.png? "Multiplication benchmark closeup")
+![alt text](https://github.com/mikeoborotov/long-number-lib/blob/master/readme-images/mult-benchmark-zoomed.png? "Multiplication benchmark closeup")
 
 Calculation time $time^{log_32}$ on the last plot is linear which indicates the correctness of the karatsuba algorithm. You can also see that this algorithm outperforms traditional multiplication because the $\sqrt{time}$ plot has logarithmic properties.
 
@@ -167,17 +184,17 @@ LNL uses traditional long division algorithm which has $n^2$ complexity at worst
 
 Benchmark plot for division of a $n$-digit number by some constant much smaller number:
 
-![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark.png? "Division benchmark")
+![alt text](https://github.com/mikeoborotov/long-number-lib/blob/master/readme-images/div-benchmark.png? "Division benchmark")
 
 Closeup of the benchmark plot:
 
-![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-zoomed.png? "Division benchmark closeup")
+![alt text](https://github.com/mikeoborotov/long-number-lib/blob/master/readme-images/div-benchmark-zoomed.png? "Division benchmark closeup")
 
 Calculation time $\sqrt{time}$ is linear on this plot which points to a $n^2$ complexity as expected. However division is faster the closer the numbers are.
 
 Here is a benchmark plot for division of two $n$-digit numbers:
 
-![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/div-benchmark-fast.png? "Division benchmark for same length numbers")
+![alt text](https://github.com/mikeoborotov/long-number-lib/blob/master/readme-images/div-benchmark-fast.png? "Division benchmark for same length numbers")
 
 ### Exponentiation
 
@@ -185,7 +202,7 @@ LNL uses exponentiation by squaring which uses $log_2a$ multiplications when cal
 
 Benchmark plot for exponentiation:
 
-![alt text](https://github.com/OborotovMikhail/LongNumberLib/blob/master/readme-images/pow-benchmark.png? "Exponentiation benchmark")
+![alt text](https://github.com/mikeoborotov/long-number-lib/blob/master/readme-images/pow-benchmark.png? "Exponentiation benchmark")
 
 ### General benchmark info
 
@@ -197,7 +214,7 @@ You can also run benchmarks for other functions and operators of LNL with more s
 
 ### Run unit tests
 
-In the `include` folder in this repository you can find a second header called `LongNumberLibTest.h`. You can install this header just like the library itself. It is important to note that both headers should be located in the same directory. Inside this file there is a class `LNL::Test` which contains unit tests for the `LNL::LongInt` class.
+In the `include` folder in this repository you can find a second header called `LNL-unit-tests.h`. You can install this header just like the library itself. It is important to note that both headers should be located in the same directory. Inside this file there is a class `LNL::Test` which contains unit tests for the `LNL::LongInt` class.
 
 To run all tests at once you can use code below:
 
@@ -209,29 +226,29 @@ LNL::Test::printTestReport();
 Or if you forked the repository you can run:
 
 ```
-g++ source/testing.cpp -o testing.out
-./testing.out
+g++ source/run-unit-tests.cpp -o run-unit-tests.out
+./run-unit-tests.out
 ```
 
 ### Run benchmarks
 
-If you are using Linux OS, you can run a benchmark for some functions to measure their execution time. To do this, run the code below in the terminal:
+If you are using Linux OS, you can run benchmarks for some functions and operators to measure their execution time. You can find benchmark implementation in `run-benchmarks.py` and `benchmark.cpp` files in the `source` directory. Here is an example code that you can run in your terminal:
 
 ```
-python3 source/testing.py source/testing.cpp -path source/test_func.cpp --pow
+python3 source/run-benchmarks.py -path source/benchmark.cpp --pow
 ```
 
-This code will run unit tests and benchmark for function `LNL::pow()`. For a more detailed understanding of how to run this script, use this code:
+This will run benchmarks for function `LNL::pow()` and plot the results. For a more detailed understanding of how to run this script, use this command:
 
 ```
-python3 source/testing.py -h
+python3 source/run-benchmarks.py -h
 ```
 
 [:arrow_up: Back to contents](#contents)
 
 ## Contributing
 
-If you find any bugs or if you have improvement suggestions, please feel free to open an issue or a pull request. If you open a pull request, please add some comments to your changes and make sure all tests from `LongNumberLibTest.h` header are running correctly.
+If you find any bugs or if you have improvement suggestions, please feel free to open an issue or a pull request. If you open a pull request, please add some comments to your changes and make sure all tests from `LNL-unit-tests.h` header are running correctly.
 
 [:arrow_up: Back to contents](#contents)
 

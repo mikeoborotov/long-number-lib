@@ -159,12 +159,12 @@ public:
 	friend LongInt random(const LongInt& left, const LongInt& right); // Generates random LongInt in some range
 	friend LongInt random(const long long size); // Generates random LongInt number with specified size
 	bool isMillerRabinPrime() const; // Miller-Rabin primality test
-	factor_t factor() const; //return 2 factors of number
-	friend LongInt randomPrime(long long size); // generate random prime for encryption algorithms
+	factor_t factor() const; // Returns 2 factors of number
+	friend LongInt randomPrime(long long size); // Generates random prime for encryption algorithms
 	friend LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular);
 	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular);
-	friend void shiftEncrypt(LongInt& li, int key);
-	friend void shiftDecrypt(LongInt& li, int key);
+	friend void shiftEncrypt(LongInt& li, long long key);
+	friend void shiftDecrypt(LongInt& li, long long key);
 };
 
 std::vector<int> LongInt::primes;
@@ -1380,13 +1380,13 @@ LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
 	return result;
 }
 
-void shiftEncrypt(LongInt& li, int key) {
+void shiftEncrypt(LongInt& li, long long key) {
 	for (long long i = 0; i < li.size(); i++) {
 		li._digits[i] = (li._digits[i] + key) % 10;
 	}
 }
 
-void shiftDecrypt(LongInt& li, int key) {
+void shiftDecrypt(LongInt& li, long long key) {
 	for (long long i = 0; i < li.size(); i++) {
 		li._digits[i] = (li._digits[i] - key + 10) % 10;
 	}
