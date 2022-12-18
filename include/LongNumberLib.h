@@ -155,15 +155,13 @@ public:
 	friend LongInt gcd(const LongInt& firstNum, const LongInt& secondNum); // Greatest common divisor
 	friend LongInt lcm(const LongInt& firstNum, const LongInt& secondNum); // Least common multiple
 	friend LongInt factorial(const LongInt& number); // Factorial of a number
-	friend LongInt Random(); // Generates random LongInt number
-	friend LongInt Random(const LongInt& left, const LongInt& right);	// Generates random LongInt from left to right
-	friend LongInt Random(const int size);
-	
-	//Encryption functions
-	bool isMillerRabinPrime() const;	// uses Miller-Rabin primaly test
-	factor_t factor() const;	//return 2 factors of number
-	friend LongInt randomPrime(int size);	// generate random prime for encryption algorithms
-	friend LongInt modPowTwo(const LongInt& li, const int pow, const LongInt& modular);
+	friend LongInt random(); // Generates random LongInt number
+	friend LongInt random(const LongInt& left, const LongInt& right); // Generates random LongInt in some range
+	friend LongInt random(const long long size); // Generates random LongInt number with specified size
+	bool isMillerRabinPrime() const; // Miller-Rabin primality test
+	factor_t factor() const; //return 2 factors of number
+	friend LongInt randomPrime(long long size); // generate random prime for encryption algorithms
+	friend LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular);
 	friend LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular);
 	friend void shiftEncrypt(LongInt& li, int key);
 	friend void shiftDecrypt(LongInt& li, int key);
@@ -1149,13 +1147,12 @@ LongInt factorial(const LongInt& number) {
  *
  * @return random generated member of LongInt class.
  */
-LongInt Random() {
+LongInt random() {
 	std::random_device rd;  
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> distrib(10000, 100000);
 
 	LongInt randomNumber(distrib(gen));
-	std::cout << "Random Number gen: " << randomNumber << std::endl;
 
 	randomNumber = pow(randomNumber, 10);
 	randomNumber = randomNumber << 2;
@@ -1167,11 +1164,10 @@ LongInt Random() {
 		randomNumber *= -1;
 	}
 
-	std::cout << randomNumber << std::endl;
 	return randomNumber;
 }
 
-LongInt Random(const LongInt& left, const LongInt& right) {
+LongInt random(const LongInt& left, const LongInt& right) {
 	std::random_device rd;
     std::mt19937 gen(rd());
 
@@ -1210,7 +1206,7 @@ LongInt Random(const LongInt& left, const LongInt& right) {
 	}
 }
 
-LongInt Random(const int size) {
+LongInt random(const long long size) {
 	std::random_device rd;
     std::mt19937 gen(rd());
 	std::uniform_int_distribution<> distrib(0, 1000);
@@ -1218,7 +1214,7 @@ LongInt Random(const int size) {
 	LongInt result;
 	result._digits.resize(size);
 	
-	for (int i = 0; i < size; i++) {
+	for (long long i = 0; i < size; i++) {
 		result._digits[i] = distrib(gen) % 10;
 	}
 
@@ -1267,7 +1263,7 @@ bool LongInt::isMillerRabinPrime() const {
 	//primeCheckAttemts tests
 	for (int i = 0; i < primeCheckAttempts; i++) {
 		//random
-		LongInt a = Random(2, *this - 2);
+		LongInt a = random(2, *this - 2);
 		LongInt x = modPow(a, t, *this);	//a^t mod n
 
 		if (x == 1 || x == *this - 1) {
@@ -1293,7 +1289,6 @@ bool LongInt::isMillerRabinPrime() const {
 	return true;
 }
 
-//TODO implement
 factor_t LongInt::factor() const {
 	fillPrimes();
 
@@ -1331,9 +1326,9 @@ factor_t LongInt::factor() const {
 /**
  * 
 */
-LongInt randomPrime(int size) {
+LongInt randomPrime(long long size) {
 	// generate random number with size
-	LongInt li = Random(size);
+	LongInt li = random(size);
 
 	//make it prime
 	while (!li.isMillerRabinPrime()) {
@@ -1353,10 +1348,10 @@ LongInt randomPrime(int size) {
 	return li;
 }
 
-LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular) {
+LongInt modPowTwo(const LongInt& li, const long long pow, const LongInt& modular) {
 	LongInt result = li % modular;
 
-	for (int i = 0; i < powOfTwo; i++) {
+	for (long long i = 0; i < pow; i++) {
 		result = (result * result) % modular;
 	}
 
@@ -1365,7 +1360,7 @@ LongInt modPowTwo(const LongInt& li, const int powOfTwo, const LongInt& modular)
 
 LongInt modPow(const LongInt& li, LongInt pow, const LongInt& modular) {
 	if (li == 0 || modular == 0) {
-		return 0;	//TODO
+		return 0;
 	}
 
 	LongInt two(2);

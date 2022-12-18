@@ -55,9 +55,9 @@ public:
 	static void test_lcm(); // Test lcm() function
 	static void test_factorial(); // Test factorial() function
 	static void test_shiftEncryption();
+	static void test_boundRandom();
 	static void test_modPowOfTwo();
 	static void test_modPow();
-	static void test_boundRandom();
 	static void test_isMillerRabinPrime();
 	static void test_randomPrime(int size);
 };
@@ -97,6 +97,7 @@ void Test::resetTestNum() {
 
 // Run all tests
 void Test::runAllTests() {
+	std::cout << "\nRUNNING UNIT TESTS, DO NOT WORRY ABOUT ERROR MESSAGES\n\n";
 	test_constructor();
 	test_toString();
 	test_assignment();
@@ -119,14 +120,14 @@ void Test::runAllTests() {
 	test_lcm();
 	test_factorial();
 	test_shiftEncryption();
-	test_isMillerRabinPrime();
 	test_modPowOfTwo();
 	test_modPow();
+	test_isMillerRabinPrime(); // This one usually takes some time
 }
 
 // Print out test report
 void Test::printTestReport() {
-	std::cout << "\n\nTEST REPORT\n";
+	std::cout << "\nTEST REPORT\n";
 	std::cout << "Total tests:  " << totalTestNum << "\n";
 	std::cout << "Failed tests: " << failedTestNum << "\n";
 	if ((failedTestNum == 0) and (totalTestNum != 0)) {
@@ -569,13 +570,13 @@ void Test::test_factorial() {
 void Test::test_shiftEncryption() {
 	int tests = 10;
 	for (int i = 1; i <= tests; i++) {
-		LongInt initial = Random();
+		LongInt initial = random();
 		LongInt msg = initial;
 		int key = std::rand() % 10;
 
 		shiftEncrypt(msg, key);
 		shiftDecrypt(msg, key);
-		verify("shift ecnryption #" + i, initial, msg);
+		verify("shiftEncryption #" + i, initial, msg);
 	}
 }
 
@@ -585,39 +586,36 @@ void Test::test_boundRandom() {
 	LNL::LongInt right;
 	do {
 		std::cin >> i >> left >> right;
-
 		for (int j = 1; j <= i; j++) {
-			std::cout << "Random number #" + std::to_string(j) << ' ' << LNL::Random(left, right) << std::endl;
+			std::cout << "Random number #" + std::to_string(j) << ' ' << LNL::random(left, right) << std::endl;
 		}
-
 	} while (i != 0);
 }
 
 void Test::test_modPowOfTwo() {
-	//A ^ (2^p) % B
-	verify("mod of power of two #1", modPowTwo(1, 100, 15), 1);
-	verify("mod of power of two #2", modPowTwo(17, 20, 185), 86);
-	verify("mod of power of two #3", modPowTwo(756382912846, 10, 8234823), 4085431);
+	verify("modPowTwo #1", modPowTwo(1, 100, 15), 1);
+	verify("modPowTwo #2", modPowTwo(17, 20, 185), 86);
+	verify("modPowTwo #3", modPowTwo(756382912846, 10, 8234823), 4085431);
 }
 
 void Test::test_modPow() {
-	verify("mod of power #1", modPow(2, 10, 15), 4);
-	verify("mod of power #2", modPow(2, 32, 2), 0);
-	verify("mod of power #3", modPow(123456, 1, 123456), 0);
-	verify("mod of power #4", modPow(17, 13, 14), 3);
-	verify("mod of pow #5", modPow(32, 47, 85), 8);
+	verify("modPow #1", modPow(2, 10, 15), 4);
+	verify("modPow #2", modPow(2, 32, 2), 0);
+	verify("modPow #3", modPow(123456, 1, 123456), 0);
+	verify("modPow #4", modPow(17, 13, 14), 3);
+	verify("modPow #5", modPow(32, 47, 85), 8);
 }
 
 void Test::test_isMillerRabinPrime() {
-	verify("prime check #1", LongInt(2).isMillerRabinPrime(), true);
-	verify("prime check #2", LongInt(15).isMillerRabinPrime(), false);
-	verify("prime check #3", LongInt(997).isMillerRabinPrime(), true);
-	verify("prime check #4", LongInt(9721).isMillerRabinPrime(), true);
-	verify("prime check #5", LongInt("258838267").isMillerRabinPrime(), false);
-	verify("prime check #6", LongInt(997 * 9721).isMillerRabinPrime(), false);
-	verify("prime check #7", LongInt("19134702400093278081449423917").isMillerRabinPrime(), true);
-	verify("prime check #8", LongInt("1066340417491710595814572169").isMillerRabinPrime(), true);
-	verify("prime check #9", (LongInt("1066340417491710595814572169") * LongInt("19134702400093278081449423917")).isMillerRabinPrime(), false);
+	verify("isMillerRabinPrime #1", LongInt(2).isMillerRabinPrime(), true);
+	verify("isMillerRabinPrime #2", LongInt(15).isMillerRabinPrime(), false);
+	verify("isMillerRabinPrime #3", LongInt(997).isMillerRabinPrime(), true);
+	verify("isMillerRabinPrime #4", LongInt(9721).isMillerRabinPrime(), true);
+	verify("isMillerRabinPrime #5", LongInt("258838267").isMillerRabinPrime(), false);
+	verify("isMillerRabinPrime #6", LongInt(997 * 9721).isMillerRabinPrime(), false);
+	verify("isMillerRabinPrime #7", LongInt("19134702400093278081449423917").isMillerRabinPrime(), true);
+	verify("isMillerRabinPrime #8", LongInt("1066340417491710595814572169").isMillerRabinPrime(), true);
+	verify("isMillerRabinPrime #9", (LongInt("1066340417491710595814572169") * LongInt("19134702400093278081449423917")).isMillerRabinPrime(), false);
 }
 
 void Test::test_randomPrime(int size) {
@@ -627,7 +625,5 @@ void Test::test_randomPrime(int size) {
 }
 
 } // Closing namespace "LNL" (short for "LongNumberLib")
-
-
 
 #endif // LONGNUMBERLIBTEST_H
